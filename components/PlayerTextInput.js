@@ -2,21 +2,24 @@ import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View, TextInput } from "react-native";
 
-const PlayerTextInput = () => {
+const PlayerTextInput = ({ height , width}) => {
   return (
-    <View
-      styles={{
+    // <View
+    //   styles={{
 
-        flexDirection: "row",
-        alignItems: "flex-start",
-        backgroundColor: "blue",
+    //     flexDirection: "row",
+    //     alignItems: "flex-start",
+    //     backgroundColor: "blue",
         
-      }}
-    >
-      <TextInput style={styles.textInput} />
-      <TextInput style={styles.textInput} />
-      <TextInput style={styles.textInput} />
-    </View>
+    //   }}
+    // >
+      
+    //   <TextInput style={styles.textInput} />
+    //   <TextInput style={styles.textInput} />
+    // </View>
+
+    <TextInput style={{...styles.textInput, height: height , width: width}} />
+
   );
 };
 

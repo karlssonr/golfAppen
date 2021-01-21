@@ -1,9 +1,32 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
-const ButtonWithBackround = ({color, text, marginBottom, onPress}) => {
+const ButtonWithBackround = ({
+  color,
+  text,
+  onPress,
+  marginBottom,
+  marginTop,
+  width,
+  height,
+  alignSelf,
+  marginRight,
+}) => {
   const content = (
-    <View style={[styles.button, { backgroundColor: color , marginBottom: marginBottom}]}>
+    <View
+      style={[
+        styles.button,
+        {
+          backgroundColor: color,
+          marginBottom: marginBottom,
+          marginTop: marginTop,
+          width: width,
+          height: height,
+          alignSelf: alignSelf,
+          marginRight: marginRight,
+        },
+      ]}
+    >
       <Text style={styles.text}>{text}</Text>
     </View>
   );
@@ -19,7 +42,7 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   text: {
-    color: "white",
+    color: "black",
     fontSize: 20,
   },
 });
