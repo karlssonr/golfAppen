@@ -9,22 +9,35 @@ const HomeScreen = ({ navigation }) => {
       <View style={styles.homeView}>
         <ButtonWithBackround
           text="Registrera Resultat"
-          color="orange"
+          color="#ff4500"
           width={300}
+          padding={15}
           onPress={() => {
             console.log("button was pressed");
             // navigation.setOptions({ title: 'Registrera Resultat'})
-            navigation.navigate("RegisterResultScreen" , { title: 'Registrera Resultat'});
+            navigation.navigate("RegisterResultScreen");
           }}
         />
-        <ButtonWithBackround text="Tabell" color="orange" width={300} 
-        onPress={() => navigation.navigate('ChartListScreen')}/>
-        <ButtonWithBackround text="Statestik" color="red" width={300} />
+        <ButtonWithBackround
+          text="Tabell"
+          color="#ff4500"
+          width={300}
+          padding={15}
+          onPress={() => navigation.navigate("ChartListScreen")}
+        />
+        <ButtonWithBackround
+          text="Statestik"
+          color="#853017"
+          width={300}
+          padding={15}
+        />
         <ButtonWithBackround
           text="Medlemmar"
-          color="orange"
+          color="#ff4500"
           marginBottom={60}
           width={300}
+          padding={15}
+          onPress={() => navigation.navigate("MemberScreen")}
         />
       </View>
     </View>
@@ -42,7 +55,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "flex-end",
-    backgroundColor: "grey",
+    backgroundColor: "black",
   },
   header: {
     color: "white",

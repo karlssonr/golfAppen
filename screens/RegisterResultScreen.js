@@ -10,11 +10,11 @@ const RegisterResultScreen = () => {
     <View style={styles.container}>
       <Text style={styles.header}>Registrera Resultat</Text>
       <View style={styles.textView}>
-        <Text style={{ ...styles.text, backgroundColor: "pink", width: "50%" }}>
+        <Text style={{ ...styles.text, backgroundColor: "black", width: "50%" }}>
           Spelare
         </Text>
-        <Text style={{ ...styles.text, backgroundColor: "yellow" }}>Poäng</Text>
-        <Text style={{ ...styles.text, backgroundColor: "brown" }}>Extra</Text>
+        <Text style={{ ...styles.text, backgroundColor: "black" }}>Poäng</Text>
+        <Text style={{ ...styles.text, backgroundColor: "black" }}>Extra</Text>
       </View>
       <View style={styles.textInputView}>
         <TextInput style={{ ...styles.textInput, width: "50%" }}></TextInput>
@@ -41,12 +41,14 @@ const RegisterResultScreen = () => {
       </View>
 
       <ButtonWithBackround
-        color="orange"
+        color="#ff4500"
         text="Registrera"
         marginTop={20}
         width="40%"
         alignSelf="flex-end"
         marginRight={10}
+        padding={5}
+
       />
     </View>
   );
@@ -68,14 +70,15 @@ const styles = StyleSheet.create({
     width: "20%",
   },
   header: {
-    backgroundColor: "yellow",
+    backgroundColor: "black",
     fontSize: 40,
     marginTop: 55,
     alignSelf: "center",
+    color: 'white'
   },
   textView: {
     flexDirection: "row",
-    backgroundColor: "red",
+    backgroundColor: "black",
     alignItems: "flex-start",
     justifyContent: "space-evenly",
   },
@@ -83,6 +86,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     marginTop: 20,
     width: "20%",
+    color: 'white'
   },
   textInputView: {
     flexDirection: "row",
