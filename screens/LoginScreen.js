@@ -10,19 +10,18 @@ export default function LogIn({ navigation }) {
   const { setIsLoggedIn, logIn } = useContext(AuthContext);
 
   const submit = () => {
-    // navigation.navigate('Home');
-    // setIsLoggedIn(true);
+
     console.log('submitting log in');
     logIn(email, password);
   };
 
   return (
     <View style={styles.container}>
-      <Text style={{ fontWeight: 'bold', fontSize: 24, marginBottom: 10 }}>
-        Log In
+      <Text style={{ fontWeight: 'bold', fontSize: 24, marginBottom: 10 , color: '#ff4500'}}>
+        
       </Text>
       <View style={{ width: '50%' }}>
-        <Text style={{ fontWeight: '600', fontSize: 16 }}>Email</Text>
+        <Text style={{ fontWeight: '600', fontSize: 16 , color: '#ff4500' }}>Email</Text>
         <TextInput
           placeholder="Enter email"
           value={email}
@@ -34,14 +33,14 @@ export default function LogIn({ navigation }) {
             marginBottom: 10,
           }}
         />
-        <Text style={{ fontWeight: '600', fontSize: 16 }}>Password</Text>
+        <Text style={{ fontWeight: '600', fontSize: 16 , color: '#ff4500'}}>Lösenord</Text>
         <TextInput
           placeholder="Enter password"
           value={password}
           onChangeText={setPassword}
           style={{ backgroundColor: 'lightgrey', padding: 10, borderRadius: 5 }}
         />
-        <Button title="Submit" onPress={submit} />
+        <Button title="Logga In" onPress={submit}  color='#ff4500' style={styles.button}/>
       </View>
     </View>
   );
@@ -50,8 +49,12 @@ export default function LogIn({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
   },
+  button: {
+      marginTop: 50,
+      
+  }
 });

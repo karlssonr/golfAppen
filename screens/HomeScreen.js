@@ -1,8 +1,15 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React , { useContext } from "react";
+import { StyleSheet, Text, View, Button } from "react-native";
 import ButtonWithBackround from "../components/HomeScreenButton";
+import { AuthContext } from '../context/AuthContext'
 
 const HomeScreen = ({ navigation }) => {
+  const { setIsLoggedIn, signOut } = useContext(AuthContext);
+
+  const submit = () => {
+    signOut();
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>KGHIO 2021</Text>
@@ -39,6 +46,11 @@ const HomeScreen = ({ navigation }) => {
           padding={15}
           onPress={() => navigation.navigate("MemberScreen")}
         />
+
+        <Button style={{ marginBottom: 20 }} title="Logga Ut" onPress={submit} color='#ff4500'/>
+
+
+
       </View>
     </View>
   );
