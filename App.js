@@ -9,9 +9,6 @@ import AuthContextProvider from "./context/AuthContext";
 
 export default function App() {
   return (
-    // <NavigationContainer>
-    //   <StackNavigator />
-    // </NavigationContainer>
 
     <AuthContextProvider>
       <AuthNavigation />
