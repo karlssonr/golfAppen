@@ -11,6 +11,7 @@ const ButtonWithBackround = ({
   height,
   alignSelf,
   marginRight,
+  padding,
 }) => {
   const content = (
     <View
@@ -24,6 +25,7 @@ const ButtonWithBackround = ({
           height: height,
           alignSelf: alignSelf,
           marginRight: marginRight,
+          padding: padding
         },
       ]}
     >
@@ -35,9 +37,9 @@ const ButtonWithBackround = ({
 
 const styles = StyleSheet.create({
   button: {
-    padding: 16,
+    padding: 15,
     width: 300,
-    borderRadius: 15,
+    borderRadius: 10,
     alignItems: "center",
     margin: 5,
   },
