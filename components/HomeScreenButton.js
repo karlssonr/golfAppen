@@ -12,6 +12,7 @@ const ButtonWithBackround = ({
   alignSelf,
   marginRight,
   padding,
+  // backgroundColor,
 }) => {
   const content = (
     <View
@@ -25,7 +26,8 @@ const ButtonWithBackround = ({
           height: height,
           alignSelf: alignSelf,
           marginRight: marginRight,
-          padding: padding
+          padding: padding,
+          // backgroundColor: backgroundColor
         },
       ]}
     >
