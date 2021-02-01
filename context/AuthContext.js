@@ -1,9 +1,10 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect } from "react";
 import firebase from "../firebase";
-
+import { Alert } from "react-native";
 
 export const AuthContext = createContext();
 const auth = firebase.auth();
+const currentUser = auth.currentUser;
 
 export default function AuthContextProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -12,7 +13,7 @@ export default function AuthContextProvider({ children }) {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      console.log('user: ', user);
+      //console.log("user: ", user);
       setUser(user);
       setIsLoading(false);
     });
@@ -20,28 +21,90 @@ export default function AuthContextProvider({ children }) {
     return unsubscribe;
   });
 
+  const updateUser = (displayName, phoneNumber, id) => {
+    
+     firebase.firestore().collection("players").doc(displayName).set({ name: displayName, id: id, phoneNumber: phoneNumber}).then(() => {
+      console.log("User added");
+    })
+
+    user
+      .updateProfile({
+        displayName: displayName
+      })
+      .then(function () {
+        alert("Update succesfull");
+        console.log("update succesfull: ", user);
+      })
+      .catch(function (error) {
+        alert(error);
+        console.log("updateUserError: ", error);
+      });
+  };
+
+  const resetPassword = async (email) => {
+    return auth
+      .sendPasswordResetEmail(email)
+      .then(function () {
+        alert("Password reset email sent.");
+      })
+      .catch(function (error) {
+        alert(error);
+        console.log(error.code);
+      });
+  };
+
+  const signUp = (email, password) => {
+    return auth
+      .createUserWithEmailAndPassword(email, password)
+      .catch(function (error) {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        if (errorCode == "auth/weak-password") {
+          alert("The password is too weak.");
+        } else {
+          alert(errorMessage);
+        }
+        console.log(error);
+      });
+  };
+
   const logIn = async (email, password) => {
-    console.log('calling log in ');
-    try {
-      await auth.signInWithEmailAndPassword(email, password);
-      console.log('logIn ');
-    } catch (error) {
-      console.log('error: ', error);
-    }
+    return auth
+      .signInWithEmailAndPassword(email, password)
+      .catch(function (error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        if (errorCode === "auth/wrong-password") {
+          alert("Wrong password.");
+        } else {
+          alert(errorMessage);
+        }
+        console.log(error);
+      });
   };
 
   const signOut = async () => {
     try {
       await auth.signOut();
     } catch (error) {
-      console.log('error:', error);
+      console.log("error:", error);
     }
   };
 
   return (
-    <AuthContext.Provider value={{ isLoading, user, logIn, signOut }}>
+    <AuthContext.Provider
+      value={{
+        isLoading,
+        user,
+        logIn,
+        signOut,
+        signUp,
+        resetPassword,
+        updateUser,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
 }
-

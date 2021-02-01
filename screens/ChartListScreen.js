@@ -2,6 +2,7 @@ import React , { useState ,useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import firebase from "../firebase";
+import Splash from "./Splash";
 
 const DATA = [
   {
@@ -61,12 +62,14 @@ const ChartListScreen = () => {
       const items = item.docs.map((doc) => doc.data());
       setPlayers(items);
       setLoading(false);
+      console.log("items: ",items);
+      
     });
-    console.log(players);
+    console.log("players: ",players);
   };
 
   useEffect(() => {
-    getPlayers();
+    getPlayers()
   
     return () => {
       getPlayers;
@@ -75,8 +78,12 @@ const ChartListScreen = () => {
   
 
   const renderItem = ({ item }) => (
-    <Item title={item.title} points={item.points} position={item.position} />
+    <Item title={item.name} points={item.points} position={item.position} />
   );
+
+  if (loading) {
+    return <Splash/>
+  }
 
   return (
     <View style={styles.container}>
@@ -84,7 +91,7 @@ const ChartListScreen = () => {
 
       <View style={styles.chartView}>
         <FlatList
-          data={DATA}
+          data={players}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
         />

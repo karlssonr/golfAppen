@@ -32,6 +32,13 @@ const HomeScreen = ({ navigation }) => {
           padding={15}
           onPress={() => navigation.navigate("ChartListScreen")}
         />
+               <ButtonWithBackround
+          text="Profil"
+          color="#ff4500"
+          width={300}
+          padding={15}
+          onPress={() => navigation.navigate("ProfileScreen")}
+        />
         <ButtonWithBackround
           text="Statestik"
           color="#853017"
@@ -47,7 +54,8 @@ const HomeScreen = ({ navigation }) => {
           onPress={() => navigation.navigate("MemberScreen")}
         />
 
-        <Button style={{ marginBottom: 20 }} title="Logga Ut" onPress={submit} color='#ff4500'/>
+        <Button style={{ }} title="Logga Ut" onPress={submit} color='#ff4500'/>
+        
 
 
 
@@ -68,6 +76,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-end",
     backgroundColor: "black",
+    marginBottom: 30
   },
   header: {
     color: "white",
