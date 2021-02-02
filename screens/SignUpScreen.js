@@ -89,12 +89,7 @@ export default function SignUpScreen({ navigation }) {
           autoCapitalize="none"
           textContentType="password"
           secureTextEntry={true}
-          //   onFocus={() => {
-          //     setSecureTextEntry({secureEntry: true});
-          //     }}
-          //     onBlur={() => {
-          //     setSecureTextEntry({secureEntry: false});
-          //     }}
+    
         />
         <Text style={{ fontWeight: "600", fontSize: 16, color: "#ff4500" }}>
           Bekräfta lösenord
@@ -107,12 +102,7 @@ export default function SignUpScreen({ navigation }) {
           autoCapitalize="none"
           secureTextEntry={true}
           textContentType="password"
-          //   onFocus={() => {
-          //     setSecureTextEntry({secureEntry: true});
-          //     }}
-          //     onBlur={() => {
-          //     setSecureTextEntry({secureEntry: false});
-          //     }}
+       
         />
 
         <Button

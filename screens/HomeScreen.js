@@ -2,6 +2,8 @@ import React , { useContext } from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
 import ButtonWithBackround from "../components/HomeScreenButton";
 import { AuthContext } from '../context/AuthContext'
+import { theme } from '../theme/theme'
+import { ThemeColors } from "react-navigation";
 
 const HomeScreen = ({ navigation }) => {
   const { setIsLoggedIn, signOut } = useContext(AuthContext);
@@ -16,7 +18,7 @@ const HomeScreen = ({ navigation }) => {
       <View style={styles.homeView}>
         <ButtonWithBackround
           text="Registrera Resultat"
-          color="#ff4500"
+          color='#FF6601'
           width={300}
           padding={15}
           onPress={() => {

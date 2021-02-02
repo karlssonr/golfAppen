@@ -1,17 +1,93 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import PlayerTextInput from "../components/PlayerTextInput";
 import { TextInput } from "react-native-gesture-handler";
 import ButtonWithBackround from "../components/HomeScreenButton";
 import DropDownPicker from "react-native-dropdown-picker";
 import { Picker } from "@react-native-picker/picker";
+import { PlayerContext } from "../context/PlayerContext";
 
 const RegisterResultScreen = () => {
+  const { postGolfRound } = useContext(PlayerContext);
+
   const [value, setValue] = useState(null);
   const [items, setItems] = useState(playersArray);
 
-  let controller;
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const [playerOne, setPlayerOne] = useState(null);
+  const [pointsOne, setPointsOne] = useState("");
+  const [extraPointsOne, setExtraPointsone] = useState("");
+
+  const [playerTwo, setPlayerTwo] = useState(null);
+  const [pointsTwo, setPointsTwo] = useState("");
+  const [extraPointsTwo, setExtraPointsTwo] = useState("");
+
+  const [playerThree, setPlayerThree] = useState(null);
+  const [pointsThree, setPointsThree] = useState("");
+  const [extraPointsThree, setExtraPointsThree] = useState("");
+
+  const [playerFour, setPlayerFour] = useState(null);
+  const [pointsFour, setPointsFour] = useState("");
+  const [extraPointsFour, setExtraPointsFour] = useState("");
+
+  const resetPlayerState = () => {
+    setPlayerOne(null);
+    setPointsOne("");
+    setExtraPointsone("");
+
+    setPlayerTwo(null);
+    setPointsTwo("");
+    setExtraPointsTwo("");
+
+    setPlayerThree(null);
+    setPointsThree("");
+    setExtraPointsThree("");
+
+    setPlayerFour(null);
+    setPointsFour("");
+    setExtraPointsFour("");
+  };
+
+  const submit = async () => {
+    try {
+      setError("");
+      setLoading(true);
+
+      if (playerOne && playerTwo && playerThree && playerFour !== null) {
+        postGolfRound(playerOne, pointsOne, extraPointsOne);
+        postGolfRound(playerTwo, pointsTwo, extraPointsTwo);
+        postGolfRound(playerThree, pointsThree, extraPointsThree);
+        postGolfRound(playerFour, pointsFour, extraPointsFour);
+      }
+
+      if (playerOne && playerTwo && playerThree !== null) {
+        postGolfRound(playerOne, pointsOne, extraPointsOne);
+        postGolfRound(playerTwo, pointsTwo, extraPointsTwo);
+        postGolfRound(playerThree, pointsThree, extraPointsThree);
+      }
+
+      if (playerOne && playerTwo !== null) {
+        postGolfRound(playerOne, pointsOne, extraPointsOne);
+        postGolfRound(playerTwo, pointsTwo, extraPointsTwo);
+      } else {
+        alert("Minst 2 spelare måste rapporteras");
+      }
+
+      resetPlayerState();
+
+      console.log("Posting golf round");
+    } catch (er) {
+      setError("Failed to post golfround");
+      console.log(er);
+    }
+
+    setLoading(false);
+  };
+
+  
 
   const playersArray = [
     { label: "Robin", value: "Robin" },
@@ -35,17 +111,16 @@ const RegisterResultScreen = () => {
         <Text style={{ ...styles.text, backgroundColor: "black" }}>Poäng</Text>
         <Text style={{ ...styles.text, backgroundColor: "black" }}>Extra</Text>
       </View>
-      <View style={{...styles.textInputView, zIndex: 5}}>
+      <View style={{ ...styles.textInputView, zIndex: 5 }}>
         <DropDownPicker
           items={playersArray}
-          defaultValue={value}
+          defaultValue={playerOne}
           containerStyle={{ height: 50 }}
           style={{
             backgroundColor: "#fafafa",
             width: 180,
             marginLeft: 10,
             marginTop: 15,
-            
           }}
           itemStyle={{ justifyContent: "flex-start" }}
           labelStyle={{
@@ -54,7 +129,7 @@ const RegisterResultScreen = () => {
             color: "#000",
           }}
           dropDownStyle={{ backgroundColor: "#fafafa" }}
-          onChangeItem={(item) => console.log(item.label, item.value)}
+          onChangeItem={(item) => setPlayerOne(item.value)}
         />
 
         {/* <View style={{ backgroundColor: 'blue' }}>
@@ -62,25 +137,33 @@ const RegisterResultScreen = () => {
   
         </View> */}
 
-        <TextInput 
-        keyboardType='number-pad'
-        style={{ ...styles.textInput }}></TextInput>
-        <TextInput 
-        keyboardType='number-pad'
-        style={{ ...styles.textInput }}></TextInput>
+        <TextInput
+          placeholder="Poäng"
+          value={pointsOne}
+          onChangeText={setPointsOne}
+          keyboardType="number-pad"
+          style={{ ...styles.textInput }}
+        />
+
+        <TextInput
+          placeholder="Extra poäng"
+          value={extraPointsOne}
+          onChangeText={setExtraPointsone}
+          keyboardType="number-pad"
+          style={{ ...styles.textInput }}
+        />
       </View>
 
-      <View style={{...styles.textInputView, zIndex: 4}}>
+      <View style={{ ...styles.textInputView, zIndex: 4 }}>
         <DropDownPicker
           items={playersArray}
-          defaultValue={value}
+          defaultValue={playerTwo}
           containerStyle={{ height: 50 }}
           style={{
             backgroundColor: "#fafafa",
             width: 180,
             marginLeft: 10,
             marginTop: 15,
-            
           }}
           itemStyle={{ justifyContent: "flex-start" }}
           labelStyle={{
@@ -89,27 +172,34 @@ const RegisterResultScreen = () => {
             color: "#000",
           }}
           dropDownStyle={{ backgroundColor: "#fafafa" }}
-          onChangeItem={(item) => console.log(item.label, item.value)}
+          onChangeItem={(item) => setPlayerTwo(item.value)}
         />
-        <TextInput 
-        keyboardType='number-pad'
-        style={{ ...styles.textInput }}></TextInput>
-        <TextInput 
-        keyboardType='number-pad'
-        style={{ ...styles.textInput }}></TextInput>
+        <TextInput
+          placeholder="Poäng"
+          value={pointsTwo}
+          onChangeText={setPointsTwo}
+          keyboardType="number-pad"
+          style={{ ...styles.textInput }}
+        ></TextInput>
+        <TextInput
+          placeholder="Extra poäng"
+          value={extraPointsTwo}
+          onChangeText={setExtraPointsTwo}
+          keyboardType="number-pad"
+          style={{ ...styles.textInput }}
+        ></TextInput>
       </View>
 
-      <View style={{...styles.textInputView, zIndex: 3}}>
+      <View style={{ ...styles.textInputView, zIndex: 3 }}>
         <DropDownPicker
           items={playersArray}
-          defaultValue={value}
+          defaultValue={playerThree}
           containerStyle={{ height: 50 }}
           style={{
             backgroundColor: "#fafafa",
             width: 180,
             marginLeft: 10,
             marginTop: 15,
-            
           }}
           itemStyle={{ justifyContent: "flex-start" }}
           labelStyle={{
@@ -118,27 +208,34 @@ const RegisterResultScreen = () => {
             color: "#000",
           }}
           dropDownStyle={{ backgroundColor: "#fafafa" }}
-          onChangeItem={(item) => console.log(item.label, item.value)}
+          onChangeItem={(item) => setPlayerThree(item.value)}
         />
-        <TextInput 
-        keyboardType='number-pad'
-        style={{ ...styles.textInput }}></TextInput>
-        <TextInput 
-        keyboardType='number-pad'
-        style={{ ...styles.textInput }}></TextInput>
+        <TextInput
+          placeholder="Poäng"
+          value={pointsThree}
+          onChangeText={setPointsThree}
+          keyboardType="number-pad"
+          style={{ ...styles.textInput }}
+        ></TextInput>
+        <TextInput
+          placeholder="Extra poäng"
+          value={extraPointsThree}
+          onChangeText={setExtraPointsThree}
+          keyboardType="number-pad"
+          style={{ ...styles.textInput }}
+        ></TextInput>
       </View>
 
-      <View style={{...styles.textInputView, zIndex: 2}}>
+      <View style={{ ...styles.textInputView, zIndex: 2 }}>
         <DropDownPicker
           items={playersArray}
-          defaultValue={value}
+          defaultValue={playerFour}
           containerStyle={{ height: 50 }}
           style={{
             backgroundColor: "#fafafa",
             width: 180,
             marginLeft: 10,
             marginTop: 15,
-            
           }}
           itemStyle={{ justifyContent: "flex-start" }}
           labelStyle={{
@@ -147,17 +244,25 @@ const RegisterResultScreen = () => {
             color: "#000",
           }}
           dropDownStyle={{ backgroundColor: "#fafafa" }}
-          onChangeItem={(item) => console.log(item.label, item.value)}
+          onChangeItem={(item) => setPlayerFour(item.value)}
         />
-        <TextInput 
-        keyboardType='number-pad'
-        style={{ ...styles.textInput }}></TextInput>
-        <TextInput 
-        keyboardType='number-pad'
-        style={{ ...styles.textInput }}></TextInput>
+        <TextInput
+          placeholder="Poäng"
+          value={pointsFour}
+          onChangeText={setPointsFour}
+          keyboardType="number-pad"
+          style={{ ...styles.textInput }}
+        ></TextInput>
+        <TextInput
+          placeholder="Extra poäng"
+          value={extraPointsFour}
+          onChangeText={setExtraPointsFour}
+          keyboardType="number-pad"
+          style={{ ...styles.textInput }}
+        ></TextInput>
       </View>
 
-      <View style={{ backgroundColor: 'white'}}/>
+      <View style={{ backgroundColor: "white" }} />
 
       <ButtonWithBackround
         color="#ff4500"
@@ -167,7 +272,8 @@ const RegisterResultScreen = () => {
         alignSelf="flex-end"
         marginRight={10}
         padding={5}
-        backgroundColor='#ff4500'
+        backgroundColor="#ff4500"
+        onPress={submit}
       />
     </View>
   );

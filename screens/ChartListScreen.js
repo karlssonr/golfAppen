@@ -1,29 +1,9 @@
-import React , { useState ,useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import firebase from "../firebase";
 import Splash from "./Splash";
-
-const DATA = [
-  {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-    title: "Stefan Lund",
-    points: "40",
-    position: "1",
-  },
-  {
-    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-    title: "Robin karlsson",
-    points: "50",
-    position: "2",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d72",
-    title: "Ida Lundgren",
-    points: "60",
-    position: "3",
-  },
-];
+import { PlayerContext } from "../context/PlayerContext";
 
 const Item = ({ title, points, position }) => (
   <View style={styles.item}>
@@ -37,10 +17,13 @@ const Item = ({ title, points, position }) => (
 );
 
 const ChartListScreen = () => {
+  // const { getPlayers } = useContext(PlayerContext);
   const [players, setPlayers] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  var databaseRef = firebase.firestore().collection("players");
+  var users = [];
+
+   var databaseRef = firebase.firestore().collection("players");
 
   // const getPlayers = () => {
   //   setLoading(true);
@@ -51,7 +34,7 @@ const ChartListScreen = () => {
   //     });
   //     setPlayers(items);
   //     setLoading(false);
-      
+
   //   });
   //   console.log(players);
   // };
@@ -63,26 +46,49 @@ const ChartListScreen = () => {
       setPlayers(items);
       setLoading(false);
       console.log("items: ",items);
-      
+
     });
     console.log("players: ",players);
   };
 
+  // const getPlayersFromDB = async () => {
+
+  //   try {
+  //     users = await getPlayers()
+  //      setPlayers(users);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
   useEffect(() => {
+
     getPlayers()
-  
+    // getPlayersFromDB();
+
+    // console.log("users: ", users);
+
     return () => {
       getPlayers;
-    }
+    };
   }, []);
-  
+
+  // useEffect(() => {
+
+  //   setPlayers(users)
+  //   console.log("users: ", users);
+
+  //   return () => {
+
+  //   }
+  // }, [users])
 
   const renderItem = ({ item }) => (
     <Item title={item.name} points={item.points} position={item.position} />
   );
 
   if (loading) {
-    return <Splash/>
+    return <Splash />;
   }
 
   return (
