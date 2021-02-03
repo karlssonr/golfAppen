@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import Theme from '../theme/Theme'
 
 const MemberScreen = () => {
 
@@ -36,9 +37,11 @@ const styles = StyleSheet.create({
       fontSize: 40,
       alignSelf: "center",
       marginTop: 20,
+      fontFamily: Theme.fontFamilyHeader
     },
     text: {
-      color: 'white'
+      color: 'white',
+      fontFamily: Theme.fontFamilyText
     },
     namePhoneIDView: {
       width: '95%',

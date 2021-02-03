@@ -4,7 +4,7 @@ import { useState, useContext } from "react";
 import { StyleSheet, Text, View, Button, TextInput, Alert } from "react-native";
 import { AuthContext } from "../context/AuthContext";
 import Splash from "./Splash";
-import Theme from '../theme/Theme'
+import Theme from "../theme/Theme";
 
 export default function SignUpScreen({ navigation }) {
   const [email, setEmail] = useState("");
@@ -43,11 +43,10 @@ export default function SignUpScreen({ navigation }) {
   };
 
   if (loading) {
-      return <Splash />
+    return <Splash />;
   }
 
   return (
- 
     <View style={styles.container}>
       <Text
         style={{
@@ -55,10 +54,11 @@ export default function SignUpScreen({ navigation }) {
           fontSize: 24,
           marginBottom: 10,
           color: Theme.orange,
+          fontFamily: Theme.fontFamilyHeader
         }}
       ></Text>
       <View style={{ width: "50%" }}>
-        <Text style={{ fontWeight: "600", fontSize: 16, color: Theme.orange }}>
+        <Text style={styles.text}>
           Email
         </Text>
         <TextInput
@@ -74,7 +74,7 @@ export default function SignUpScreen({ navigation }) {
           autoCapitalize="none"
           autoCorrect={false}
         />
-        <Text style={{ fontWeight: "600", fontSize: 16, color: Theme.orange }}>
+        <Text style={styles.text}>
           Lösenord
         </Text>
         <TextInput
@@ -90,11 +90,8 @@ export default function SignUpScreen({ navigation }) {
           autoCapitalize="none"
           textContentType="password"
           secureTextEntry={true}
-    
         />
-        <Text style={{ fontWeight: "600", fontSize: 16, color: Theme.orange }}>
-          Bekräfta lösenord
-        </Text>
+        <Text style={styles.text}>Bekräfta lösenord</Text>
         <TextInput
           placeholder="Bekräfta lösenord"
           value={confirmPassword}
@@ -103,7 +100,6 @@ export default function SignUpScreen({ navigation }) {
           autoCapitalize="none"
           secureTextEntry={true}
           textContentType="password"
-       
         />
 
         <Button
@@ -127,5 +123,11 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 50,
+  },
+  text: {
+    fontWeight: "600",
+    fontSize: 16,
+    color: Theme.orange,
+    fontFamily: Theme.fontFamilyText,
   },
 });

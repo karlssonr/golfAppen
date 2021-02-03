@@ -3,7 +3,7 @@ import { useState, useContext } from "react";
 import { StyleSheet, Text, View, Button, TextInput, Alert } from "react-native";
 import { AuthContext } from "../context/AuthContext";
 import Splash from "./Splash";
-import Theme from '../theme/Theme'
+import Theme from "../theme/Theme";
 
 export default function SignUpScreen({ navigation }) {
   const [displayName, setDisplayName] = useState("");
@@ -40,10 +40,13 @@ export default function SignUpScreen({ navigation }) {
           fontSize: 24,
           marginBottom: 10,
           color: Theme.orange,
+          fontFamily: Theme.fontFamilyText,
         }}
       ></Text>
       <View style={{ width: "50%" }}>
-        <Text style={{ fontWeight: "600", fontSize: 16, color: Theme.orange }}>
+        <Text
+          style={styles.text}
+        >
           Namn
         </Text>
         <TextInput
@@ -59,9 +62,7 @@ export default function SignUpScreen({ navigation }) {
           autoCapitalize="none"
           autoCorrect={false}
         />
-        <Text style={{ fontWeight: "600", fontSize: 16, color: Theme.orange }}>
-          Telefonummer
-        </Text>
+        <Text style={styles.text}>Telefonummer</Text>
         <TextInput
           placeholder="Ange telefonummer"
           value={phoneNumber}
@@ -74,8 +75,8 @@ export default function SignUpScreen({ navigation }) {
           }}
           autoCapitalize="none"
         />
-        <Text style={{ fontWeight: "600", fontSize: 16, color: Theme.orange }}>
-          ID
+        <Text style={styles.text}>
+          Golf ID
         </Text>
         <TextInput
           placeholder="Ange ID"
@@ -106,5 +107,11 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 50,
+  },
+  text: {
+    fontWeight: "600",
+    fontSize: 16,
+    color: Theme.orange,
+    fontFamily: Theme.fontFamilyText,
   },
 });

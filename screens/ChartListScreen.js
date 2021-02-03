@@ -142,6 +142,7 @@ const styles = StyleSheet.create({
     fontSize: 50,
     alignSelf: "center",
     marginTop: 40,
+    fontFamily: Theme.fontFamilyHeader,
   },
 
   item: {
@@ -157,18 +158,21 @@ const styles = StyleSheet.create({
     fontSize: 18,
     //marginLeft: 40
     color: "white",
+    fontFamily: Theme.fontFamilyText
   },
   points: {
     fontSize: 18,
     //marginLeft: 40
     textAlign: "right",
     color: Theme.orange,
+    fontFamily: Theme.fontFamilyText
   },
   position: {
     fontSize: 18,
     //marginLeft: 40
     color: "white",
     marginRight: 15,
+    fontFamily: Theme.fontFamilyText
   },
   chartView: {
      backgroundColor: "grey",
@@ -182,10 +186,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "white",
     marginTop: 20,
+    fontFamily: Theme.fontFamilyText
   },
   text: {
     color: "white",
     marginTop: 10,
+    fontFamily: Theme.fontFamilyText
   },
 });
 

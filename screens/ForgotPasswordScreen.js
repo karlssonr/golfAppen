@@ -3,6 +3,7 @@ import { useState, useContext } from "react";
 import { StyleSheet, Text, View, Button, TextInput, Alert } from "react-native";
 import { AuthContext } from "../context/AuthContext";
 import Splash from "./Splash";
+import Theme from '../theme/Theme'
 
 export default function ForgotPasswordScreen({ navigation }) {
   const [email, setEmail] = useState("");
@@ -41,11 +42,12 @@ export default function ForgotPasswordScreen({ navigation }) {
           fontWeight: "bold",
           fontSize: 24,
           marginBottom: 10,
-          color: "#ff4500",
+          color: Theme.orange,
+          fontFamily: Theme.fontFamilyText
         }}
       ></Text>
       <View style={{ width: "50%" }}>
-        <Text style={{ fontWeight: "600", fontSize: 16, color: "#ff4500" }}>
+        <Text style={{ fontWeight: "600", fontSize: 16, color: Theme.orange, fontFamily: Theme.fontFamilyText }}>
           Email
         </Text>
         <TextInput
@@ -67,7 +69,7 @@ export default function ForgotPasswordScreen({ navigation }) {
 
         <Button
           title="Återställ lösenord"
-          color="#ff4500"
+          color={Theme.orange}
           style={styles.button}
           disabled={loading}
           onPress={submit}

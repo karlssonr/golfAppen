@@ -2,8 +2,8 @@ import React from "react";
 import { useState, useContext } from "react";
 import { StyleSheet, Text, View, Button, TextInput } from "react-native";
 import { AuthContext } from "../context/AuthContext";
-import Splash from "./Splash"
-import Theme from '../theme/Theme'
+import Splash from "./Splash";
+import Theme from "../theme/Theme";
 
 export default function LogIn({ navigation }) {
   const [email, setEmail] = useState("");
@@ -14,24 +14,22 @@ export default function LogIn({ navigation }) {
   const { setIsLoggedIn, logIn } = useContext(AuthContext);
 
   const submit = async () => {
-
     try {
-        setError("");
-        setLoading(true);
-        logIn(email, password)
-        console.log("submitting sign up");
-      } catch  {
-          setError("Failed reset password");
-          console.log(error);
-        
-      }
-  
-      setLoading(false);
-    };
-  
-    if (loading) {
-        return <Splash/>
+      setError("");
+      setLoading(true);
+      logIn(email, password);
+      console.log("submitting sign up");
+    } catch {
+      setError("Failed reset password");
+      console.log(error);
     }
+
+    setLoading(false);
+  };
+
+  if (loading) {
+    return <Splash />;
+  }
 
   return (
     <View style={styles.container}>
@@ -41,14 +39,22 @@ export default function LogIn({ navigation }) {
           fontSize: 24,
           marginBottom: 10,
           color: Theme.orange,
+          fontFamily: Theme.fontFamilyText,
         }}
       ></Text>
       <View style={{ width: "50%" }}>
-        <Text style={{ fontWeight: "600", fontSize: 16, color: Theme.orange }}>
+        <Text
+          style={{
+            fontWeight: "600",
+            fontSize: 16,
+            color: Theme.orange,
+            fontFamily: Theme.fontFamilyText,
+          }}
+        >
           Email
         </Text>
         <TextInput
-        autoCorrect={true}
+          autoCorrect={true}
           placeholder="Enter email"
           value={email}
           onChangeText={setEmail}
@@ -60,7 +66,7 @@ export default function LogIn({ navigation }) {
           }}
           autoCapitalize="none"
         />
-        <Text style={{ fontWeight: "600", fontSize: 16, color: Theme.orange }}>
+        <Text style={{ fontWeight: "600", fontSize: 16, color: Theme.orange, fontFamily: Theme.fontFamilyText }}>
           Lösenord
         </Text>
         <TextInput
@@ -84,7 +90,7 @@ export default function LogIn({ navigation }) {
           style={styles.button}
         />
 
-<Button
+        <Button
           title="Glömt lösenord?"
           onPress={() => navigation.navigate("ForgotPasswordScreen")}
           color={Theme.orange}

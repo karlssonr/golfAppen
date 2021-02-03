@@ -353,6 +353,7 @@ const styles = StyleSheet.create({
     marginTop: 55,
     alignSelf: "center",
     color: "white",
+    fontFamily: Theme.fontFamilyHeader
   },
   textView: {
     marginTop: 100,
@@ -367,6 +368,7 @@ const styles = StyleSheet.create({
     width: "20%",
     color: "white",
     backgroundColor: undefined,
+    fontFamily: Theme.fontFamilyText
   },
   textInputView: {
     flexDirection: "row",

@@ -99,6 +99,7 @@ const styles = StyleSheet.create({
     fontSize: 60,
     alignSelf: "center",
     marginBottom: 10,
+    fontFamily: Theme.fontFamilyHeader
   },
 });
 
