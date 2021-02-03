@@ -1,23 +1,8 @@
+import { StyleSheet } from "react-native";
 
-// import { StyleSheet } from "react-native";
+const Theme = {
+  orange: "#FF6601",
+  darkOrange: "#853017",
+};
 
-// export const orange = ''
-
-
-//  export const theme = StyleSheet.create({
-//     colors: {
-//         orange: 's'
-//     },
-//     textType: {
-
-
-
-//     },
-//     header: {
-//       color: "white",
-//       fontSize: 60,
-//       alignSelf: "center",
-//       marginBottom: 10,
-//     },
-//   });
-
+export default Theme;

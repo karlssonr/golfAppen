@@ -5,6 +5,7 @@ import ChartListScreen from "../screens/ChartListScreen";
 import RegisterResultScreen from "../screens/RegisterResultScreen";
 import MemberScreen from "../screens/MemberScreen";
 import ProfileScreen from "../screens/ProfileScreen"
+import Theme from '../theme/Theme'
 
 const Stack = createStackNavigator();
 
@@ -14,7 +15,7 @@ export default function AuthenticatedStack() {
       initialRouteName="Home"
       screenOptions={{
         headerStyle: { backgroundColor: "black" },
-        headerTintColor: "#ff4500",
+        headerTintColor: Theme.orange,
       }}
     >
       <Stack.Screen

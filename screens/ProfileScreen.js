@@ -3,6 +3,7 @@ import { useState, useContext } from "react";
 import { StyleSheet, Text, View, Button, TextInput, Alert } from "react-native";
 import { AuthContext } from "../context/AuthContext";
 import Splash from "./Splash";
+import Theme from '../theme/Theme'
 
 export default function SignUpScreen({ navigation }) {
   const [displayName, setDisplayName] = useState("");
@@ -38,11 +39,11 @@ export default function SignUpScreen({ navigation }) {
           fontWeight: "bold",
           fontSize: 24,
           marginBottom: 10,
-          color: "#ff4500",
+          color: Theme.orange,
         }}
       ></Text>
       <View style={{ width: "50%" }}>
-        <Text style={{ fontWeight: "600", fontSize: 16, color: "#ff4500" }}>
+        <Text style={{ fontWeight: "600", fontSize: 16, color: Theme.orange }}>
           Namn
         </Text>
         <TextInput
@@ -58,7 +59,7 @@ export default function SignUpScreen({ navigation }) {
           autoCapitalize="none"
           autoCorrect={false}
         />
-        <Text style={{ fontWeight: "600", fontSize: 16, color: "#ff4500" }}>
+        <Text style={{ fontWeight: "600", fontSize: 16, color: Theme.orange }}>
           Telefonummer
         </Text>
         <TextInput
@@ -73,7 +74,7 @@ export default function SignUpScreen({ navigation }) {
           }}
           autoCapitalize="none"
         />
-        <Text style={{ fontWeight: "600", fontSize: 16, color: "#ff4500" }}>
+        <Text style={{ fontWeight: "600", fontSize: 16, color: Theme.orange }}>
           ID
         </Text>
         <TextInput
@@ -86,7 +87,7 @@ export default function SignUpScreen({ navigation }) {
 
         <Button
           title="Updatera Profil"
-          color="#ff4500"
+          color={Theme.orange}
           style={styles.button}
           disabled={loading}
           onPress={submit}
