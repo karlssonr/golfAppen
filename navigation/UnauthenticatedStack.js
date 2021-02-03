@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import LoginScreen from "../screens/LoginScreen";
 import SignUpScreen from "../screens/SignUpScreen";
 import ForgotPasswordScreen from "../screens/ForgotPasswordScreen"
+import Theme from '../theme/Theme'
 
 const Stack = createStackNavigator();
 
@@ -12,7 +13,7 @@ export default function UnauthenticatedStack() {
       initialRouteName="LoginScreen"
       screenOptions={{
         headerStyle: { backgroundColor: "black" },
-        headerTintColor: "#ff4500",
+        headerTintColor: Theme.orange,
       }}
     >
       <Stack.Screen

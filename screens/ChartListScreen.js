@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
+import { StyleSheet, Text, View, Image, ImageBackground } from "react-native";
+import { FlatList, ScrollView } from "react-native-gesture-handler";
 import firebase from "../firebase";
 import Splash from "./Splash";
 import { PlayerContext } from "../context/PlayerContext";
+import Theme from '../theme/Theme'
 
 const Item = ({ title, points, position }) => (
   <View style={styles.item}>
@@ -92,9 +93,22 @@ const ChartListScreen = () => {
   }
 
   return (
+    //  <ScrollView style={{ backgroundColor: 'black'}}>
     <View style={styles.container}>
-      <Text style={styles.header}>Tabell</Text>
 
+      <ImageBackground
+            source={require('../assets/greenball.png')}
+            style={{     width: '100%',
+            height: undefined,
+            aspectRatio: 1,
+            // backgroundColor: 'white'
+        }}>
+<Text style={styles.header}>Tabell</Text>
+
+      </ImageBackground>
+    
+      
+      
       <View style={styles.chartView}>
         <FlatList
           data={players}
@@ -105,6 +119,8 @@ const ChartListScreen = () => {
       <Text style={styles.text}>Vänd luren för detaljer</Text>
       <Text style={styles.kghio}>KGHIO 2021</Text>
     </View>
+    //  </ScrollView>
+    
   );
 };
 
@@ -146,7 +162,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     //marginLeft: 40
     textAlign: "right",
-    color: "#ff4500",
+    color: Theme.orange,
   },
   position: {
     fontSize: 18,
@@ -155,11 +171,11 @@ const styles = StyleSheet.create({
     marginRight: 15,
   },
   chartView: {
-    backgroundColor: "grey",
+     backgroundColor: "grey",
     flexDirection: "column",
-    width: "80%",
-    marginTop: 30,
-    height: "65%",
+    width: "100%",
+    marginTop: -40,
+    height: "40%",
   },
 
   kghio: {

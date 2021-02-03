@@ -3,6 +3,7 @@ import { useState, useContext } from "react";
 import { StyleSheet, Text, View, Button, TextInput } from "react-native";
 import { AuthContext } from "../context/AuthContext";
 import Splash from "./Splash"
+import Theme from '../theme/Theme'
 
 export default function LogIn({ navigation }) {
   const [email, setEmail] = useState("");
@@ -39,11 +40,11 @@ export default function LogIn({ navigation }) {
           fontWeight: "bold",
           fontSize: 24,
           marginBottom: 10,
-          color: "#ff4500",
+          color: Theme.orange,
         }}
       ></Text>
       <View style={{ width: "50%" }}>
-        <Text style={{ fontWeight: "600", fontSize: 16, color: "#ff4500" }}>
+        <Text style={{ fontWeight: "600", fontSize: 16, color: Theme.orange }}>
           Email
         </Text>
         <TextInput
@@ -59,7 +60,7 @@ export default function LogIn({ navigation }) {
           }}
           autoCapitalize="none"
         />
-        <Text style={{ fontWeight: "600", fontSize: 16, color: "#ff4500" }}>
+        <Text style={{ fontWeight: "600", fontSize: 16, color: Theme.orange }}>
           Lösenord
         </Text>
         <TextInput
@@ -73,20 +74,20 @@ export default function LogIn({ navigation }) {
         <Button
           title="Logga In"
           onPress={submit}
-          color="#ff4500"
+          color={Theme.orange}
           style={styles.button}
         />
         <Button
           title="Skapa Konto"
           onPress={() => navigation.navigate("SignUpScreen")}
-          color="#ff4500"
+          color={Theme.orange}
           style={styles.button}
         />
 
 <Button
           title="Glömt lösenord?"
           onPress={() => navigation.navigate("ForgotPasswordScreen")}
-          color="#ff4500"
+          color={Theme.orange}
           style={styles.button}
         />
       </View>

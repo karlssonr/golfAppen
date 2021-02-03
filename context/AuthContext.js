@@ -23,7 +23,7 @@ export default function AuthContextProvider({ children }) {
 
   const updateUser = (displayName, phoneNumber, id) => {
     
-     firebase.firestore().collection("players").doc(displayName).set({ name: displayName, id: id, phoneNumber: phoneNumber}).then(() => {
+     firebase.firestore().collection("players").doc(displayName).set({ name: displayName, id: id, phoneNumber: phoneNumber, label: displayName, value: displayName}).then(() => {
       console.log("User added");
     })
 

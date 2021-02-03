@@ -12,6 +12,9 @@ const ButtonWithBackround = ({
   alignSelf,
   marginRight,
   padding,
+  touchableOpacityHeight,
+  touchableOpacityWidth,
+
   // backgroundColor,
 }) => {
   const content = (
@@ -34,13 +37,25 @@ const ButtonWithBackround = ({
       <Text style={styles.text}>{text}</Text>
     </View>
   );
-  return <TouchableOpacity onPress={onPress}>{content}</TouchableOpacity>;
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      style={{
+        width: touchableOpacityWidth,
+        height: touchableOpacityHeight,
+        // backgroundColor: "white",
+        alignSelf: alignSelf,
+      }}
+    >
+      {content}
+    </TouchableOpacity>
+  );
 };
 
 const styles = StyleSheet.create({
   button: {
     padding: 15,
-    width: 300,
+    // width: 0,
     borderRadius: 10,
     alignItems: "center",
     margin: 5,
