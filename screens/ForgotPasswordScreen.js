@@ -3,53 +3,40 @@ import { useState, useContext } from "react";
 import { StyleSheet, Text, View, Button, TextInput, Alert } from "react-native";
 import { AuthContext } from "../context/AuthContext";
 import Splash from "./Splash";
-import Theme from '../theme/Theme'
+import Theme from "../theme/Theme";
 
 export default function ForgotPasswordScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  
 
   const { resetPassword } = useContext(AuthContext);
 
-
   const submit = async () => {
-
-
     try {
       setError("");
       setLoading(true);
-      resetPassword(email)
+      resetPassword(email);
       console.log("submitting sign up");
-    } catch  {
-        setError("Failed reset password");
-        console.log(error);
-      
+    } catch {
+      setError("Failed reset password");
+      console.log(error);
     }
 
     setLoading(false);
   };
 
   if (loading) {
-      return <Splash/>
+    return <Splash />;
   }
 
   return (
     <View style={styles.container}>
       <Text
-        style={{
-          fontWeight: "bold",
-          fontSize: 24,
-          marginBottom: 10,
-          color: Theme.orange,
-          fontFamily: Theme.fontFamilyText
-        }}
+        style={styles.text}
       ></Text>
       <View style={{ width: "50%" }}>
-        <Text style={{ fontWeight: "600", fontSize: 16, color: Theme.orange, fontFamily: Theme.fontFamilyText }}>
-          Email
-        </Text>
+        <Text style={styles.text}>Email</Text>
         <TextInput
           placeholder="Ange emailadress"
           value={email}
@@ -62,10 +49,7 @@ export default function ForgotPasswordScreen({ navigation }) {
           }}
           autoCapitalize="none"
           autoCorrect={false}
-    
         />
-    
-   
 
         <Button
           title="Återställ lösenord"
@@ -88,5 +72,11 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 50,
+  },
+  text: {
+    fontWeight: "600",
+    fontSize: 16,
+    color: Theme.orange,
+    fontFamily: Theme.fontFamilyText,
   },
 });

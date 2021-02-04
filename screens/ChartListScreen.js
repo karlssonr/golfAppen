@@ -7,6 +7,8 @@ import { PlayerContext } from "../context/PlayerContext";
 import Theme from '../theme/Theme'
 
 const Item = ({ title, points, position }) => (
+
+
   <View style={styles.item}>
     <Text style={styles.position}>{position}</Text>
     <Text style={styles.title}>{title}</Text>
@@ -18,7 +20,7 @@ const Item = ({ title, points, position }) => (
 );
 
 const ChartListScreen = () => {
-  // const { getPlayers } = useContext(PlayerContext);
+   const { getPlayers } = useContext(PlayerContext);
   const [players, setPlayers] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -26,63 +28,19 @@ const ChartListScreen = () => {
 
    var databaseRef = firebase.firestore().collection("players");
 
-  // const getPlayers = () => {
-  //   setLoading(true);
-  //   databaseRef.onSnapshot((querySnapshot) => {
-  //     const items = [];
-  //     querySnapshot.forEach((doc) => {
-  //       items.push(doc.data());
-  //     });
-  //     setPlayers(items);
-  //     setLoading(false);
-
-  //   });
-  //   console.log(players);
-  // };
-
-  const getPlayers = () => {
-    setLoading(true);
-    databaseRef.get().then((item) => {
-      const items = item.docs.map((doc) => doc.data());
-      setPlayers(items);
-      setLoading(false);
-      console.log("items: ",items);
-
-    });
-    console.log("players: ",players);
-  };
-
-  // const getPlayersFromDB = async () => {
-
-  //   try {
-  //     users = await getPlayers()
-  //      setPlayers(users);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   useEffect(() => {
 
-    getPlayers()
-    // getPlayersFromDB();
+      getPlayers().then(setPlayers)
+    
 
-    // console.log("users: ", users);
+     console.log("users: ", users);
 
-    return () => {
-      getPlayers;
-    };
+     console.log("players: ", players);
+
+   
   }, []);
 
-  // useEffect(() => {
-
-  //   setPlayers(users)
-  //   console.log("users: ", users);
-
-  //   return () => {
-
-  //   }
-  // }, [users])
+  
 
   const renderItem = ({ item }) => (
     <Item title={item.name} points={item.points} position={item.position} />
@@ -113,7 +71,7 @@ const ChartListScreen = () => {
         <FlatList
           data={players}
           renderItem={renderItem}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item, index) => index.toString()}
         />
       </View>
       <Text style={styles.text}>Vänd luren för detaljer</Text>

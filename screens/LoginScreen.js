@@ -44,12 +44,7 @@ export default function LogIn({ navigation }) {
       ></Text>
       <View style={{ width: "50%" }}>
         <Text
-          style={{
-            fontWeight: "600",
-            fontSize: 16,
-            color: Theme.orange,
-            fontFamily: Theme.fontFamilyText,
-          }}
+          style={styles.text}
         >
           Email
         </Text>
@@ -66,9 +61,7 @@ export default function LogIn({ navigation }) {
           }}
           autoCapitalize="none"
         />
-        <Text style={{ fontWeight: "600", fontSize: 16, color: Theme.orange, fontFamily: Theme.fontFamilyText }}>
-          Lösenord
-        </Text>
+        <Text style={styles.text}>Lösenord</Text>
         <TextInput
           placeholder="Enter password"
           value={password}
@@ -110,5 +103,11 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 50,
+  },
+  text: {
+    fontWeight: "600",
+    fontSize: 16,
+    color: Theme.orange,
+    fontFamily: Theme.fontFamilyText,
   },
 });

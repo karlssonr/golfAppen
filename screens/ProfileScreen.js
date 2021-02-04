@@ -8,7 +8,7 @@ import Theme from "../theme/Theme";
 export default function SignUpScreen({ navigation }) {
   const [displayName, setDisplayName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [userId, setUserId] = useState("");
+  const [golfUserID, setGolfUserID] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -18,7 +18,7 @@ export default function SignUpScreen({ navigation }) {
     try {
       setError("");
       setLoading(true);
-      updateUser(displayName, phoneNumber, userId);
+      updateUser(displayName, phoneNumber, golfUserID);
       console.log("submitting sign up");
     } catch (er) {
       setError("Failed to create an account");
@@ -79,9 +79,9 @@ export default function SignUpScreen({ navigation }) {
           Golf ID
         </Text>
         <TextInput
-          placeholder="Ange ID"
-          value={userId}
-          onChangeText={setUserId}
+          placeholder="Ange golf ID"
+          value={golfUserID}
+          onChangeText={setGolfUserID}
           style={{ backgroundColor: "lightgrey", padding: 10, borderRadius: 5 }}
           autoCapitalize="none"
         />
