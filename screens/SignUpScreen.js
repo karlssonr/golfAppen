@@ -1,18 +1,17 @@
-import React, { useEffect } from "react";
-// import { Alert } from 'react-bootstrap'
-import { useState, useContext } from "react";
-import { StyleSheet, Text, View, Button, TextInput, Alert } from "react-native";
-import { AuthContext } from "../context/AuthContext";
-import Splash from "./Splash";
-import Theme from "../theme/Theme";
+import React from 'react';
+
+import { useState, useContext } from 'react';
+import { StyleSheet, Text, View, Button, TextInput, Alert } from 'react-native';
+import { AuthContext } from '../context/AuthContext';
+import Splash from './Splash';
+import Theme from '../theme/Theme';
 
 export default function SignUpScreen({ navigation }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [secureTextEntry, setSecureTextEntry] = useState(false);
 
   const { setIsLoggedIn, signUp } = useContext(AuthContext);
 
@@ -23,19 +22,19 @@ export default function SignUpScreen({ navigation }) {
 
   const submit = async () => {
     if (password !== confirmPassword) {
-      setError("Password do not match");
+      setError('Password do not match');
       Alert.alert(error);
 
       return;
     }
 
     try {
-      setError("");
+      setError('');
       setLoading(true);
       signUp(email, password);
-      console.log("submitting sign up");
+      console.log('submitting sign up');
     } catch {
-      setError("Failed to create an account");
+      setError('Failed to create an account');
       Alert.alert(error);
     }
 
@@ -48,45 +47,22 @@ export default function SignUpScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text
-        style={{
-          fontWeight: "bold",
-          fontSize: 24,
-          marginBottom: 10,
-          color: Theme.orange,
-          fontFamily: Theme.fontFamilyHeader
-        }}
-      ></Text>
-      <View style={{ width: "50%" }}>
-        <Text style={styles.text}>
-          Email
-        </Text>
+      <View style={{ width: '50%' }}>
+        <Text style={styles.text}>Email</Text>
         <TextInput
           placeholder="Ange emailadress"
           value={email}
           onChangeText={setEmail}
-          style={{
-            backgroundColor: "lightgrey",
-            padding: 10,
-            borderRadius: 5,
-            marginBottom: 10,
-          }}
+          style={styles.textInput}
           autoCapitalize="none"
           autoCorrect={false}
         />
-        <Text style={styles.text}>
-          Lösenord
-        </Text>
+        <Text style={styles.text}>Lösenord</Text>
         <TextInput
           placeholder="Ange lösenord"
           value={password}
           onChangeText={setPassword}
-          style={{
-            backgroundColor: "lightgrey",
-            padding: 10,
-            borderRadius: 5,
-            marginBottom: 10,
-          }}
+          style={styles.textInput}
           autoCapitalize="none"
           textContentType="password"
           secureTextEntry={true}
@@ -96,7 +72,7 @@ export default function SignUpScreen({ navigation }) {
           placeholder="Bekräfta lösenord"
           value={confirmPassword}
           onChangeText={setConfirmPassword}
-          style={{ backgroundColor: "lightgrey", padding: 10, borderRadius: 5 }}
+          style={{ backgroundColor: 'lightgrey', padding: 10, borderRadius: 5 }}
           autoCapitalize="none"
           secureTextEntry={true}
           textContentType="password"
@@ -117,17 +93,23 @@ export default function SignUpScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "black",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: 'black',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   button: {
     marginTop: 50,
   },
   text: {
-    fontWeight: "600",
+    fontWeight: '600',
     fontSize: 16,
     color: Theme.orange,
     fontFamily: Theme.fontFamilyText,
+  },
+  textInput: {
+    backgroundColor: 'lightgrey',
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 10,
   },
 });

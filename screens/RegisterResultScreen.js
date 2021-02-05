@@ -1,66 +1,61 @@
-import { StatusBar } from "expo-status-bar";
-import React, { useState, useContext, useEffect } from "react";
-import { StyleSheet, Text, View, ImageBackground, Button } from "react-native";
-import PlayerTextInput from "../components/PlayerTextInput";
-import { TextInput } from "react-native-gesture-handler";
-import ButtonWithBackround from "../components/HomeScreenButton";
-import DropDownPicker from "react-native-dropdown-picker";
-import { Picker } from "@react-native-picker/picker";
-import { PlayerContext } from "../context/PlayerContext";
-import Theme from "../theme/Theme";
-import firebase from "../firebase";
-import Splash from "./Splash";
+import React, { useState, useContext, useEffect } from 'react';
+import { StyleSheet, Text, View, ImageBackground, Button } from 'react-native';
+
+import { TextInput } from 'react-native-gesture-handler';
+
+import DropDownPicker from 'react-native-dropdown-picker';
+
+import { PlayerContext } from '../context/PlayerContext';
+import Theme from '../theme/Theme';
+
+import Splash from './Splash';
 
 const RegisterResultScreen = () => {
   const [players, setPlayers] = useState([]);
 
   const { postGolfRound, getPlayers } = useContext(PlayerContext);
 
-  // const [value, setValue] = useState(null);
-  // const [items, setItems] = useState(players);
-
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   const [playerOne, setPlayerOne] = useState({
     name: null,
-    points: "",
-    extraPoints: "",
-    userID: ""
+    points: '',
+    extraPoints: '',
+    userID: '',
   });
 
   const [playerTwo, setPlayerTwo] = useState({
     name: null,
-    points: "",
-    extraPoints: "",
-    userID: ""
+    points: '',
+    extraPoints: '',
+    userID: '',
   });
 
   const [playerThree, setPlayerThree] = useState({
     name: null,
-    points: "",
-    extraPoints: "",
-    userID: ""
+    points: '',
+    extraPoints: '',
+    userID: '',
   });
 
   const [playerFour, setPlayerFour] = useState({
     name: null,
-    points: "",
-    extraPoints: "",
-    userID: ""
+    points: '',
+    extraPoints: '',
+    userID: '',
   });
 
   const resetPlayerState = () => {
-    setPlayerOne({ name: null, points: "", extraPoints: "", userID: "" });
-    setPlayerTwo({ name: null, points: "", extraPoints: "" , userID: ""});
-    setPlayerThree({ name: null, points: "", extraPoints: "" , userID: ""});
-    setPlayerFour({ name: null, points: "", extraPoints: "" , userID: ""});
+    setPlayerOne({ name: null, points: '', extraPoints: '', userID: '' });
+    setPlayerTwo({ name: null, points: '', extraPoints: '', userID: '' });
+    setPlayerThree({ name: null, points: '', extraPoints: '', userID: '' });
+    setPlayerFour({ name: null, points: '', extraPoints: '', userID: '' });
   };
 
   const submit = async () => {
-
     try {
-      setError("");
+      setError('');
       setLoading(true);
 
       let playersPlayed = 0;
@@ -80,8 +75,7 @@ const RegisterResultScreen = () => {
 
       if (playersPlayed > 1) {
         if (playerOne.name !== null) {
-
-          console.log("USERID", playerOne.userID);
+          console.log('USERID', playerOne.userID);
 
           postGolfRound(
             playerOne.userID,
@@ -111,14 +105,14 @@ const RegisterResultScreen = () => {
           );
         }
       } else {
-        alert("Minst 2 spelare måste rapporteras");
+        alert('Minst 2 spelare måste rapporteras');
       }
 
-      // resetPlayerState();
+      resetPlayerState();
 
-      console.log("Posting golf round");
+      console.log('Posting golf round');
     } catch (er) {
-      setError("Failed to post golfround");
+      setError('Failed to post golfround');
       console.log(er);
     }
 
@@ -128,8 +122,6 @@ const RegisterResultScreen = () => {
   useEffect(() => {
     getPlayers().then(setPlayers);
   }, []);
-
-  
 
   const mapPlayersFromDB = (players) => {
     let array = [];
@@ -157,19 +149,18 @@ const RegisterResultScreen = () => {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require("../assets/golfBall.png")}
+        source={require('../assets/golfBall.png')}
         style={{
-          width: "100%",
+          width: '100%',
           height: undefined,
           aspectRatio: 1,
           // backgroundColor: 'white'
         }}
       >
-      
         <Text style={styles.header}>Registrera Resultat</Text>
 
         <View style={styles.textView}>
-          <Text style={{ ...styles.text, width: "50%" }}>Spelare</Text>
+          <Text style={{ ...styles.text, width: '50%' }}>Spelare</Text>
           <Text style={{ ...styles.text }}>Poäng</Text>
           <Text style={{ ...styles.text }}>Extra</Text>
         </View>
@@ -180,15 +171,16 @@ const RegisterResultScreen = () => {
             defaultValue={playerOne.name}
             containerStyle={{ height: 50 }}
             style={styles.dropDownPickerStyle}
-            itemStyle={{ justifyContent: "flex-start" }}
+            itemStyle={{ justifyContent: 'flex-start' }}
             labelStyle={styles.dropDownLabelStyle}
-            dropDownStyle={{ backgroundColor: "#fafafa" }}
+            dropDownStyle={{ backgroundColor: '#fafafa' }}
             onChangeItem={(item) => {
-        
-              setPlayerOne({ ...playerOne, name: item.value, userID: item.userID })
-            }
-              
-            }
+              setPlayerOne({
+                ...playerOne,
+                name: item.value,
+                userID: item.userID,
+              });
+            }}
           />
 
           {/* <View style={{ backgroundColor: 'blue' }}>
@@ -224,11 +216,15 @@ const RegisterResultScreen = () => {
             defaultValue={playerTwo.name}
             containerStyle={{ height: 50 }}
             style={styles.dropDownPickerStyle}
-            itemStyle={{ justifyContent: "flex-start" }}
+            itemStyle={{ justifyContent: 'flex-start' }}
             labelStyle={styles.dropDownLabelStyle}
-            dropDownStyle={{ backgroundColor: "#fafafa" }}
+            dropDownStyle={{ backgroundColor: '#fafafa' }}
             onChangeItem={(item) =>
-              setPlayerTwo({ ...playerTwo, name: item.value , userID: item.userID})
+              setPlayerTwo({
+                ...playerTwo,
+                name: item.value,
+                userID: item.userID,
+              })
             }
           />
           <TextInput
@@ -258,11 +254,15 @@ const RegisterResultScreen = () => {
             defaultValue={playerThree.name}
             containerStyle={{ height: 50 }}
             style={styles.dropDownPickerStyle}
-            itemStyle={{ justifyContent: "flex-start" }}
+            itemStyle={{ justifyContent: 'flex-start' }}
             labelStyle={styles.dropDownLabelStyle}
-            dropDownStyle={{ backgroundColor: "#fafafa" }}
+            dropDownStyle={{ backgroundColor: '#fafafa' }}
             onChangeItem={(item) =>
-              setPlayerThree({ ...playerThree, name: item.value , userID: item.userID})
+              setPlayerThree({
+                ...playerThree,
+                name: item.value,
+                userID: item.userID,
+              })
             }
           />
           <TextInput
@@ -292,11 +292,15 @@ const RegisterResultScreen = () => {
             defaultValue={playerFour.name}
             containerStyle={{ height: 50 }}
             style={styles.dropDownPickerStyle}
-            itemStyle={{ justifyContent: "flex-start" }}
+            itemStyle={{ justifyContent: 'flex-start' }}
             labelStyle={styles.dropDownLabelStyle}
-            dropDownStyle={{ backgroundColor: "#fafafa" }}
+            dropDownStyle={{ backgroundColor: '#fafafa' }}
             onChangeItem={(item) =>
-              setPlayerFour({ ...playerFour, name: item.value , userID: item.userID})
+              setPlayerFour({
+                ...playerFour,
+                name: item.value,
+                userID: item.userID,
+              })
             }
           />
           <TextInput
@@ -320,7 +324,6 @@ const RegisterResultScreen = () => {
         </View>
       </ImageBackground>
 
-   
       <View style={{ marginTop: 200 }}>
         <Button
           title="Registrera resultat"
@@ -333,65 +336,62 @@ const RegisterResultScreen = () => {
 };
 
 const styles = StyleSheet.create({
-
-
   playerDropdown: {
     marginTop: 20,
     marginRight: 20,
   },
 
   dropDownPickerStyle: {
-    backgroundColor: "#fafafa",
+    backgroundColor: '#fafafa',
     width: 180,
     marginLeft: 10,
     marginTop: 15,
   },
   dropDownLabelStyle: {
     fontSize: 14,
-    textAlign: "left",
-    color: "#000",
+    textAlign: 'left',
+    color: '#000',
   },
 
   container: {
     flex: 1,
-    backgroundColor: "black",
+    backgroundColor: 'black',
     //alignItems: "center",
-    justifyContent: "flex-start",
+    justifyContent: 'flex-start',
   },
   textInput: {
     height: 35,
-    borderColor: "gray",
+    borderColor: 'gray',
     borderWidth: 2,
-    backgroundColor: "white",
+    backgroundColor: 'white',
     marginTop: 15,
-    width: "20%",
+    width: '20%',
   },
   header: {
-  
     fontSize: 40,
     marginTop: 55,
-    alignSelf: "center",
-    color: "white",
+    alignSelf: 'center',
+    color: 'white',
     fontFamily: Theme.fontFamilyHeader,
   },
   textView: {
     marginTop: 100,
-    flexDirection: "row",
-    
-    alignItems: "flex-start",
-    justifyContent: "space-evenly",
+    flexDirection: 'row',
+
+    alignItems: 'flex-start',
+    justifyContent: 'space-evenly',
   },
   text: {
     fontSize: 25,
     marginTop: 20,
-    width: "20%",
-    color: "white",
+    width: '20%',
+    color: 'white',
     backgroundColor: undefined,
     fontFamily: Theme.fontFamilyText,
   },
   textInputView: {
-    flexDirection: "row",
-    justifyContent: "space-evenly",
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
   },
 });
 

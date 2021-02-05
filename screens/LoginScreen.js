@@ -1,26 +1,26 @@
-import React from "react";
-import { useState, useContext } from "react";
-import { StyleSheet, Text, View, Button, TextInput } from "react-native";
-import { AuthContext } from "../context/AuthContext";
-import Splash from "./Splash";
-import Theme from "../theme/Theme";
+import React from 'react';
+import { useState, useContext } from 'react';
+import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
+import { AuthContext } from '../context/AuthContext';
+import Splash from './Splash';
+import Theme from '../theme/Theme';
 
 export default function LogIn({ navigation }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   const { setIsLoggedIn, logIn } = useContext(AuthContext);
 
   const submit = async () => {
     try {
-      setError("");
+      setError('');
       setLoading(true);
       logIn(email, password);
-      console.log("submitting sign up");
+      console.log('submitting sign up');
     } catch {
-      setError("Failed reset password");
+      setError('Failed reset password');
       console.log(error);
     }
 
@@ -35,26 +35,22 @@ export default function LogIn({ navigation }) {
     <View style={styles.container}>
       <Text
         style={{
-          fontWeight: "bold",
+          fontWeight: 'bold',
           fontSize: 24,
           marginBottom: 10,
           color: Theme.orange,
           fontFamily: Theme.fontFamilyText,
         }}
       ></Text>
-      <View style={{ width: "50%" }}>
-        <Text
-          style={styles.text}
-        >
-          Email
-        </Text>
+      <View style={{ width: '50%' }}>
+        <Text style={styles.text}>Email</Text>
         <TextInput
           autoCorrect={true}
           placeholder="Enter email"
           value={email}
           onChangeText={setEmail}
           style={{
-            backgroundColor: "lightgrey",
+            backgroundColor: 'lightgrey',
             padding: 10,
             borderRadius: 5,
             marginBottom: 10,
@@ -66,7 +62,7 @@ export default function LogIn({ navigation }) {
           placeholder="Enter password"
           value={password}
           onChangeText={setPassword}
-          style={{ backgroundColor: "lightgrey", padding: 10, borderRadius: 5 }}
+          style={{ backgroundColor: 'lightgrey', padding: 10, borderRadius: 5 }}
           autoCapitalize="none"
           secureTextEntry={true}
         />
@@ -78,14 +74,14 @@ export default function LogIn({ navigation }) {
         />
         <Button
           title="Skapa Konto"
-          onPress={() => navigation.navigate("SignUpScreen")}
+          onPress={() => navigation.navigate('SignUpScreen')}
           color={Theme.orange}
           style={styles.button}
         />
 
         <Button
           title="Glömt lösenord?"
-          onPress={() => navigation.navigate("ForgotPasswordScreen")}
+          onPress={() => navigation.navigate('ForgotPasswordScreen')}
           color={Theme.orange}
           style={styles.button}
         />
@@ -97,15 +93,15 @@ export default function LogIn({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "black",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: 'black',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   button: {
     marginTop: 50,
   },
   text: {
-    fontWeight: "600",
+    fontWeight: '600',
     fontSize: 16,
     color: Theme.orange,
     fontFamily: Theme.fontFamilyText,

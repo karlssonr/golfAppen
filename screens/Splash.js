@@ -1,13 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
-import Theme from '../theme/Theme'
+import Theme from '../theme/Theme';
 
 export default function Splash() {
   return (
     <View style={styles.container}>
       <Text>App Logo</Text>
-      <ActivityIndicator animating={true}
-      color={Theme.orange} />
+      <ActivityIndicator animating={true} color={Theme.orange} />
     </View>
   );
 }
