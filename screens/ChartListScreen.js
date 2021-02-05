@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useContext } from "react";
-import { StyleSheet, Text, View, Image, ImageBackground } from "react-native";
-import { FlatList, ScrollView } from "react-native-gesture-handler";
-import firebase from "../firebase";
-import Splash from "./Splash";
-import { PlayerContext } from "../context/PlayerContext";
-import Theme from '../theme/Theme'
+import React, { useState, useEffect, useContext } from 'react';
+import { StyleSheet, Text, View, ImageBackground } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
+import Splash from './Splash';
+import { PlayerContext } from '../context/PlayerContext';
+import Theme from '../theme/Theme';
 
 const Item = ({ title, points, position }) => (
   <View style={styles.item}>
@@ -18,71 +17,32 @@ const Item = ({ title, points, position }) => (
 );
 
 const ChartListScreen = () => {
-  // const { getPlayers } = useContext(PlayerContext);
+  const { getPlayers, getPlayerScore } = useContext(PlayerContext);
   const [players, setPlayers] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  var users = [];
+  const getEachPlayerScore = async (players) => {
+    let array = [];
 
-   var databaseRef = firebase.firestore().collection("players");
+    for (const player of players) {
+      let scores = await getPlayerScore(player.userID);
 
-  // const getPlayers = () => {
-  //   setLoading(true);
-  //   databaseRef.onSnapshot((querySnapshot) => {
-  //     const items = [];
-  //     querySnapshot.forEach((doc) => {
-  //       items.push(doc.data());
-  //     });
-  //     setPlayers(items);
-  //     setLoading(false);
+      array.push({
+        name: player.name,
+        scores: scores,
+      });
+    }
 
-  //   });
-  //   console.log(players);
-  // };
-
-  const getPlayers = () => {
-    setLoading(true);
-    databaseRef.get().then((item) => {
-      const items = item.docs.map((doc) => doc.data());
-      setPlayers(items);
-      setLoading(false);
-      console.log("items: ",items);
-
-    });
-    console.log("players: ",players);
+    return array;
   };
 
-  // const getPlayersFromDB = async () => {
-
-  //   try {
-  //     users = await getPlayers()
-  //      setPlayers(users);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   useEffect(() => {
-
-    getPlayers()
-    // getPlayersFromDB();
-
-    // console.log("users: ", users);
-
-    return () => {
-      getPlayers;
-    };
+    getPlayers().then(setPlayers);
   }, []);
 
-  // useEffect(() => {
-
-  //   setPlayers(users)
-  //   console.log("users: ", users);
-
-  //   return () => {
-
-  //   }
-  // }, [users])
+  useEffect(() => {
+    getEachPlayerScore(players);
+  }, [players]);
 
   const renderItem = ({ item }) => (
     <Item title={item.name} points={item.points} position={item.position} />
@@ -95,97 +55,95 @@ const ChartListScreen = () => {
   return (
     //  <ScrollView style={{ backgroundColor: 'black'}}>
     <View style={styles.container}>
-
       <ImageBackground
-            source={require('../assets/greenball.png')}
-            style={{     width: '100%',
-            height: undefined,
-            aspectRatio: 1,
-            // backgroundColor: 'white'
-        }}>
-<Text style={styles.header}>Tabell</Text>
-
+        source={require('../assets/greenball.png')}
+        style={styles.imageBackgroundStyle}
+      >
+        <Text style={styles.header}>Tabell</Text>
       </ImageBackground>
-    
-      
-      
+
       <View style={styles.chartView}>
         <FlatList
           data={players}
           renderItem={renderItem}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item, index) => index.toString()}
         />
       </View>
       <Text style={styles.text}>Vänd luren för detaljer</Text>
       <Text style={styles.kghio}>KGHIO 2021</Text>
     </View>
     //  </ScrollView>
-    
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "black",
-    alignItems: "center",
-    //justifyContent: "flex-start",
+    backgroundColor: 'black',
+    alignItems: 'center',
   },
   flatList: {
-    // flex: 1,
-    // alignItems: "center",
-    // justifyContent: "flex-end",
-    backgroundColor: "white",
+    backgroundColor: 'white',
   },
   header: {
-    color: "white",
+    color: 'white',
     fontSize: 50,
-    alignSelf: "center",
-    marginTop: 40,
+    alignSelf: 'center',
+    marginTop: 120,
+    fontFamily: Theme.fontFamilyHeader,
   },
 
   item: {
-    backgroundColor: "black",
+    backgroundColor: 'black',
     padding: 1,
     marginVertical: 1,
     marginHorizontal: 1,
-    flexDirection: "row",
-    //alignItems: 'flex-start',
-    //justifyContent: 'center'
+    flexDirection: 'row',
   },
   title: {
-    fontSize: 18,
-    //marginLeft: 40
-    color: "white",
+    fontSize: 15,
+
+    color: 'white',
+    fontFamily: Theme.fontFamilyText,
   },
   points: {
-    fontSize: 18,
-    //marginLeft: 40
-    textAlign: "right",
+    fontSize: 15,
+
+    textAlign: 'right',
     color: Theme.orange,
+    fontFamily: Theme.fontFamilyText,
   },
   position: {
-    fontSize: 18,
-    //marginLeft: 40
-    color: "white",
+    fontSize: 15,
+
+    color: 'white',
     marginRight: 15,
+    fontFamily: Theme.fontFamilyText,
   },
   chartView: {
-     backgroundColor: "grey",
-    flexDirection: "column",
-    width: "100%",
-    marginTop: -40,
-    height: "40%",
+    backgroundColor: 'grey',
+    flexDirection: 'column',
+    width: '100%',
+    marginTop: 0,
+    height: '45%',
   },
 
   kghio: {
     fontSize: 20,
-    color: "white",
+    color: 'white',
     marginTop: 20,
+    fontFamily: Theme.fontFamilyText,
   },
   text: {
-    color: "white",
+    color: 'white',
     marginTop: 10,
+    fontFamily: Theme.fontFamilyText,
+  },
+  imageBackgroundStyle: {
+    width: '100%',
+    height: undefined,
+    aspectRatio: 1,
+    marginTop: -90,
   },
 });
 

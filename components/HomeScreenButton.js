@@ -1,5 +1,6 @@
-import React, { Component } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import React from 'react';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import Theme from '../theme/Theme';
 
 const ButtonWithBackround = ({
   color,
@@ -14,6 +15,7 @@ const ButtonWithBackround = ({
   padding,
   touchableOpacityHeight,
   touchableOpacityWidth,
+  zIndex,
 
   // backgroundColor,
 }) => {
@@ -30,6 +32,7 @@ const ButtonWithBackround = ({
           alignSelf: alignSelf,
           marginRight: marginRight,
           padding: padding,
+
           // backgroundColor: backgroundColor
         },
       ]}
@@ -45,6 +48,7 @@ const ButtonWithBackround = ({
         height: touchableOpacityHeight,
         // backgroundColor: "white",
         alignSelf: alignSelf,
+        zIndex: zIndex,
       }}
     >
       {content}
@@ -57,12 +61,13 @@ const styles = StyleSheet.create({
     padding: 15,
     // width: 0,
     borderRadius: 10,
-    alignItems: "center",
+    alignItems: 'center',
     margin: 5,
   },
   text: {
-    color: "black",
+    color: 'black',
     fontSize: 20,
+    fontFamily: Theme.fontFamilyText,
   },
 });
 

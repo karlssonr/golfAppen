@@ -1,10 +1,8 @@
-import React, { useContext } from "react";
-import { StyleSheet, Text, View, Button, ImageBackground } from "react-native";
-import ButtonWithBackround from "../components/HomeScreenButton";
-import { AuthContext } from "../context/AuthContext";
-import { theme } from "../theme/Theme";
-import { ThemeColors } from "react-navigation";
-import Theme from "../theme/Theme";
+import React, { useContext } from 'react';
+import { StyleSheet, Text, View, Button, ImageBackground } from 'react-native';
+import ButtonWithBackround from '../components/HomeScreenButton';
+import { AuthContext } from '../context/AuthContext';
+import Theme from '../theme/Theme';
 
 const HomeScreen = ({ navigation }) => {
   const { setIsLoggedIn, signOut } = useContext(AuthContext);
@@ -16,8 +14,8 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require("../assets/image8.png")}
-        style={{ width: "100%", height: undefined, aspectRatio: 1 }}
+        source={require('../assets/image8.png')}
+        style={{ width: '100%', height: undefined, aspectRatio: 1 }}
       >
         <Text style={styles.header}>KGHIO 2021</Text>
       </ImageBackground>
@@ -27,40 +25,44 @@ const HomeScreen = ({ navigation }) => {
           text="Registrera Resultat"
           color={Theme.orange}
           width={300}
-          padding={15}
+          padding={12}
+          zIndex={400}
           onPress={() => {
-            console.log("button was pressed");
+            console.log('button was pressed');
             // navigation.setOptions({ title: 'Registrera Resultat'})
-            navigation.navigate("RegisterResultScreen");
+            navigation.navigate('RegisterResultScreen');
           }}
         />
         <ButtonWithBackround
           text="Tabell"
           color={Theme.orange}
           width={300}
-          padding={15}
-          onPress={() => navigation.navigate("ChartListScreen")}
+          padding={12}
+          zIndex={400}
+          onPress={() => navigation.navigate('ChartListScreen')}
         />
         <ButtonWithBackround
           text="Profil"
           color={Theme.orange}
           width={300}
-          padding={15}
-          onPress={() => navigation.navigate("ProfileScreen")}
+          padding={12}
+          zIndex={400}
+          onPress={() => navigation.navigate('ProfileScreen')}
         />
         <ButtonWithBackround
           text="Statestik"
           color={Theme.darkOrange}
           width={300}
-          padding={15}
+          zIndex={400}
+          padding={12}
         />
         <ButtonWithBackround
           text="Medlemmar"
           color={Theme.orange}
           marginBottom={60}
           width={300}
-          padding={15}
-          onPress={() => navigation.navigate("MemberScreen")}
+          padding={12}
+          onPress={() => navigation.navigate('MemberScreen')}
         />
 
         <Button
@@ -76,29 +78,30 @@ const HomeScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   imageBackgroundStyle: {
-    width: "100%",
-    height: "80%",
+    width: '100%',
+    height: '80%',
     aspectRatio: 1,
   },
 
   container: {
     flex: 1,
-    backgroundColor: "black",
+    backgroundColor: 'black',
     //alignItems: "center",
-    justifyContent: "flex-start",
+    justifyContent: 'flex-start',
   },
   homeView: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "flex-end",
-    backgroundColor: "black",
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    backgroundColor: 'black',
     marginBottom: 30,
   },
   header: {
-    color: "white",
+    color: 'white',
     fontSize: 60,
-    alignSelf: "center",
+    alignSelf: 'center',
     marginBottom: 10,
+    fontFamily: Theme.fontFamilyHeader,
   },
 });
 

@@ -1,44 +1,65 @@
-import React, { createContext, useState, useEffect } from "react";
-import firebase from "../firebase";
-import { Alert } from "react-native";
+import React, { createContext, useState } from 'react';
+import firebase from '../firebase';
 
 export const PlayerContext = createContext();
+const auth = firebase.auth();
 
 export default function PlayerContextProvider({ children }) {
-  const [isLoading, setIsLoading] = useState(true);
+  const postGolfRound = (userID, points, extraPoints) => {
+    console.log('postgolfround:', userID, points, extraPoints);
+    // const userID = currentUser.uid
 
-  const postGolfRound = (player, points, extraPoints) => {
     firebase
       .firestore()
-      .collection("players")
-      .doc(player)
-      .collection("golfRounds")
+      .collection('players')
+      .doc(userID)
+      .collection('golfRounds')
       .doc()
       .set({ points: points, extraPoints: extraPoints })
       .then(() => {
-        console.log("GolfRound Added");
-        alert("Golfrounds added");
+        console.log('GolfRound Added');
+        alert('Golfrounds added');
       });
   };
 
-  const getPlayers = () => {
-    var databaseRef = firebase.firestore().collection("players");
-    var players = []
+  const getPlayerScore = async (userID) => {
+    console.log('getplayerscore');
+    let snapshot = await firebase
+      .firestore()
+      .collection('players')
+      .doc(userID)
+      .collection('golfRounds')
+      .get();
 
-    databaseRef.get().then((item) => {
-      const items = item.docs.map((doc) => doc.data());
+    let playerScore = [];
 
-      players.push(items)
+    if (snapshot) {
+      snapshot.forEach((doc) => {
+        playerScore.push({ ...doc.data() });
+      });
+    }
+    console.log('playerScore:  ', playerScore);
+    return playerScore;
+  };
 
-      console.log("items: ", items);
-      console.log("players: ",players);
-      return players;
-    });
-    
+  const getPlayers = async () => {
+    let snapshot = await firebase.firestore().collection('players').get();
+
+    let players = [];
+
+    if (snapshot) {
+      snapshot.forEach((doc) => {
+        players.push({ ...doc.data() });
+      });
+    }
+    console.log('getPlayers');
+    return players;
   };
 
   return (
-    <PlayerContext.Provider value={{ postGolfRound , getPlayers}}>
+    <PlayerContext.Provider
+      value={{ postGolfRound, getPlayers, getPlayerScore }}
+    >
       {children}
     </PlayerContext.Provider>
   );
