@@ -4,11 +4,9 @@ import { FlatList, ScrollView } from "react-native-gesture-handler";
 import firebase from "../firebase";
 import Splash from "./Splash";
 import { PlayerContext } from "../context/PlayerContext";
-import Theme from '../theme/Theme'
+import Theme from "../theme/Theme";
 
 const Item = ({ title, points, position }) => (
-
-
   <View style={styles.item}>
     <Text style={styles.position}>{position}</Text>
     <Text style={styles.title}>{title}</Text>
@@ -20,27 +18,34 @@ const Item = ({ title, points, position }) => (
 );
 
 const ChartListScreen = () => {
-   const { getPlayers } = useContext(PlayerContext);
+  const { getPlayers, getPlayerScore } = useContext(PlayerContext);
   const [players, setPlayers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [playerScore, setPlayerScore] = useState([]);
 
-  var users = [];
+  const getEachPlayerScore = (players) => {
+    let array = [];
 
-   var databaseRef = firebase.firestore().collection("players");
+    players.forEach((player) => {
+      let score = getPlayerScore(player.userID);
+      array.push({
+        name: player.name,
+        points: score.points,
+        extraPoints: score.extraPoints
+      });
+    });
+
+    console.log("array: ", array);
+
+    return array;
+  };
 
   useEffect(() => {
+    getPlayers()
+      .then(setPlayers)
+      .then(getEachPlayerScore(players));
 
-      getPlayers().then(setPlayers)
-    
-
-     console.log("users: ", users);
-
-     console.log("players: ", players);
-
-   
   }, []);
-
-  
 
   const renderItem = ({ item }) => (
     <Item title={item.name} points={item.points} position={item.position} />
@@ -53,20 +58,19 @@ const ChartListScreen = () => {
   return (
     //  <ScrollView style={{ backgroundColor: 'black'}}>
     <View style={styles.container}>
-
       <ImageBackground
-            source={require('../assets/greenball.png')}
-            style={{     width: '100%',
-            height: undefined,
-            aspectRatio: 1,
-            // backgroundColor: 'white'
-        }}>
-<Text style={styles.header}>Tabell</Text>
-
+        source={require("../assets/greenball.png")}
+        style={{
+          width: "100%",
+          height: undefined,
+          aspectRatio: 1,
+          marginTop: -90,
+          // backgroundColor: 'white'
+        }}
+      >
+        <Text style={styles.header}>Tabell</Text>
       </ImageBackground>
-    
-      
-      
+
       <View style={styles.chartView}>
         <FlatList
           data={players}
@@ -78,7 +82,6 @@ const ChartListScreen = () => {
       <Text style={styles.kghio}>KGHIO 2021</Text>
     </View>
     //  </ScrollView>
-    
   );
 };
 
@@ -87,19 +90,17 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "black",
     alignItems: "center",
-    //justifyContent: "flex-start",
+  
   },
   flatList: {
-    // flex: 1,
-    // alignItems: "center",
-    // justifyContent: "flex-end",
+
     backgroundColor: "white",
   },
   header: {
     color: "white",
     fontSize: 50,
     alignSelf: "center",
-    marginTop: 40,
+    marginTop: 120,
     fontFamily: Theme.fontFamilyHeader,
   },
 
@@ -109,47 +110,46 @@ const styles = StyleSheet.create({
     marginVertical: 1,
     marginHorizontal: 1,
     flexDirection: "row",
-    //alignItems: 'flex-start',
-    //justifyContent: 'center'
+
   },
   title: {
-    fontSize: 18,
-    //marginLeft: 40
+    fontSize: 15,
+  
     color: "white",
-    fontFamily: Theme.fontFamilyText
+    fontFamily: Theme.fontFamilyText,
   },
   points: {
-    fontSize: 18,
-    //marginLeft: 40
+    fontSize: 15,
+ 
     textAlign: "right",
     color: Theme.orange,
-    fontFamily: Theme.fontFamilyText
+    fontFamily: Theme.fontFamilyText,
   },
   position: {
-    fontSize: 18,
-    //marginLeft: 40
+    fontSize: 15,
+
     color: "white",
     marginRight: 15,
-    fontFamily: Theme.fontFamilyText
+    fontFamily: Theme.fontFamilyText,
   },
   chartView: {
-     backgroundColor: "grey",
+    backgroundColor: "grey",
     flexDirection: "column",
     width: "100%",
-    marginTop: -40,
-    height: "40%",
+    marginTop: 0,
+    height: "45%",
   },
 
   kghio: {
     fontSize: 20,
     color: "white",
     marginTop: 20,
-    fontFamily: Theme.fontFamilyText
+    fontFamily: Theme.fontFamilyText,
   },
   text: {
     color: "white",
     marginTop: 10,
-    fontFamily: Theme.fontFamilyText
+    fontFamily: Theme.fontFamilyText,
   },
 });
 

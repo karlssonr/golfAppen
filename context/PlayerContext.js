@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import firebase from "../firebase";
 import { Alert } from "react-native";
-import {AuthContext} from './AuthContext'
+import { AuthContext } from "./AuthContext";
 
 export const PlayerContext = createContext();
 const auth = firebase.auth();
@@ -13,11 +13,8 @@ export default function PlayerContextProvider({ children }) {
   // const { currentUser } = useContext(AuthContext);
 
   const postGolfRound = (userID, points, extraPoints) => {
-
-
-    console.log("postgolfround:",userID, points, extraPoints);
+    console.log("postgolfround:", userID, points, extraPoints);
     // const userID = currentUser.uid
-
 
     firebase
       .firestore()
@@ -32,17 +29,35 @@ export default function PlayerContextProvider({ children }) {
       });
   };
 
- 
+  const getPlayerScore = async (userID) => {
+    let snapshot = await firebase
+      .firestore()
+      .collection("players")
+      .doc(userID)
+      .collection("golfRounds")
+      .get();
+
+    let playerScore = [];
+
+    if (snapshot) {
+      snapshot.forEach((doc) => {
+        playerScore.push({ ...doc.data(), 
+        name: userID.name
+        });
+      });
+    }
+    // console.log("playerScore:  ", playerScore);
+    return playerScore;
+  };
 
   const getPlayers = async () => {
-    
-    let snapshot = await firebase.firestore().collection("players").get()
+    let snapshot = await firebase.firestore().collection("players").get();
 
     let players = [];
 
     if (snapshot) {
       snapshot.forEach((doc) => {
-        players.push({...doc.data()});
+        players.push({ ...doc.data() });
       });
     }
     console.log("getPlayers");
@@ -50,7 +65,7 @@ export default function PlayerContextProvider({ children }) {
   };
 
   return (
-    <PlayerContext.Provider value={{ postGolfRound , getPlayers}}>
+    <PlayerContext.Provider value={{ postGolfRound, getPlayers , getPlayerScore}}>
       {children}
     </PlayerContext.Provider>
   );

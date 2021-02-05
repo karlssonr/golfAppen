@@ -129,7 +129,7 @@ const RegisterResultScreen = () => {
     getPlayers().then(setPlayers);
   }, []);
 
-  // console.log("players: ", players);
+  
 
   const mapPlayersFromDB = (players) => {
     let array = [];
@@ -320,22 +320,8 @@ const RegisterResultScreen = () => {
         </View>
       </ImageBackground>
 
-      {/* <View style={{ backgroundColor: "white" }} /> */}
-
-      {/* <ButtonWithBackround
-        color={Colors.orange}
-        text="Registrera"
-        marginTop={0}
-        width={120}
-        alignSelf="flex-end"
-        marginRight={10}
-        padding={5}
-        // backgroundColor=
-        onPress={submit}
-        touchableOpacityHeight={70}
-        touchableOpacityWidth="40%"
-      /> */}
-      <View style={{ marginTop: 100 }}>
+   
+      <View style={{ marginTop: 200 }}>
         <Button
           title="Registrera resultat"
           onPress={submit}
@@ -347,9 +333,7 @@ const RegisterResultScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  //   button: {
-  // margin: 100
-  //   },
+
 
   playerDropdown: {
     marginTop: 20,
@@ -383,7 +367,7 @@ const styles = StyleSheet.create({
     width: "20%",
   },
   header: {
-    // backgroundColor: "black",
+  
     fontSize: 40,
     marginTop: 55,
     alignSelf: "center",
@@ -393,7 +377,7 @@ const styles = StyleSheet.create({
   textView: {
     marginTop: 100,
     flexDirection: "row",
-    // backgroundColor: "black",
+    
     alignItems: "flex-start",
     justifyContent: "space-evenly",
   },

@@ -15,6 +15,7 @@ const ButtonWithBackround = ({
   padding,
   touchableOpacityHeight,
   touchableOpacityWidth,
+  zIndex
 
   // backgroundColor,
 }) => {
@@ -31,6 +32,7 @@ const ButtonWithBackround = ({
           alignSelf: alignSelf,
           marginRight: marginRight,
           padding: padding,
+          
           // backgroundColor: backgroundColor
         },
       ]}
@@ -46,6 +48,8 @@ const ButtonWithBackround = ({
         height: touchableOpacityHeight,
         // backgroundColor: "white",
         alignSelf: alignSelf,
+        zIndex: zIndex
+        
       }}
     >
       {content}

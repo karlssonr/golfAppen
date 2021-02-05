@@ -27,7 +27,8 @@ const HomeScreen = ({ navigation }) => {
           text="Registrera Resultat"
           color={Theme.orange}
           width={300}
-          padding={15}
+          padding={12}
+          zIndex={400}
           onPress={() => {
             console.log("button was pressed");
             // navigation.setOptions({ title: 'Registrera Resultat'})
@@ -38,28 +39,31 @@ const HomeScreen = ({ navigation }) => {
           text="Tabell"
           color={Theme.orange}
           width={300}
-          padding={15}
+          padding={12}
+          zIndex={400}
           onPress={() => navigation.navigate("ChartListScreen")}
         />
         <ButtonWithBackround
           text="Profil"
           color={Theme.orange}
           width={300}
-          padding={15}
+          padding={12}
+          zIndex={400}
           onPress={() => navigation.navigate("ProfileScreen")}
         />
         <ButtonWithBackround
           text="Statestik"
           color={Theme.darkOrange}
           width={300}
-          padding={15}
+          zIndex={400}
+          padding={12}
         />
         <ButtonWithBackround
           text="Medlemmar"
           color={Theme.orange}
           marginBottom={60}
           width={300}
-          padding={15}
+          padding={12}
           onPress={() => navigation.navigate("MemberScreen")}
         />
 
