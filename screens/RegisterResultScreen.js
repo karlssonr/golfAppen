@@ -6,7 +6,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 import { PlayerContext } from '../context/PlayerContext';
-import Theme from '../theme/Theme';
+import Theme from '../theme/theme';
 
 import Splash from './Splash';
 

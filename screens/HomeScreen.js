@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { StyleSheet, Text, View, Button, ImageBackground } from 'react-native';
 import ButtonWithBackround from '../components/HomeScreenButton';
 import { AuthContext } from '../context/AuthContext';
-import Theme from '../theme/Theme';
+import Theme from '../theme/theme';
 
 const HomeScreen = ({ navigation }) => {
   const { setIsLoggedIn, signOut } = useContext(AuthContext);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
-import Theme from '../theme/Theme';
+import Theme from '../theme/theme';
 
 export default function Splash() {
   return (

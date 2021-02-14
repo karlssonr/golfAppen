@@ -1,13 +1,12 @@
-import React, { createContext, useState, useEffect } from "react";
-import firebase from "../firebase";
-import { Alert } from "react-native";
-import { firestore } from "firebase";
-import { set } from "react-native-reanimated";
+import React, { createContext, useState, useEffect } from 'react';
+import firebase from '../firebase';
+import { Alert } from 'react-native';
+import { firestore } from 'firebase';
+import { set } from 'react-native-reanimated';
 
 export const AuthContext = createContext();
 const auth = firebase.auth();
 // const currentUser = auth.currentUser;
-
 
 export default function AuthContextProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -27,7 +26,7 @@ export default function AuthContextProvider({ children }) {
   const updateUser = (displayName, phoneNumber, golfID) => {
     firebase
       .firestore()
-      .collection("players")
+      .collection('players')
       .doc(auth.currentUser.uid)
       .set({
         name: displayName,
@@ -36,7 +35,7 @@ export default function AuthContextProvider({ children }) {
         userID: auth.currentUser.uid,
       })
       .then(() => {
-        console.log("User updated");
+        console.log('User updated');
         // console.log("userid: ", auth.currentUser.uid);
       });
 
@@ -45,12 +44,12 @@ export default function AuthContextProvider({ children }) {
         displayName: displayName,
       })
       .then(function () {
-        alert("Update succesfull");
+        alert('Update succesfull');
         // console.log("update succesfull: ", user);
       })
       .catch(function (error) {
         alert(error);
-        console.log("updateUserError: ", error);
+        console.log('updateUserError: ', error);
       });
   };
 
@@ -58,7 +57,7 @@ export default function AuthContextProvider({ children }) {
     return auth
       .sendPasswordResetEmail(email)
       .then(function () {
-        alert("Password reset email sent.");
+        alert('Password reset email sent.');
       })
       .catch(function (error) {
         alert(error);
@@ -72,8 +71,8 @@ export default function AuthContextProvider({ children }) {
       .catch(function (error) {
         var errorCode = error.code;
         var errorMessage = error.message;
-        if (errorCode == "auth/weak-password") {
-          alert("The password is too weak.");
+        if (errorCode == 'auth/weak-password') {
+          alert('The password is too weak.');
         } else {
           alert(errorMessage);
         }
@@ -88,8 +87,8 @@ export default function AuthContextProvider({ children }) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
-        if (errorCode === "auth/wrong-password") {
-          alert("Wrong password.");
+        if (errorCode === 'auth/wrong-password') {
+          alert('Wrong password.');
         } else {
           alert(errorMessage);
         }
@@ -101,7 +100,7 @@ export default function AuthContextProvider({ children }) {
     try {
       await auth.signOut();
     } catch (error) {
-      console.log("error:", error);
+      console.log('error:', error);
     }
   };
 

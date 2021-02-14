@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, ImageBackground } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import Splash from './Splash';
 import { PlayerContext } from '../context/PlayerContext';
-import Theme from '../theme/Theme';
+import Theme from '../theme/theme';
 
 const Item = ({ title, points, position }) => (
   <View style={styles.item}>

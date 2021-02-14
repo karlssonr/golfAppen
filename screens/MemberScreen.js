@@ -4,7 +4,7 @@ import { FlatList } from 'react-native-gesture-handler';
 
 import Splash from './Splash';
 import { PlayerContext } from '../context/PlayerContext';
-import Theme from '../theme/Theme';
+import Theme from '../theme/theme';
 
 const Item = ({ name, phoneNumber, golfID }) => (
   <View style={styles.item}>

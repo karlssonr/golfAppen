@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import Theme from '../theme/Theme';
+import Theme from '../theme/theme';
 
 const ButtonWithBackround = ({
   color,

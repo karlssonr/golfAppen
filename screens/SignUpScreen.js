@@ -4,7 +4,7 @@ import { useState, useContext } from 'react';
 import { StyleSheet, Text, View, Button, TextInput, Alert } from 'react-native';
 import { AuthContext } from '../context/AuthContext';
 import Splash from './Splash';
-import Theme from '../theme/Theme';
+import Theme from '../theme/theme';
 
 export default function SignUpScreen({ navigation }) {
   const [email, setEmail] = useState('');
