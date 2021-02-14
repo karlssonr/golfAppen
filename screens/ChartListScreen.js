@@ -5,14 +5,14 @@ import Splash from './Splash';
 import { PlayerContext } from '../context/PlayerContext';
 import Theme from '../theme/Theme';
 
-const Item = ({ title, points, position }) => (
+const Item = ({ name, totalScore, averageOfBest7Rounds }) => (
   <View style={styles.item}>
-    <Text style={styles.position}>{position}</Text>
-    <Text style={styles.title}>{title}</Text>
+    <Text style={styles.title}>{name}</Text>
 
     <View style={{ flex: 1 }}></View>
 
-    <Text style={styles.points}>{points}</Text>
+    <Text style={styles.points}>{totalScore}</Text>
+    <Text style={styles.position}>{averageOfBest7Rounds}</Text>
   </View>
 );
 
@@ -20,6 +20,112 @@ const ChartListScreen = () => {
   const { getPlayers, getPlayerScore } = useContext(PlayerContext);
   const [players, setPlayers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [golfroundsOfPlayers, setGolfroundsOfPlayers] = useState([]);
+  const [resultTable, setResultTable] = useState([]);
+  let resultScore = [];
+
+  const sumAllScores = (golfroundsOfPlayer) => {
+    // console.log('123', golfroundsOfPlayer);
+    let totalScore = 0;
+    let pointsAsInt;
+    let extraPointsAsInt;
+    golfroundsOfPlayer.scores.forEach((scoreOfGolfroundOfPlayer) => {
+      pointsAsInt = parseInt(scoreOfGolfroundOfPlayer.points);
+      extraPointsAsInt = parseInt(scoreOfGolfroundOfPlayer.extraPoints);
+
+      totalScore = pointsAsInt + extraPointsAsInt + totalScore;
+    });
+
+    return totalScore;
+  };
+
+  const assignResultsForEachPlayer = (golfroundsOfPlayers) => {
+    let totalScore = 0;
+    let avrageScore = 0;
+    let averageOfBest7Rounds = 0;
+    golfroundsOfPlayers.forEach((golfroundsOfPlayer) => {
+      totalScore = sumAllScores(golfroundsOfPlayer);
+      avrageScore = calculateAverageScore(golfroundsOfPlayer);
+      averageOfBest7Rounds = calcutaleAverageOfBest7Rounds(golfroundsOfPlayer);
+
+      resultScore.push({
+        name: golfroundsOfPlayer.name,
+        totalScore: totalScore,
+        avrageScore: avrageScore,
+        averageOfBest7Rounds: averageOfBest7Rounds,
+      });
+
+      // setResultTable({
+      //   name: golfroundsOfPlayer.name,
+      //   totalScore: totalScore,
+      //   avrageScore: avrageScore,
+      //   averageOfBest7Rounds: averageOfBest7Rounds,
+      // });
+      console.log(
+        'TOTALSCORE: ',
+        totalScore,
+        'NAME',
+        golfroundsOfPlayer.name,
+        'avrageScore:',
+        avrageScore,
+        'averageOfBest7Rounds',
+        averageOfBest7Rounds
+      );
+    });
+
+    console.log('RESULT: ', resultScore);
+  };
+
+  const calcutaleAverageOfBest7Rounds = (golfroundsOfPlayer) => {
+    let best7Rounds = [];
+
+    let pointsAsInt;
+    let extraPointsAsInt;
+    let scoreOfRound;
+
+    golfroundsOfPlayer.scores.forEach((scoreOfGolfroundOfPlayer) => {
+      pointsAsInt = parseInt(scoreOfGolfroundOfPlayer.points);
+      extraPointsAsInt = parseInt(scoreOfGolfroundOfPlayer.extraPoints);
+      scoreOfRound = pointsAsInt + extraPointsAsInt;
+
+      if (best7Rounds.length < 7) {
+        best7Rounds.push(scoreOfRound);
+      } else {
+        best7Rounds.sort(getLowestNumber);
+        // console.log('best7rounds: ', best7Rounds);
+        if (best7Rounds[0] < scoreOfRound) {
+          best7Rounds[0] = scoreOfRound;
+        }
+      }
+    });
+    return getAverageNumberOfArrayOfNumber(best7Rounds);
+  };
+  const getAverageNumberOfArrayOfNumber = (arrayOfNumbers) => {
+    let sum = 0;
+
+    arrayOfNumbers.forEach((number) => {
+      sum = sum + number;
+    });
+    return sum / arrayOfNumbers.length;
+  };
+
+  const getLowestNumber = (number1, number2) => {
+    if (number1 < number2) {
+      return -1;
+    }
+    if (number1 > number2) {
+      return 1;
+    }
+
+    return 0;
+  };
+
+  const calculateAverageScore = (golfroundsOfPlayer) => {
+    let totalScore = sumAllScores(golfroundsOfPlayer);
+    let numberOfGolfrounds = golfroundsOfPlayer.scores.length;
+
+    return totalScore / numberOfGolfrounds;
+  };
 
   const getEachPlayerScore = async (players) => {
     let array = [];
@@ -33,6 +139,7 @@ const ChartListScreen = () => {
       });
     }
 
+    setGolfroundsOfPlayers(array);
     return array;
   };
 
@@ -41,11 +148,17 @@ const ChartListScreen = () => {
   }, []);
 
   useEffect(() => {
-    getEachPlayerScore(players);
+    getEachPlayerScore(players).then(
+      assignResultsForEachPlayer(golfroundsOfPlayers)
+    );
   }, [players]);
 
   const renderItem = ({ item }) => (
-    <Item title={item.name} points={item.points} position={item.position} />
+    <Item
+      name={item.name}
+      totalScore={item.totalScore}
+      averageOfBest7Rounds={item.averageOfBest7Rounds}
+    />
   );
 
   if (loading) {
@@ -64,7 +177,7 @@ const ChartListScreen = () => {
 
       <View style={styles.chartView}>
         <FlatList
-          data={players}
+          data={resultScore}
           renderItem={renderItem}
           keyExtractor={(item, index) => index.toString()}
         />
