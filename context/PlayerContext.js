@@ -6,9 +6,6 @@ const auth = firebase.auth();
 
 export default function PlayerContextProvider({ children }) {
   const postGolfRound = (userID, points, extraPoints) => {
-    console.log('postgolfround:', userID, points, extraPoints);
-    // const userID = currentUser.uid
-
     firebase
       .firestore()
       .collection('players')
@@ -23,7 +20,7 @@ export default function PlayerContextProvider({ children }) {
   };
 
   const getPlayerScore = async (userID) => {
-    console.log('getplayerscore');
+    // console.log('getplayerscore');
     let snapshot = await firebase
       .firestore()
       .collection('players')
@@ -38,7 +35,7 @@ export default function PlayerContextProvider({ children }) {
         playerScore.push({ ...doc.data() });
       });
     }
-    console.log('playerScore:  ', playerScore);
+    // console.log('playerScore:  ', playerScore);
     return playerScore;
   };
 
