@@ -12,6 +12,7 @@ const Item = ({ name, totalScore, averageOfBest7Rounds }) => (
     <View style={{ flex: 1 }}></View>
 
     <Text style={styles.points}>{totalScore}</Text>
+    <View style={{ flex: 1 }}></View>
     <Text style={styles.position}>{averageOfBest7Rounds}</Text>
   </View>
 );
@@ -19,7 +20,7 @@ const Item = ({ name, totalScore, averageOfBest7Rounds }) => (
 const ChartListScreen = () => {
   const { getPlayers, getPlayerScore } = useContext(PlayerContext);
   const [players, setPlayers] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(null);
   const [resultTable, setResultTable] = useState([]);
 
   const sumAllScores = (golfroundsOfPlayer) => {
@@ -51,7 +52,7 @@ const ChartListScreen = () => {
         name: golfroundsOfPlayer.name,
         totalScore: totalScore,
         avrageScore: avrageScore,
-        averageOfBest7Rounds: averageOfBest7Rounds,
+        averageOfBest7Rounds: averageOfBest7Rounds.toFixed(2),
       });
     });
 
@@ -134,14 +135,14 @@ const ChartListScreen = () => {
   }, []);
 
   useEffect(() => {
-    getEachPlayerScore(players).then((value) =>
-      assignResultsForEachPlayer(value).then(setLoading(false))
-    );
+    getEachPlayerScore(players).then((value) => {
+      assignResultsForEachPlayer(value);
+    });
   }, [players]);
 
-  if (loading) {
-    return <Splash />;
-  }
+  useEffect(() => {
+    setLoading(false);
+  }, [resultTable]);
 
   return (
     //  <ScrollView style={{ backgroundColor: 'black'}}>
@@ -152,21 +153,31 @@ const ChartListScreen = () => {
       >
         <Text style={styles.header}>Tabell</Text>
       </ImageBackground>
+      <View style={styles.namePhoneIDView}>
+        <Text style={{ ...styles.culumText, width: 140 }}>Namn</Text>
+        <View style={{ flex: 1 }}></View>
+        <Text style={styles.culumText}>Total</Text>
+        <View style={{ flex: 1 }}></View>
+        <Text style={{ ...styles.culumText }}>Medel av 7 bästa</Text>
+      </View>
 
       <View style={styles.chartView}>
-        <FlatList
-          data={resultTable}
-          renderItem={({ item }) => {
-            return (
-              <Item
-                name={item.name}
-                totalScore={item.totalScore}
-                averageOfBest7Rounds={item.averageOfBest7Rounds}
-              />
-            );
-          }}
-          keyExtractor={(item, index) => index.toString()}
-        />
+        {loading && <Splash />}
+        {resultTable && (
+          <FlatList
+            data={resultTable}
+            renderItem={({ item }) => {
+              return (
+                <Item
+                  name={item.name}
+                  totalScore={item.totalScore}
+                  averageOfBest7Rounds={item.averageOfBest7Rounds}
+                />
+              );
+            }}
+            keyExtractor={(_, index) => index.toString()}
+          />
+        )}
       </View>
       <Text style={styles.text}>Vänd luren för detaljer</Text>
       <Text style={styles.kghio}>KGHIO 2021</Text>
@@ -198,9 +209,11 @@ const styles = StyleSheet.create({
     marginVertical: 1,
     marginHorizontal: 1,
     flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   title: {
     fontSize: 15,
+    width: 90,
 
     color: 'white',
     fontFamily: Theme.fontFamilyText,
@@ -238,11 +251,28 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontFamily: Theme.fontFamilyText,
   },
+  culumText: {
+    color: 'white',
+    fontFamily: Theme.fontFamilyText,
+  },
   imageBackgroundStyle: {
     width: '100%',
     height: undefined,
     aspectRatio: 1,
     marginTop: -90,
+  },
+  namePhoneIDView: {
+    width: '100%',
+    borderRadius: 2,
+    justifyContent: 'space-evenly',
+    flexDirection: 'row',
+    marginTop: 0,
+    borderColor: 'white',
+    backgroundColor: 'grey',
+
+    borderWidth: 1,
+    alignSelf: 'center',
+    fontFamily: Theme.fontFamilyText,
   },
 });
 
