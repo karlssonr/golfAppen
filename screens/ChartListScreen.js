@@ -18,9 +18,10 @@ const Item = ({ name, totalScore, averageOfBest7Rounds }) => (
 );
 
 const ChartListScreen = () => {
-  const { getPlayers, getPlayerScore } = useContext(PlayerContext);
+  const { getPlayers, getPlayerScore, loadingPlayerScore } = useContext(
+    PlayerContext
+  );
   const [players, setPlayers] = useState([]);
-  const [loading, setLoading] = useState(null);
   const [resultTable, setResultTable] = useState([]);
 
   const sumAllScores = (golfroundsOfPlayer) => {
@@ -130,7 +131,6 @@ const ChartListScreen = () => {
   };
 
   useEffect(() => {
-    setLoading(true);
     getAndSetPlayers();
   }, []);
 
@@ -139,10 +139,6 @@ const ChartListScreen = () => {
       assignResultsForEachPlayer(value);
     });
   }, [players]);
-
-  useEffect(() => {
-    setLoading(false);
-  }, [resultTable]);
 
   return (
     //  <ScrollView style={{ backgroundColor: 'black'}}>
@@ -162,11 +158,12 @@ const ChartListScreen = () => {
       </View>
 
       <View style={styles.chartView}>
-        {loading && <Splash />}
+        {loadingPlayerScore && <Splash />}
         {resultTable && (
           <FlatList
             data={resultTable}
             renderItem={({ item }) => {
+              console.log('item: ', item);
               return (
                 <Item
                   name={item.name}
@@ -224,6 +221,7 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     color: Theme.orange,
     fontFamily: Theme.fontFamilyText,
+    marginLeft: 0,
   },
   position: {
     fontSize: 15,

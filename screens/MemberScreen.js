@@ -132,9 +132,10 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 15,
-    marginLeft: 20,
+    marginLeft: 10,
     color: 'white',
     fontFamily: Theme.fontFamilyText,
+    width: 70,
   },
   phoneNumber: {
     fontSize: 15,

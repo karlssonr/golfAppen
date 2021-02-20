@@ -4,18 +4,19 @@
     "slug": "golfAppen",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/pokal.png",
+    "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/pokal.png",
       "resizeMode": "contain",
-      "backgroundColor": "black"
+      "backgroundColor": "#000000"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.robin.karlsson.golfAppen"
     },
     "android": {
       "adaptiveIcon": {

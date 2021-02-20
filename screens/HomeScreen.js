@@ -1,75 +1,74 @@
 import React, { useContext } from 'react';
 import { StyleSheet, Text, View, Button, ImageBackground } from 'react-native';
-import ButtonWithBackround from '../components/HomeScreenButton';
-import { AuthContext } from '../context/AuthContext';
+import IconAndTextButton from '../components/IconAndTextButton';
+
 import Theme from '../theme/theme';
 
 const HomeScreen = ({ navigation }) => {
-  const { setIsLoggedIn, signOut } = useContext(AuthContext);
-
-  const submit = () => {
-    signOut();
-  };
-
   return (
     <View style={styles.container}>
       <ImageBackground
         source={require('../assets/image8.png')}
-        style={{ width: '100%', height: undefined, aspectRatio: 1 }}
+        style={{ width: '100%', height: '55%', aspectRatio: 1 }}
       >
         <Text style={styles.header}>KGHIO 2021</Text>
       </ImageBackground>
 
       <View style={styles.homeView}>
-        <ButtonWithBackround
-          text="Registrera Resultat"
-          color={Theme.orange}
-          width={300}
-          padding={12}
-          zIndex={400}
-          onPress={() => {
-            console.log('button was pressed');
-            // navigation.setOptions({ title: 'Registrera Resultat'})
-            navigation.navigate('RegisterResultScreen');
-          }}
+        <IconAndTextButton
+          imageSource={require('../assets/edit.png')}
+          imageWidth={30}
+          imageHeight={30}
+          title="Registrera Resultat"
+          textColor="white"
+          textFontSize={20}
+          onPress={() => navigation.navigate('RegisterResultScreen')}
         />
-        <ButtonWithBackround
-          text="Tabell"
-          color={Theme.orange}
-          width={300}
-          padding={12}
-          zIndex={400}
+        <IconAndTextButton
+          imageSource={require('../assets/golfbag.png')}
+          imageWidth={30}
+          imageHeight={30}
+          title="Senaste rundorna"
+          textColor="grey"
+          textFontSize={20}
+          // onPress={() => navigation.navigate('RegisterResultScreen')}
+        />
+        <IconAndTextButton
+          imageSource={require('../assets/list.png')}
+          imageWidth={30}
+          imageHeight={30}
+          title="Tabell"
+          textColor="white"
+          textFontSize={20}
           onPress={() => navigation.navigate('ChartListScreen')}
         />
-        <ButtonWithBackround
-          text="Profil"
-          color={Theme.orange}
-          width={300}
-          padding={12}
-          zIndex={400}
-          onPress={() => navigation.navigate('ProfileScreen')}
+        <IconAndTextButton
+          imageSource={require('../assets/stats.png')}
+          imageWidth={30}
+          imageHeight={30}
+          title="Statistik"
+          textColor="grey"
+          textFontSize={20}
+          // onPress={() => navigation.navigate('RegisterResultScreen')}
         />
-        <ButtonWithBackround
-          text="Statestik"
-          color={Theme.darkOrange}
-          width={300}
-          zIndex={400}
-          padding={12}
-        />
-        <ButtonWithBackround
-          text="Medlemmar"
-          color={Theme.orange}
-          marginBottom={60}
-          width={300}
-          padding={12}
+        <IconAndTextButton
+          imageSource={require('../assets/golfSwing.png')}
+          imageWidth={30}
+          imageHeight={30}
+          title="Medlemmar"
+          textColor="white"
+          textFontSize={20}
           onPress={() => navigation.navigate('MemberScreen')}
         />
+        <IconAndTextButton
+          imageSource={require('../assets/crown.png')}
+          imageWidth={30}
+          imageHeight={30}
+          title="Champs"
+          textColor="grey"
+          textFontSize={20}
 
-        <Button
-          style={{}}
-          title="Logga Ut"
-          onPress={submit}
-          color={Theme.orange}
+          // onPress={() => navigation.navigate('RegisterResultScreen')}
         />
       </View>
     </View>
@@ -79,22 +78,27 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   imageBackgroundStyle: {
     width: '100%',
-    height: '80%',
+    height: undefined,
     aspectRatio: 1,
+
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    marginBottom: '0%',
+    backgroundColor: 'black',
   },
 
   container: {
     flex: 1,
     backgroundColor: 'black',
-    //alignItems: "center",
-    justifyContent: 'flex-start',
+
+    justifyContent: 'center',
   },
   homeView: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-end',
-    backgroundColor: 'black',
-    marginBottom: 30,
+    backgroundColor: null,
+    marginBottom: 50,
   },
   header: {
     color: 'white',
@@ -102,6 +106,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginBottom: 10,
     fontFamily: Theme.fontFamilyHeader,
+    marginTop: 80,
   },
 });
 

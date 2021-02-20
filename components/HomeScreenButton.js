@@ -16,6 +16,7 @@ const ButtonWithBackround = ({
   touchableOpacityHeight,
   touchableOpacityWidth,
   zIndex,
+  marginLeft,
 
   // backgroundColor,
 }) => {
@@ -26,12 +27,13 @@ const ButtonWithBackround = ({
         {
           backgroundColor: color,
           marginBottom: marginBottom,
-          marginTop: marginTop,
+          // marginTop: marginTop,
           width: width,
           height: height,
           alignSelf: alignSelf,
           marginRight: marginRight,
           padding: padding,
+          marginLeft: marginLeft,
 
           // backgroundColor: backgroundColor
         },
@@ -49,6 +51,7 @@ const ButtonWithBackround = ({
         // backgroundColor: "white",
         alignSelf: alignSelf,
         zIndex: zIndex,
+        marginTop: marginTop,
       }}
     >
       {content}

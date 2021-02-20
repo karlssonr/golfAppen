@@ -5,6 +5,7 @@ export const PlayerContext = createContext();
 const auth = firebase.auth();
 
 export default function PlayerContextProvider({ children }) {
+  const [loadingPlayerScore, setLoadingPlayerScore] = useState(false);
   const postGolfRound = (userID, points, extraPoints) => {
     firebase
       .firestore()
@@ -20,6 +21,7 @@ export default function PlayerContextProvider({ children }) {
   };
 
   const getPlayerScore = async (userID) => {
+    setLoadingPlayerScore(true);
     // console.log('getplayerscore');
     let snapshot = await firebase
       .firestore()
@@ -36,6 +38,7 @@ export default function PlayerContextProvider({ children }) {
       });
     }
     // console.log('playerScore:  ', playerScore);
+    setLoadingPlayerScore(false);
     return playerScore;
   };
 
@@ -55,7 +58,7 @@ export default function PlayerContextProvider({ children }) {
 
   return (
     <PlayerContext.Provider
-      value={{ postGolfRound, getPlayers, getPlayerScore }}
+      value={{ postGolfRound, getPlayers, getPlayerScore, loadingPlayerScore }}
     >
       {children}
     </PlayerContext.Provider>
