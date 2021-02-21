@@ -1,19 +1,29 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, View, ImageBackground } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ImageBackground,
+  ScrollView,
+} from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import Splash from './Splash';
 import { PlayerContext } from '../context/PlayerContext';
 import Theme from '../theme/theme';
 
 const Item = ({ name, totalScore, averageOfBest7Rounds }) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{name}</Text>
+  <View style={{ ...styles.item }}>
+    <Text style={{ ...styles.title, backgroundColor: null }}>{name}</Text>
 
     <View style={{ flex: 1 }}></View>
 
-    <Text style={styles.points}>{totalScore}</Text>
+    <Text style={{ ...styles.points, backgroundColor: null }}>
+      {totalScore}
+    </Text>
     <View style={{ flex: 1 }}></View>
-    <Text style={styles.position}>{averageOfBest7Rounds}</Text>
+    <Text style={{ ...styles.position, backgroundColor: null }}>
+      {averageOfBest7Rounds}
+    </Text>
   </View>
 );
 
@@ -141,45 +151,55 @@ const ChartListScreen = () => {
   }, [players]);
 
   return (
-    //  <ScrollView style={{ backgroundColor: 'black'}}>
-    <View style={styles.container}>
-      <ImageBackground
-        source={require('../assets/greenball.png')}
-        style={styles.imageBackgroundStyle}
-      >
-        <Text style={styles.header}>Tabell</Text>
-      </ImageBackground>
-      <View style={styles.namePhoneIDView}>
-        <Text style={{ ...styles.culumText, width: 140 }}>Namn</Text>
-        <View style={{ flex: 1 }}></View>
-        <Text style={styles.culumText}>Total</Text>
-        <View style={{ flex: 1 }}></View>
-        <Text style={{ ...styles.culumText }}>Medel av 7 bästa</Text>
-      </View>
+    <ScrollView style={{ backgroundColor: 'black' }}>
+      <View style={styles.container}>
+        <ImageBackground
+          source={require('../assets/greenball.png')}
+          style={styles.imageBackgroundStyle}
+        >
+          <Text style={styles.header}>Tabell</Text>
+        </ImageBackground>
+        <View style={styles.namePhoneIDView}>
+          <Text style={{ ...styles.culumText, width: 140 }}>Namn</Text>
+          <View style={{ flex: 1 }}></View>
+          <Text style={styles.culumText}>Total</Text>
+          <View style={{ flex: 1 }}></View>
+          <Text style={{ ...styles.culumText }}>Medel av 7 bästa</Text>
+        </View>
 
-      <View style={styles.chartView}>
-        {loadingPlayerScore && <Splash />}
-        {resultTable && (
-          <FlatList
-            data={resultTable}
-            renderItem={({ item }) => {
-              console.log('item: ', item);
-              return (
-                <Item
-                  name={item.name}
-                  totalScore={item.totalScore}
-                  averageOfBest7Rounds={item.averageOfBest7Rounds}
-                />
-              );
-            }}
-            keyExtractor={(_, index) => index.toString()}
-          />
-        )}
+        <View style={styles.chartView}>
+          {loadingPlayerScore && <Splash />}
+          {resultTable && (
+            <FlatList
+              data={resultTable}
+              renderItem={({ item }) => {
+                console.log('item: ', item);
+                return (
+                  <Item
+                    name={item.name}
+                    totalScore={item.totalScore}
+                    averageOfBest7Rounds={item.averageOfBest7Rounds}
+                  />
+                );
+              }}
+              keyExtractor={(_, index) => index.toString()}
+            />
+          )}
+        </View>
+        <View
+          style={{
+            // backgroundColor: 'red',
+            alignSelf: 'center',
+            alignItems: 'center',
+            marginTop: 50,
+            marginBottom: 50,
+          }}
+        >
+          <Text style={styles.text}>Vänd luren för detaljer</Text>
+          <Text style={styles.kghio}>KGHIO 2021</Text>
+        </View>
       </View>
-      <Text style={styles.text}>Vänd luren för detaljer</Text>
-      <Text style={styles.kghio}>KGHIO 2021</Text>
-    </View>
-    //  </ScrollView>
+    </ScrollView>
   );
 };
 
@@ -235,7 +255,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     width: '100%',
     marginTop: 0,
-    height: '45%',
+    // height: '45%',
   },
 
   kghio: {

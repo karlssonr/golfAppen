@@ -1,13 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { StyleSheet, Text, View, ImageBackground, Button } from 'react-native';
-
 import { TextInput } from 'react-native-gesture-handler';
-
 import DropDownPicker from 'react-native-dropdown-picker';
-
 import { PlayerContext } from '../context/PlayerContext';
 import Theme from '../theme/theme';
-
+import IconAndTextButton from '../components/IconAndTextButton';
 import Splash from './Splash';
 
 const RegisterResultScreen = () => {
@@ -159,17 +156,27 @@ const RegisterResultScreen = () => {
       >
         <Text style={styles.header}>Registrera Resultat</Text>
 
-        <View style={styles.textView}>
-          <Text style={{ ...styles.text, width: '50%' }}>Spelare</Text>
-          <Text style={{ ...styles.text }}>Poäng</Text>
-          <Text style={{ ...styles.text }}>Extra</Text>
+        <View style={{ ...styles.textView }}>
+          <Text
+            style={{
+              ...styles.text,
+
+              width: 180,
+              alignSelf: 'center',
+              marginLeft: 10,
+            }}
+          >
+            Spelare
+          </Text>
+          <Text style={{ ...styles.text, width: '20%' }}>Poäng</Text>
+          <Text style={{ ...styles.text, width: '20%' }}>Extra</Text>
         </View>
         <View style={{ ...styles.textInputView, zIndex: 5 }}>
           <DropDownPicker
             placeholder="Välj spelare"
             items={playersArray}
             defaultValue={playerOne.name}
-            containerStyle={{ height: 50 }}
+            containerStyle={{ height: 45 }}
             style={styles.dropDownPickerStyle}
             itemStyle={{ justifyContent: 'flex-start' }}
             labelStyle={styles.dropDownLabelStyle}
@@ -214,7 +221,7 @@ const RegisterResultScreen = () => {
             placeholder="Välj spelare"
             items={playersArray}
             defaultValue={playerTwo.name}
-            containerStyle={{ height: 50 }}
+            containerStyle={{ height: 45 }}
             style={styles.dropDownPickerStyle}
             itemStyle={{ justifyContent: 'flex-start' }}
             labelStyle={styles.dropDownLabelStyle}
@@ -252,7 +259,7 @@ const RegisterResultScreen = () => {
             placeholder="Välj spelare"
             items={playersArray}
             defaultValue={playerThree.name}
-            containerStyle={{ height: 50 }}
+            containerStyle={{ height: 45 }}
             style={styles.dropDownPickerStyle}
             itemStyle={{ justifyContent: 'flex-start' }}
             labelStyle={styles.dropDownLabelStyle}
@@ -290,7 +297,7 @@ const RegisterResultScreen = () => {
             placeholder="Välj spelare"
             items={playersArray}
             defaultValue={playerFour.name}
-            containerStyle={{ height: 50 }}
+            containerStyle={{ height: 45 }}
             style={styles.dropDownPickerStyle}
             itemStyle={{ justifyContent: 'flex-start' }}
             labelStyle={styles.dropDownLabelStyle}
@@ -324,11 +331,15 @@ const RegisterResultScreen = () => {
         </View>
       </ImageBackground>
 
-      <View style={{ marginTop: 200 }}>
-        <Button
-          title="Registrera resultat"
+      <View style={{ marginTop: 200, alignSelf: 'center' }}>
+        <IconAndTextButton
+          imageSource={require('../assets/edit.png')}
+          imageWidth={30}
+          imageHeight={30}
+          title="Registrera Resultat"
+          textColor="white"
+          textFontSize={20}
           onPress={submit}
-          color={Theme.orange}
         />
       </View>
     </View>
@@ -360,7 +371,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   textInput: {
-    height: 35,
+    height: 30,
     borderColor: 'gray',
     borderWidth: 2,
     backgroundColor: 'white',
@@ -378,13 +389,13 @@ const styles = StyleSheet.create({
     marginTop: 100,
     flexDirection: 'row',
 
-    alignItems: 'flex-start',
+    alignItems: 'center',
     justifyContent: 'space-evenly',
   },
   text: {
-    fontSize: 25,
-    marginTop: 20,
-    width: '20%',
+    fontSize: 22,
+    // marginTop: 20,
+    // width: '20%',
     color: 'white',
     backgroundColor: undefined,
     fontFamily: Theme.fontFamilyText,

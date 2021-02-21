@@ -8,20 +8,22 @@ import Theme from '../theme/theme';
 
 const Item = ({ name, phoneNumber, golfID }) => (
   <View style={styles.item}>
-    <Text style={styles.name}>{name}</Text>
+    <Text style={{ ...styles.name, backgroundColor: null }}>{name}</Text>
 
     <View style={{ flex: 1 }} />
     <View style={{ flex: 1 }} />
-    <Text style={styles.phoneNumber}>{phoneNumber}</Text>
+    <Text style={{ ...styles.phoneNumber, backgroundColor: null }}>
+      {phoneNumber}
+    </Text>
 
     <View style={{ flex: 1 }}></View>
 
-    <Text style={styles.golfID}>{golfID}</Text>
+    <Text style={{ ...styles.golfID, backgroundColor: null }}>{golfID}</Text>
   </View>
 );
 
 const MemberScreen = () => {
-  const { getPlayers } = useContext(PlayerContext);
+  const { getPlayers, getPlayerLoading } = useContext(PlayerContext);
   const [players, setPlayers] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -30,10 +32,6 @@ const MemberScreen = () => {
 
     console.log('players: ', players);
   }, []);
-
-  if (loading) {
-    return <Splash />;
-  }
 
   return (
     <View style={styles.container}>
@@ -47,13 +45,14 @@ const MemberScreen = () => {
       <View style={styles.namePhoneIDView}>
         <Text style={styles.text}>Namn</Text>
         <View />
-        <View />
-        <View />
+
         <Text style={styles.text}>Tel</Text>
         <View />
-        <View />
+
         <Text style={{ ...styles.text }}>Golf ID</Text>
       </View>
+
+      {getPlayerLoading && <Splash />}
 
       <View style={styles.chartView}>
         <FlatList
@@ -102,11 +101,11 @@ const styles = StyleSheet.create({
     fontFamily: Theme.fontFamilyText,
   },
   namePhoneIDView: {
-    width: '95%',
+    width: '100%',
     borderRadius: 2,
     justifyContent: 'space-evenly',
     flexDirection: 'row',
-    marginTop: 20,
+    marginTop: 0,
     borderColor: 'white',
     backgroundColor: 'grey',
 
@@ -117,9 +116,10 @@ const styles = StyleSheet.create({
   chartView: {
     backgroundColor: 'grey',
     flexDirection: 'column',
-    width: '95%',
+    width: '100%',
     marginTop: 0,
-    height: '40%',
+
+    // height: '40%',
   },
   item: {
     backgroundColor: 'black',
@@ -127,8 +127,7 @@ const styles = StyleSheet.create({
     marginVertical: 1,
     marginHorizontal: 1,
     flexDirection: 'row',
-    //alignItems: 'flex-start',
-    //justifyContent: 'center'
+    justifyContent: 'space-between',
   },
   name: {
     fontSize: 15,
