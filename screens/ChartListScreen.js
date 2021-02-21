@@ -1,25 +1,37 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, View, ImageBackground } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ImageBackground,
+  ScrollView,
+} from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import Splash from './Splash';
 import { PlayerContext } from '../context/PlayerContext';
 import Theme from '../theme/theme';
 
 const Item = ({ name, totalScore, averageOfBest7Rounds }) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{name}</Text>
+  <View style={{ ...styles.item }}>
+    <Text style={{ ...styles.title, backgroundColor: null }}>{name}</Text>
 
     <View style={{ flex: 1 }}></View>
 
-    <Text style={styles.points}>{totalScore}</Text>
-    <Text style={styles.position}>{averageOfBest7Rounds}</Text>
+    <Text style={{ ...styles.points, backgroundColor: null }}>
+      {totalScore}
+    </Text>
+    <View style={{ flex: 1 }}></View>
+    <Text style={{ ...styles.position, backgroundColor: null }}>
+      {averageOfBest7Rounds}
+    </Text>
   </View>
 );
 
 const ChartListScreen = () => {
-  const { getPlayers, getPlayerScore } = useContext(PlayerContext);
+  const { getPlayers, getPlayerScore, loadingPlayerScore } = useContext(
+    PlayerContext
+  );
   const [players, setPlayers] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [resultTable, setResultTable] = useState([]);
 
   const sumAllScores = (golfroundsOfPlayer) => {
@@ -51,7 +63,7 @@ const ChartListScreen = () => {
         name: golfroundsOfPlayer.name,
         totalScore: totalScore,
         avrageScore: avrageScore,
-        averageOfBest7Rounds: averageOfBest7Rounds,
+        averageOfBest7Rounds: averageOfBest7Rounds.toFixed(2),
       });
     });
 
@@ -129,49 +141,65 @@ const ChartListScreen = () => {
   };
 
   useEffect(() => {
-    setLoading(true);
     getAndSetPlayers();
   }, []);
 
   useEffect(() => {
-    getEachPlayerScore(players).then((value) =>
-      assignResultsForEachPlayer(value).then(setLoading(false))
-    );
+    getEachPlayerScore(players).then((value) => {
+      assignResultsForEachPlayer(value);
+    });
   }, [players]);
 
-  if (loading) {
-    return <Splash />;
-  }
-
   return (
-    //  <ScrollView style={{ backgroundColor: 'black'}}>
-    <View style={styles.container}>
-      <ImageBackground
-        source={require('../assets/greenball.png')}
-        style={styles.imageBackgroundStyle}
-      >
-        <Text style={styles.header}>Tabell</Text>
-      </ImageBackground>
+    <ScrollView style={{ backgroundColor: 'black' }}>
+      <View style={styles.container}>
+        <ImageBackground
+          source={require('../assets/greenball.png')}
+          style={styles.imageBackgroundStyle}
+        >
+          <Text style={styles.header}>Tabell</Text>
+        </ImageBackground>
+        <View style={styles.namePhoneIDView}>
+          <Text style={{ ...styles.culumText, width: 140 }}>Namn</Text>
+          <View style={{ flex: 1 }}></View>
+          <Text style={styles.culumText}>Total</Text>
+          <View style={{ flex: 1 }}></View>
+          <Text style={{ ...styles.culumText }}>Medel av 7 bästa</Text>
+        </View>
 
-      <View style={styles.chartView}>
-        <FlatList
-          data={resultTable}
-          renderItem={({ item }) => {
-            return (
-              <Item
-                name={item.name}
-                totalScore={item.totalScore}
-                averageOfBest7Rounds={item.averageOfBest7Rounds}
-              />
-            );
+        <View style={styles.chartView}>
+          {loadingPlayerScore && <Splash />}
+          {resultTable && (
+            <FlatList
+              data={resultTable}
+              renderItem={({ item }) => {
+                console.log('item: ', item);
+                return (
+                  <Item
+                    name={item.name}
+                    totalScore={item.totalScore}
+                    averageOfBest7Rounds={item.averageOfBest7Rounds}
+                  />
+                );
+              }}
+              keyExtractor={(_, index) => index.toString()}
+            />
+          )}
+        </View>
+        <View
+          style={{
+            // backgroundColor: 'red',
+            alignSelf: 'center',
+            alignItems: 'center',
+            marginTop: 50,
+            marginBottom: 50,
           }}
-          keyExtractor={(item, index) => index.toString()}
-        />
+        >
+          <Text style={styles.text}>Vänd luren för detaljer</Text>
+          <Text style={styles.kghio}>KGHIO 2021</Text>
+        </View>
       </View>
-      <Text style={styles.text}>Vänd luren för detaljer</Text>
-      <Text style={styles.kghio}>KGHIO 2021</Text>
-    </View>
-    //  </ScrollView>
+    </ScrollView>
   );
 };
 
@@ -198,9 +226,11 @@ const styles = StyleSheet.create({
     marginVertical: 1,
     marginHorizontal: 1,
     flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   title: {
     fontSize: 15,
+    width: 90,
 
     color: 'white',
     fontFamily: Theme.fontFamilyText,
@@ -211,6 +241,7 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     color: Theme.orange,
     fontFamily: Theme.fontFamilyText,
+    marginLeft: 0,
   },
   position: {
     fontSize: 15,
@@ -224,7 +255,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     width: '100%',
     marginTop: 0,
-    height: '45%',
+    // height: '45%',
   },
 
   kghio: {
@@ -238,11 +269,28 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontFamily: Theme.fontFamilyText,
   },
+  culumText: {
+    color: 'white',
+    fontFamily: Theme.fontFamilyText,
+  },
   imageBackgroundStyle: {
     width: '100%',
     height: undefined,
     aspectRatio: 1,
     marginTop: -90,
+  },
+  namePhoneIDView: {
+    width: '100%',
+    borderRadius: 2,
+    justifyContent: 'space-evenly',
+    flexDirection: 'row',
+    marginTop: 0,
+    borderColor: 'white',
+    backgroundColor: 'grey',
+
+    borderWidth: 1,
+    alignSelf: 'center',
+    fontFamily: Theme.fontFamilyText,
   },
 });
 

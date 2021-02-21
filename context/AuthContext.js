@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import firebase from '../firebase';
-import { Alert } from 'react-native';
+import { Alert, Button } from 'react-native';
 import { firestore } from 'firebase';
 import { set } from 'react-native-reanimated';
 
@@ -15,7 +15,6 @@ export default function AuthContextProvider({ children }) {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      // console.log("user: ", user);
       setUser(user);
       setIsLoading(false);
     });
@@ -36,7 +35,6 @@ export default function AuthContextProvider({ children }) {
       })
       .then(() => {
         console.log('User updated');
-        // console.log("userid: ", auth.currentUser.uid);
       });
 
     user
@@ -45,7 +43,6 @@ export default function AuthContextProvider({ children }) {
       })
       .then(function () {
         alert('Update succesfull');
-        // console.log("update succesfull: ", user);
       })
       .catch(function (error) {
         alert(error);
