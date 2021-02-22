@@ -77,14 +77,15 @@ export default function SignUpScreen({ navigation }) {
               }}
               autoCapitalize="none"
             />
-
-            <Button
-              title="Updatera Profil"
-              color={Theme.orange}
-              style={styles.button}
-              disabled={loading}
-              onPress={submit}
-            />
+            <View style={{ marginTop: 30 }}>
+              <Button
+                title="Updatera Profil"
+                color={Theme.orange}
+                style={styles.button}
+                disabled={loading}
+                onPress={submit}
+              />
+            </View>
           </View>
         </View>
       </TouchableWithoutFeedback>

@@ -30,7 +30,7 @@ const MemberScreen = () => {
     <ScrollView style={{ backgroundColor: 'black' }}>
       <View style={styles.container}>
         <ImageBackground
-          source={require('../assets/pokal.png')}
+          source={require('../assets/golfBall.png')}
           style={styles.imageBackgroundStyle}
         >
           <Text style={styles.header}>Medlemmar</Text>
@@ -56,7 +56,6 @@ const MemberScreen = () => {
           <FlatList
             data={players}
             renderItem={({ item }) => {
-              console.log('item:   ', item);
               return (
                 <Item
                   name={item.name}

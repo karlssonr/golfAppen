@@ -15,12 +15,10 @@ const Item = ({ name, totalScore, averageOfBest7Rounds }) => (
   <View style={{ ...styles.item }}>
     <Text style={{ ...styles.title, backgroundColor: null }}>{name}</Text>
 
-    {/* <View style={{ flex: 1, backgroundColor: 'blue' }}></View> */}
-
     <Text style={{ ...styles.totalScore, backgroundColor: null }}>
       {totalScore}
     </Text>
-    {/* <View style={{ flex: 1, backgroundColor: 'blue' }}></View> */}
+
     <Text style={{ ...styles.sevenBest, backgroundColor: null }}>
       {averageOfBest7Rounds}
     </Text>
@@ -154,7 +152,7 @@ const ChartListScreen = () => {
     <ScrollView style={{ backgroundColor: 'black' }}>
       <View style={styles.container}>
         <ImageBackground
-          source={require('../assets/greenball.png')}
+          source={require('../assets/pokal.png')}
           style={styles.imageBackgroundStyle}
         >
           <Text style={styles.header}>Tabell</Text>

@@ -9,7 +9,7 @@ import {
   Platform,
   KeyboardAvoidingView,
 } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
+import { TextInput, ScrollView } from 'react-native-gesture-handler';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { PlayerContext } from '../context/PlayerContext';
 import Theme from '../theme/theme';
@@ -21,7 +21,6 @@ const RegisterResultScreen = () => {
 
   const { postGolfRound, getPlayers } = useContext(PlayerContext);
 
-  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   const [playerOne, setPlayerOne] = useState({
@@ -61,7 +60,6 @@ const RegisterResultScreen = () => {
 
   const submit = async () => {
     try {
-      setError('');
       setLoading(true);
 
       let playersPlayed = 0;
@@ -81,8 +79,6 @@ const RegisterResultScreen = () => {
 
       if (playersPlayed > 1) {
         if (playerOne.name !== null) {
-          console.log('USERID', playerOne.userID);
-
           postGolfRound(
             playerOne.userID,
             playerOne.points,
@@ -118,7 +114,6 @@ const RegisterResultScreen = () => {
 
       console.log('Posting golf round');
     } catch (er) {
-      setError('Failed to post golfround');
       console.log(er);
     }
 
@@ -140,8 +135,6 @@ const RegisterResultScreen = () => {
       });
     });
 
-    // console.log("array: ", array);
-
     return array;
   };
 
@@ -158,17 +151,22 @@ const RegisterResultScreen = () => {
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
+          {/* <View style={{ height: '30%' }}> */}
           <ImageBackground
-            source={require('../assets/golfBall.png')}
+            source={require('../assets/greenball.png')}
             style={{
               width: '100%',
               height: undefined,
               aspectRatio: 1,
+              marginTop: -90,
+
               // backgroundColor: 'white'
             }}
           >
             <Text style={styles.header}>Registrera Resultat</Text>
-
+          </ImageBackground>
+          {/* </View> */}
+          <View>
             <View style={{ ...styles.textView }}>
               <Text
                 style={{
@@ -337,18 +335,18 @@ const RegisterResultScreen = () => {
                 style={{ ...styles.textInput }}
               ></TextInput>
             </View>
-          </ImageBackground>
 
-          <View style={{ marginTop: 200, alignSelf: 'center' }}>
-            <IconAndTextButton
-              imageSource={require('../assets/edit.png')}
-              imageWidth={30}
-              imageHeight={30}
-              title="Registrera Resultat"
-              textColor="white"
-              textFontSize={20}
-              onPress={submit}
-            />
+            <View style={{ marginTop: 50, alignSelf: 'center' }}>
+              <IconAndTextButton
+                imageSource={require('../assets/edit.png')}
+                imageWidth={30}
+                imageHeight={30}
+                title="Registrera Resultat"
+                textColor="white"
+                textFontSize={20}
+                onPress={submit}
+              />
+            </View>
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -390,13 +388,13 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 40,
-    marginTop: 55,
+    marginTop: 120,
     alignSelf: 'center',
     color: 'white',
     fontFamily: Theme.fontFamilyHeader,
   },
   textView: {
-    marginTop: 100,
+    marginTop: -30,
     flexDirection: 'row',
 
     alignItems: 'center',

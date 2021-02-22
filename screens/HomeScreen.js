@@ -9,7 +9,7 @@ const HomeScreen = ({ navigation }) => {
     <View style={styles.container}>
       <ImageBackground
         source={require('../assets/image8.png')}
-        style={{ width: '100%', height: '55%', aspectRatio: 1 }}
+        style={{ width: '100%', height: undefined, aspectRatio: 1 }}
       >
         <Text style={styles.header}>KGHIO 2021</Text>
       </ImageBackground>
