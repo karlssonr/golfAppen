@@ -23,7 +23,7 @@ export default function PlayerContextProvider({ children }) {
 
   const getPlayerScore = async (userID) => {
     setLoadingPlayerScore(true);
-    // console.log('getplayerscore');
+
     let snapshot = await firebase
       .firestore()
       .collection('players')
@@ -38,7 +38,7 @@ export default function PlayerContextProvider({ children }) {
         playerScore.push({ ...doc.data() });
       });
     }
-    // console.log('playerScore:  ', playerScore);
+
     setLoadingPlayerScore(false);
     return playerScore;
   };

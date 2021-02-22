@@ -30,6 +30,7 @@ export default function AuthenticatedStack() {
           title: userName,
           headerRight: () => (
             <Button
+              backgroundColor={null}
               onPress={() => {
                 console.log('profil');
                 navigation.navigate('ProfileScreen');

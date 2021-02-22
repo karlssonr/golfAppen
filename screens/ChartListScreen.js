@@ -15,13 +15,13 @@ const Item = ({ name, totalScore, averageOfBest7Rounds }) => (
   <View style={{ ...styles.item }}>
     <Text style={{ ...styles.title, backgroundColor: null }}>{name}</Text>
 
-    <View style={{ flex: 1 }}></View>
+    {/* <View style={{ flex: 1, backgroundColor: 'blue' }}></View> */}
 
-    <Text style={{ ...styles.points, backgroundColor: null }}>
+    <Text style={{ ...styles.totalScore, backgroundColor: null }}>
       {totalScore}
     </Text>
-    <View style={{ flex: 1 }}></View>
-    <Text style={{ ...styles.position, backgroundColor: null }}>
+    {/* <View style={{ flex: 1, backgroundColor: 'blue' }}></View> */}
+    <Text style={{ ...styles.sevenBest, backgroundColor: null }}>
       {averageOfBest7Rounds}
     </Text>
   </View>
@@ -160,11 +160,19 @@ const ChartListScreen = () => {
           <Text style={styles.header}>Tabell</Text>
         </ImageBackground>
         <View style={styles.namePhoneIDView}>
-          <Text style={{ ...styles.culumText, width: 140 }}>Namn</Text>
-          <View style={{ flex: 1 }}></View>
-          <Text style={styles.culumText}>Total</Text>
-          <View style={{ flex: 1 }}></View>
-          <Text style={{ ...styles.culumText }}>Medel av 7 bästa</Text>
+          <Text style={{ ...styles.culumText, width: '45%' }}>Namn</Text>
+          {/* <View style={{ flex: 1 }}></View> */}
+          <Text
+            style={{ ...styles.culumText, textAlign: 'center', width: '15%' }}
+          >
+            Total
+          </Text>
+          {/* <View style={{ flex: 1 }}></View> */}
+          <Text
+            style={{ ...styles.culumText, textAlign: 'right', width: '35%' }}
+          >
+            Medel av 7 bästa
+          </Text>
         </View>
 
         <View style={styles.chartView}>
@@ -230,24 +238,27 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 15,
-    width: 90,
+    width: '45%',
 
     color: 'white',
     fontFamily: Theme.fontFamilyText,
   },
-  points: {
+  totalScore: {
     fontSize: 15,
 
-    textAlign: 'right',
+    textAlign: 'center',
     color: Theme.orange,
     fontFamily: Theme.fontFamilyText,
     marginLeft: 0,
+    width: '15%',
   },
-  position: {
+  sevenBest: {
     fontSize: 15,
+    width: '35%',
+    textAlign: 'right',
 
     color: 'white',
-    marginRight: 15,
+    // marginRight: 15,
     fontFamily: Theme.fontFamilyText,
   },
   chartView: {
