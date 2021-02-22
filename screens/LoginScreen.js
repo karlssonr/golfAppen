@@ -1,6 +1,16 @@
 import React from 'react';
 import { useState, useContext } from 'react';
-import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TextInput,
+  Platform,
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  Keyboard,
+} from 'react-native';
 import { AuthContext } from '../context/AuthContext';
 import Splash from './Splash';
 import Theme from '../theme/theme';
@@ -32,61 +42,75 @@ export default function LogIn({ navigation }) {
   }
 
   return (
-    <View style={styles.container}>
-      <Text
-        style={{
-          fontWeight: 'bold',
-          fontSize: 24,
-          marginBottom: 10,
-          color: Theme.orange,
-          fontFamily: Theme.fontFamilyText,
-        }}
-      ></Text>
-      <View style={{ width: '50%' }}>
-        <Text style={styles.text}>Email</Text>
-        <TextInput
-          autoCorrect={true}
-          placeholder="Enter email"
-          value={email}
-          onChangeText={setEmail}
-          style={{
-            backgroundColor: 'lightgrey',
-            padding: 10,
-            borderRadius: 5,
-            marginBottom: 10,
-          }}
-          autoCapitalize="none"
-        />
-        <Text style={styles.text}>Lösenord</Text>
-        <TextInput
-          placeholder="Enter password"
-          value={password}
-          onChangeText={setPassword}
-          style={{ backgroundColor: 'lightgrey', padding: 10, borderRadius: 5 }}
-          autoCapitalize="none"
-          secureTextEntry={true}
-        />
-        <Button
-          title="Logga In"
-          onPress={submit}
-          color={Theme.orange}
-          style={styles.button}
-        />
-        <Button
-          title="Skapa Konto"
-          onPress={() => navigation.navigate('SignUpScreen')}
-          color={Theme.orange}
-          style={styles.button}
-        />
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{ flex: 1 }}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 24,
+              marginBottom: 10,
+              color: Theme.orange,
+              fontFamily: Theme.fontFamilyText,
+            }}
+          ></Text>
+          <View style={{ width: '50%' }}>
+            <Text style={styles.text}>Email</Text>
+            <TextInput
+              autoCorrect={true}
+              placeholder="Enter email"
+              value={email}
+              onChangeText={setEmail}
+              style={{
+                backgroundColor: 'lightgrey',
+                padding: 10,
+                borderRadius: 5,
+                marginBottom: 10,
+              }}
+              autoCapitalize="none"
+            />
+            <Text style={styles.text}>Lösenord</Text>
+            <TextInput
+              placeholder="Enter password"
+              value={password}
+              onChangeText={setPassword}
+              style={{
+                backgroundColor: 'lightgrey',
+                padding: 10,
+                borderRadius: 5,
+              }}
+              autoCapitalize="none"
+              secureTextEntry={true}
+            />
+            <View style={{ marginTop: 30 }}>
+              <Button
+                title="Logga In"
+                onPress={submit}
+                color={Theme.orange}
+                style={styles.button}
+              />
 
-        <Button
-          title="Glömt lösenord?"
-          onPress={() => navigation.navigate('ForgotPasswordScreen')}
-          color={Theme.orange}
-          style={styles.button}
-        />
-      </View>
-    </View>
+              <Button
+                title="Skapa Konto"
+                onPress={() => navigation.navigate('SignUpScreen')}
+                color={Theme.orange}
+                style={styles.button}
+              />
+
+              <Button
+                title="Glömt lösenord?"
+                onPress={() => navigation.navigate('ForgotPasswordScreen')}
+                color={Theme.orange}
+                style={styles.button}
+              />
+            </View>
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -98,7 +122,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button: {
-    marginTop: 50,
+    margin: 0,
   },
   text: {
     fontWeight: '600',

@@ -1,6 +1,16 @@
 import React from 'react';
 import { useState, useContext } from 'react';
-import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TextInput,
+  Platform,
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  Keyboard,
+} from 'react-native';
 import { AuthContext } from '../context/AuthContext';
 import Splash from './Splash';
 import Theme from '../theme/theme';
@@ -31,28 +41,37 @@ export default function ForgotPasswordScreen({ navigation }) {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}></Text>
-      <View style={{ width: '50%' }}>
-        <Text style={styles.text}>Email</Text>
-        <TextInput
-          placeholder="Ange emailadress"
-          value={email}
-          onChangeText={setEmail}
-          style={styles.textImputEmail}
-          autoCapitalize="none"
-          autoCorrect={false}
-        />
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{ flex: 1 }}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
+          <Text style={styles.text}></Text>
+          <View style={{ width: '50%' }}>
+            <Text style={styles.text}>Email</Text>
+            <TextInput
+              placeholder="Ange emailadress"
+              value={email}
+              onChangeText={setEmail}
+              style={styles.textImputEmail}
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
 
-        <Button
-          title="Återställ lösenord"
-          color={Theme.orange}
-          style={styles.button}
-          disabled={loading}
-          onPress={submit}
-        />
-      </View>
-    </View>
+            <View style={{ marginTop: 30 }}>
+              <Button
+                title="Återställ lösenord"
+                color={Theme.orange}
+                style={styles.button}
+                disabled={loading}
+                onPress={submit}
+              />
+            </View>
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }
 

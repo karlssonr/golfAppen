@@ -1,5 +1,14 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { StyleSheet, Text, View, ImageBackground, Button } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ImageBackground,
+  Keyboard,
+  TouchableWithoutFeedback,
+  Platform,
+  KeyboardAvoidingView,
+} from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { PlayerContext } from '../context/PlayerContext';
@@ -142,207 +151,208 @@ const RegisterResultScreen = () => {
     return <Splash />;
   }
 
-  console.log(playerOne);
   return (
-    <View style={styles.container}>
-      <ImageBackground
-        source={require('../assets/golfBall.png')}
-        style={{
-          width: '100%',
-          height: undefined,
-          aspectRatio: 1,
-          // backgroundColor: 'white'
-        }}
-      >
-        <Text style={styles.header}>Registrera Resultat</Text>
-
-        <View style={{ ...styles.textView }}>
-          <Text
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{ flex: 1 }}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
+          <ImageBackground
+            source={require('../assets/golfBall.png')}
             style={{
-              ...styles.text,
-
-              width: 180,
-              alignSelf: 'center',
-              marginLeft: 10,
+              width: '100%',
+              height: undefined,
+              aspectRatio: 1,
+              // backgroundColor: 'white'
             }}
           >
-            Spelare
-          </Text>
-          <Text style={{ ...styles.text, width: '20%' }}>Poäng</Text>
-          <Text style={{ ...styles.text, width: '20%' }}>Extra</Text>
+            <Text style={styles.header}>Registrera Resultat</Text>
+
+            <View style={{ ...styles.textView }}>
+              <Text
+                style={{
+                  ...styles.text,
+
+                  width: 180,
+                  alignSelf: 'center',
+                  marginLeft: 10,
+                }}
+              >
+                Spelare
+              </Text>
+              <Text style={{ ...styles.text, width: '20%' }}>Poäng</Text>
+              <Text style={{ ...styles.text, width: '20%' }}>Extra</Text>
+            </View>
+            <View style={{ ...styles.textInputView, zIndex: 5 }}>
+              <DropDownPicker
+                placeholder="Välj spelare"
+                items={playersArray}
+                defaultValue={playerOne.name}
+                containerStyle={{ height: 45 }}
+                style={styles.dropDownPickerStyle}
+                itemStyle={{ justifyContent: 'flex-start' }}
+                labelStyle={styles.dropDownLabelStyle}
+                dropDownStyle={{ backgroundColor: '#fafafa' }}
+                onChangeItem={(item) => {
+                  setPlayerOne({
+                    ...playerOne,
+                    name: item.value,
+                    userID: item.userID,
+                  });
+                }}
+              />
+
+              <TextInput
+                placeholder="Poäng"
+                value={playerOne.points}
+                onChangeText={(text) =>
+                  setPlayerOne({ ...playerOne, points: text })
+                }
+                keyboardType="number-pad"
+                style={{ ...styles.textInput }}
+              />
+
+              <TextInput
+                placeholder="Extra poäng"
+                value={playerOne.extraPoints}
+                onChangeText={(text) =>
+                  setPlayerOne({ ...playerOne, extraPoints: text })
+                }
+                keyboardType="number-pad"
+                style={{ ...styles.textInput }}
+              />
+            </View>
+
+            <View style={{ ...styles.textInputView, zIndex: 4 }}>
+              <DropDownPicker
+                placeholder="Välj spelare"
+                items={playersArray}
+                defaultValue={playerTwo.name}
+                containerStyle={{ height: 45 }}
+                style={styles.dropDownPickerStyle}
+                itemStyle={{ justifyContent: 'flex-start' }}
+                labelStyle={styles.dropDownLabelStyle}
+                dropDownStyle={{ backgroundColor: '#fafafa' }}
+                onChangeItem={(item) =>
+                  setPlayerTwo({
+                    ...playerTwo,
+                    name: item.value,
+                    userID: item.userID,
+                  })
+                }
+              />
+              <TextInput
+                placeholder="Poäng"
+                value={playerTwo.points}
+                onChangeText={(text) =>
+                  setPlayerTwo({ ...playerTwo, points: text })
+                }
+                keyboardType="number-pad"
+                style={{ ...styles.textInput }}
+              ></TextInput>
+              <TextInput
+                placeholder="Extra poäng"
+                value={playerTwo.extraPoints}
+                onChangeText={(text) =>
+                  setPlayerTwo({ ...playerTwo, extraPoints: text })
+                }
+                keyboardType="number-pad"
+                style={{ ...styles.textInput }}
+              ></TextInput>
+            </View>
+
+            <View style={{ ...styles.textInputView, zIndex: 3 }}>
+              <DropDownPicker
+                placeholder="Välj spelare"
+                items={playersArray}
+                defaultValue={playerThree.name}
+                containerStyle={{ height: 45 }}
+                style={styles.dropDownPickerStyle}
+                itemStyle={{ justifyContent: 'flex-start' }}
+                labelStyle={styles.dropDownLabelStyle}
+                dropDownStyle={{ backgroundColor: '#fafafa' }}
+                onChangeItem={(item) =>
+                  setPlayerThree({
+                    ...playerThree,
+                    name: item.value,
+                    userID: item.userID,
+                  })
+                }
+              />
+              <TextInput
+                placeholder="Poäng"
+                value={playerThree.points}
+                onChangeText={(text) =>
+                  setPlayerThree({ ...playerThree, points: text })
+                }
+                keyboardType="number-pad"
+                style={{ ...styles.textInput }}
+              ></TextInput>
+              <TextInput
+                placeholder="Extra poäng"
+                value={playerThree.extraPoints}
+                onChangeText={(text) =>
+                  setPlayerThree({ ...playerThree, extraPoints: text })
+                }
+                keyboardType="number-pad"
+                style={{ ...styles.textInput }}
+              ></TextInput>
+            </View>
+
+            <View style={{ ...styles.textInputView, zIndex: 2 }}>
+              <DropDownPicker
+                placeholder="Välj spelare"
+                items={playersArray}
+                defaultValue={playerFour.name}
+                containerStyle={{ height: 45 }}
+                style={styles.dropDownPickerStyle}
+                itemStyle={{ justifyContent: 'flex-start' }}
+                labelStyle={styles.dropDownLabelStyle}
+                dropDownStyle={{ backgroundColor: '#fafafa' }}
+                onChangeItem={(item) =>
+                  setPlayerFour({
+                    ...playerFour,
+                    name: item.value,
+                    userID: item.userID,
+                  })
+                }
+              />
+              <TextInput
+                placeholder="Poäng"
+                value={playerFour.points}
+                onChangeText={(text) =>
+                  setPlayerFour({ ...playerFour, points: text })
+                }
+                keyboardType="number-pad"
+                style={{ ...styles.textInput }}
+              ></TextInput>
+              <TextInput
+                placeholder="Extra poäng"
+                value={players.extraPoints}
+                onChangeText={(text) =>
+                  setPlayerFour({ ...playerFour, extraPoints: text })
+                }
+                keyboardType="number-pad"
+                style={{ ...styles.textInput }}
+              ></TextInput>
+            </View>
+          </ImageBackground>
+
+          <View style={{ marginTop: 200, alignSelf: 'center' }}>
+            <IconAndTextButton
+              imageSource={require('../assets/edit.png')}
+              imageWidth={30}
+              imageHeight={30}
+              title="Registrera Resultat"
+              textColor="white"
+              textFontSize={20}
+              onPress={submit}
+            />
+          </View>
         </View>
-        <View style={{ ...styles.textInputView, zIndex: 5 }}>
-          <DropDownPicker
-            placeholder="Välj spelare"
-            items={playersArray}
-            defaultValue={playerOne.name}
-            containerStyle={{ height: 45 }}
-            style={styles.dropDownPickerStyle}
-            itemStyle={{ justifyContent: 'flex-start' }}
-            labelStyle={styles.dropDownLabelStyle}
-            dropDownStyle={{ backgroundColor: '#fafafa' }}
-            onChangeItem={(item) => {
-              setPlayerOne({
-                ...playerOne,
-                name: item.value,
-                userID: item.userID,
-              });
-            }}
-          />
-
-          {/* <View style={{ backgroundColor: 'blue' }}>
-
-  
-        </View> */}
-
-          <TextInput
-            placeholder="Poäng"
-            value={playerOne.points}
-            onChangeText={(text) =>
-              setPlayerOne({ ...playerOne, points: text })
-            }
-            keyboardType="number-pad"
-            style={{ ...styles.textInput }}
-          />
-
-          <TextInput
-            placeholder="Extra poäng"
-            value={playerOne.extraPoints}
-            onChangeText={(text) =>
-              setPlayerOne({ ...playerOne, extraPoints: text })
-            }
-            keyboardType="number-pad"
-            style={{ ...styles.textInput }}
-          />
-        </View>
-
-        <View style={{ ...styles.textInputView, zIndex: 4 }}>
-          <DropDownPicker
-            placeholder="Välj spelare"
-            items={playersArray}
-            defaultValue={playerTwo.name}
-            containerStyle={{ height: 45 }}
-            style={styles.dropDownPickerStyle}
-            itemStyle={{ justifyContent: 'flex-start' }}
-            labelStyle={styles.dropDownLabelStyle}
-            dropDownStyle={{ backgroundColor: '#fafafa' }}
-            onChangeItem={(item) =>
-              setPlayerTwo({
-                ...playerTwo,
-                name: item.value,
-                userID: item.userID,
-              })
-            }
-          />
-          <TextInput
-            placeholder="Poäng"
-            value={playerTwo.points}
-            onChangeText={(text) =>
-              setPlayerTwo({ ...playerTwo, points: text })
-            }
-            keyboardType="number-pad"
-            style={{ ...styles.textInput }}
-          ></TextInput>
-          <TextInput
-            placeholder="Extra poäng"
-            value={playerTwo.extraPoints}
-            onChangeText={(text) =>
-              setPlayerTwo({ ...playerTwo, extraPoints: text })
-            }
-            keyboardType="number-pad"
-            style={{ ...styles.textInput }}
-          ></TextInput>
-        </View>
-
-        <View style={{ ...styles.textInputView, zIndex: 3 }}>
-          <DropDownPicker
-            placeholder="Välj spelare"
-            items={playersArray}
-            defaultValue={playerThree.name}
-            containerStyle={{ height: 45 }}
-            style={styles.dropDownPickerStyle}
-            itemStyle={{ justifyContent: 'flex-start' }}
-            labelStyle={styles.dropDownLabelStyle}
-            dropDownStyle={{ backgroundColor: '#fafafa' }}
-            onChangeItem={(item) =>
-              setPlayerThree({
-                ...playerThree,
-                name: item.value,
-                userID: item.userID,
-              })
-            }
-          />
-          <TextInput
-            placeholder="Poäng"
-            value={playerThree.points}
-            onChangeText={(text) =>
-              setPlayerThree({ ...playerThree, points: text })
-            }
-            keyboardType="number-pad"
-            style={{ ...styles.textInput }}
-          ></TextInput>
-          <TextInput
-            placeholder="Extra poäng"
-            value={playerThree.extraPoints}
-            onChangeText={(text) =>
-              setPlayerThree({ ...playerThree, extraPoints: text })
-            }
-            keyboardType="number-pad"
-            style={{ ...styles.textInput }}
-          ></TextInput>
-        </View>
-
-        <View style={{ ...styles.textInputView, zIndex: 2 }}>
-          <DropDownPicker
-            placeholder="Välj spelare"
-            items={playersArray}
-            defaultValue={playerFour.name}
-            containerStyle={{ height: 45 }}
-            style={styles.dropDownPickerStyle}
-            itemStyle={{ justifyContent: 'flex-start' }}
-            labelStyle={styles.dropDownLabelStyle}
-            dropDownStyle={{ backgroundColor: '#fafafa' }}
-            onChangeItem={(item) =>
-              setPlayerFour({
-                ...playerFour,
-                name: item.value,
-                userID: item.userID,
-              })
-            }
-          />
-          <TextInput
-            placeholder="Poäng"
-            value={playerFour.points}
-            onChangeText={(text) =>
-              setPlayerFour({ ...playerFour, points: text })
-            }
-            keyboardType="number-pad"
-            style={{ ...styles.textInput }}
-          ></TextInput>
-          <TextInput
-            placeholder="Extra poäng"
-            value={players.extraPoints}
-            onChangeText={(text) =>
-              setPlayerFour({ ...playerFour, extraPoints: text })
-            }
-            keyboardType="number-pad"
-            style={{ ...styles.textInput }}
-          ></TextInput>
-        </View>
-      </ImageBackground>
-
-      <View style={{ marginTop: 200, alignSelf: 'center' }}>
-        <IconAndTextButton
-          imageSource={require('../assets/edit.png')}
-          imageWidth={30}
-          imageHeight={30}
-          title="Registrera Resultat"
-          textColor="white"
-          textFontSize={20}
-          onPress={submit}
-        />
-      </View>
-    </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 
