@@ -17,7 +17,7 @@ export default function PlayerContextProvider({ children }) {
       .set({ points: points, extraPoints: extraPoints })
       .then(() => {
         console.log('GolfRound Added');
-        alert('Golfrounds added');
+        // alert('Golfrunda skapad');
       });
   };
 

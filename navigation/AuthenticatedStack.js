@@ -22,7 +22,7 @@ export default function AuthenticatedStack() {
       screenOptions={{
         headerStyle: {
           backgroundColor: 'black',
-          alignItems: 'center',
+          // alignItems: 'center',
         },
         headerTintColor: Theme.orange,
       }}

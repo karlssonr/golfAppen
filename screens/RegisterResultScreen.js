@@ -17,89 +17,94 @@ import IconAndTextButton from '../components/IconAndTextButton';
 import Splash from './Splash';
 
 const RegisterResultScreen = () => {
-  const [players, setPlayers] = useState([]);
-
   const { postGolfRound, getPlayers } = useContext(PlayerContext);
+
+  const [players, setPlayers] = useState([]);
+  const [registerButtonDisabled, setRegisterButtonDisabled] = useState(false);
 
   const [loading, setLoading] = useState(false);
 
   const [playerOne, setPlayerOne] = useState({
     name: null,
     points: '',
-    extraPoints: '',
+    extraPoints: '0',
     userID: '',
   });
 
   const [playerTwo, setPlayerTwo] = useState({
     name: null,
     points: '',
-    extraPoints: '',
+    extraPoints: '0',
     userID: '',
   });
 
   const [playerThree, setPlayerThree] = useState({
     name: null,
     points: '',
-    extraPoints: '',
+    extraPoints: '0',
     userID: '',
   });
 
   const [playerFour, setPlayerFour] = useState({
     name: null,
     points: '',
-    extraPoints: '',
+    extraPoints: '0',
     userID: '',
   });
 
   const resetPlayerState = () => {
-    setPlayerOne({ name: null, points: '', extraPoints: '', userID: '' });
-    setPlayerTwo({ name: null, points: '', extraPoints: '', userID: '' });
-    setPlayerThree({ name: null, points: '', extraPoints: '', userID: '' });
-    setPlayerFour({ name: null, points: '', extraPoints: '', userID: '' });
+    setPlayerOne({ name: null, points: '', extraPoints: '0', userID: '' });
+    setPlayerTwo({ name: null, points: '', extraPoints: '0', userID: '' });
+    setPlayerThree({ name: null, points: '', extraPoints: '0', userID: '' });
+    setPlayerFour({ name: null, points: '', extraPoints: '0', userID: '' });
   };
 
   const submit = async () => {
     try {
-      setLoading(true);
+      // setLoading(true);
 
       let playersPlayed = 0;
 
-      if (playerOne.name !== null) {
+      if (playerOne.name !== null && playerOne.points !== '') {
         playersPlayed++;
       }
-      if (playerTwo.name !== null) {
+      if (playerTwo.name !== null && playerTwo.points !== '') {
         playersPlayed++;
       }
-      if (playerThree.name !== null) {
+      if (playerThree.name !== null && playerThree.points !== '') {
         playersPlayed++;
       }
-      if (playerFour.name !== null) {
+      if (playerFour.name !== null && playerFour.points !== '') {
         playersPlayed++;
       }
 
+      if (playersPlayed < 1) {
+        alert('Minst 2 spelare och pöäng måste rapporteras');
+      }
+
       if (playersPlayed > 1) {
-        if (playerOne.name !== null) {
+        if (playerOne.name !== null && playerOne.points !== '') {
           postGolfRound(
             playerOne.userID,
             playerOne.points,
             playerOne.extraPoints
           );
         }
-        if (playerTwo.name !== null) {
+        if (playerTwo.name !== null && playerTwo.points !== '') {
           postGolfRound(
             playerTwo.userID,
             playerTwo.points,
             playerTwo.extraPoints
           );
         }
-        if (playerThree.name !== null) {
+        if (playerThree.name !== null && playerThree.points !== '') {
           postGolfRound(
             playerThree.userID,
             playerThree.points,
             playerThree.extraPoints
           );
         }
-        if (playerFour.name !== null) {
+        if (playerFour.name !== null && playerFour.points !== '') {
           postGolfRound(
             playerFour.userID,
             playerFour.points,
@@ -107,7 +112,7 @@ const RegisterResultScreen = () => {
           );
         }
       } else {
-        alert('Minst 2 spelare måste rapporteras');
+        return;
       }
 
       resetPlayerState();
@@ -117,7 +122,8 @@ const RegisterResultScreen = () => {
       console.log(er);
     }
 
-    setLoading(false);
+    alert('Golfrunda skapad');
+    // setLoading(false);
   };
 
   useEffect(() => {

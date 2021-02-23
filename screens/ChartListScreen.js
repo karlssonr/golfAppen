@@ -116,6 +116,8 @@ const ChartListScreen = () => {
     let totalScore = sumAllScores(golfroundsOfPlayer);
     let numberOfGolfrounds = golfroundsOfPlayer.scores.length;
 
+    let test = totalScore / numberOfGolfrounds;
+
     return totalScore / numberOfGolfrounds;
   };
 
@@ -179,7 +181,6 @@ const ChartListScreen = () => {
             <FlatList
               data={resultTable}
               renderItem={({ item }) => {
-                console.log('item: ', item);
                 return (
                   <Item
                     name={item.name}
