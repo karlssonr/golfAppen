@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, Text, View, ImageBackground } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
+import { FlatList, ScrollView } from 'react-native-gesture-handler';
 
 import Splash from './Splash';
 import { PlayerContext } from '../context/PlayerContext';
@@ -10,13 +10,9 @@ const Item = ({ name, phoneNumber, golfID }) => (
   <View style={styles.item}>
     <Text style={{ ...styles.name, backgroundColor: null }}>{name}</Text>
 
-    <View style={{ flex: 1 }} />
-    <View style={{ flex: 1 }} />
     <Text style={{ ...styles.phoneNumber, backgroundColor: null }}>
       {phoneNumber}
     </Text>
-
-    <View style={{ flex: 1 }}></View>
 
     <Text style={{ ...styles.golfID, backgroundColor: null }}>{golfID}</Text>
   </View>
@@ -25,54 +21,56 @@ const Item = ({ name, phoneNumber, golfID }) => (
 const MemberScreen = () => {
   const { getPlayers, getPlayerLoading } = useContext(PlayerContext);
   const [players, setPlayers] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getPlayers().then(setPlayers);
-
-    console.log('players: ', players);
   }, []);
 
   return (
-    <View style={styles.container}>
-      <ImageBackground
-        source={require('../assets/pokal.png')}
-        style={styles.imageBackgroundStyle}
-      >
-        <Text style={styles.header}>Medlemmar</Text>
-      </ImageBackground>
+    <ScrollView style={{ backgroundColor: 'black' }}>
+      <View style={styles.container}>
+        <ImageBackground
+          source={require('../assets/golfBall.png')}
+          style={styles.imageBackgroundStyle}
+        >
+          <Text style={styles.header}>Medlemmar</Text>
+        </ImageBackground>
 
-      <View style={styles.namePhoneIDView}>
-        <Text style={styles.text}>Namn</Text>
-        <View />
+        <View style={styles.namePhoneIDView}>
+          <Text style={{ ...styles.text, width: '37%' }}>Namn</Text>
+          <View />
 
-        <Text style={styles.text}>Tel</Text>
-        <View />
+          <Text style={{ ...styles.text, width: '33%', textAlign: 'center' }}>
+            Tel
+          </Text>
+          <View />
 
-        <Text style={{ ...styles.text }}>Golf ID</Text>
+          <Text style={{ ...styles.text, width: '30%', textAlign: 'right' }}>
+            Golf ID
+          </Text>
+        </View>
+
+        {getPlayerLoading && <Splash />}
+
+        <View style={styles.chartView}>
+          <FlatList
+            data={players}
+            renderItem={({ item }) => {
+              return (
+                <Item
+                  name={item.name}
+                  phoneNumber={item.phoneNumber}
+                  golfID={item.golfID}
+                />
+              );
+            }}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </View>
+
+        <Text style={styles.kghio}>KGHIO 2021</Text>
       </View>
-
-      {getPlayerLoading && <Splash />}
-
-      <View style={styles.chartView}>
-        <FlatList
-          data={players}
-          renderItem={({ item }) => {
-            console.log('item:   ', item);
-            return (
-              <Item
-                name={item.name}
-                phoneNumber={item.phoneNumber}
-                golfID={item.golfID}
-              />
-            );
-          }}
-          keyExtractor={(item, index) => index.toString()}
-        />
-      </View>
-
-      <Text style={styles.kghio}>KGHIO 2021</Text>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -118,8 +116,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     width: '100%',
     marginTop: 0,
-
-    // height: '40%',
   },
   item: {
     backgroundColor: 'black',
@@ -131,23 +127,26 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 15,
-    marginLeft: 10,
+
     color: 'white',
     fontFamily: Theme.fontFamilyText,
-    width: 70,
+    width: '37%',
   },
   phoneNumber: {
     fontSize: 15,
-    //marginLeft: 40
-    textAlign: 'right',
+
+    width: '33%',
+    textAlign: 'center',
     color: 'white',
     fontFamily: Theme.fontFamilyText,
   },
   golfID: {
     fontSize: 15,
-    //marginLeft: 40
+
     color: 'white',
-    marginRight: 25,
+
+    width: '30%',
+    textAlign: 'right',
     fontFamily: Theme.fontFamilyText,
   },
 

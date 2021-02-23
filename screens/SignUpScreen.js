@@ -1,7 +1,18 @@
 import React from 'react';
 
 import { useState, useContext } from 'react';
-import { StyleSheet, Text, View, Button, TextInput, Alert } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TextInput,
+  Alert,
+  Platform,
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  Keyboard,
+} from 'react-native';
 import { AuthContext } from '../context/AuthContext';
 import Splash from './Splash';
 import Theme from '../theme/theme';
@@ -14,11 +25,6 @@ export default function SignUpScreen({ navigation }) {
   const [loading, setLoading] = useState(false);
 
   const { setIsLoggedIn, signUp } = useContext(AuthContext);
-
-  //   useEffect(() => {
-  //     console.log("error: ", error);
-
-  //   }, [error])
 
   const submit = async () => {
     if (password !== confirmPassword) {
@@ -46,47 +52,60 @@ export default function SignUpScreen({ navigation }) {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={{ width: '50%' }}>
-        <Text style={styles.text}>Email</Text>
-        <TextInput
-          placeholder="Ange emailadress"
-          value={email}
-          onChangeText={setEmail}
-          style={styles.textInput}
-          autoCapitalize="none"
-          autoCorrect={false}
-        />
-        <Text style={styles.text}>Lösenord</Text>
-        <TextInput
-          placeholder="Ange lösenord"
-          value={password}
-          onChangeText={setPassword}
-          style={styles.textInput}
-          autoCapitalize="none"
-          textContentType="password"
-          secureTextEntry={true}
-        />
-        <Text style={styles.text}>Bekräfta lösenord</Text>
-        <TextInput
-          placeholder="Bekräfta lösenord"
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
-          style={{ backgroundColor: 'lightgrey', padding: 10, borderRadius: 5 }}
-          autoCapitalize="none"
-          secureTextEntry={true}
-          textContentType="password"
-        />
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{ flex: 1 }}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
+          <View style={{ width: '50%' }}>
+            <Text style={styles.text}>Email</Text>
+            <TextInput
+              placeholder="Ange emailadress"
+              value={email}
+              onChangeText={setEmail}
+              style={styles.textInput}
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+            <Text style={styles.text}>Lösenord</Text>
+            <TextInput
+              placeholder="Ange lösenord"
+              value={password}
+              onChangeText={setPassword}
+              style={styles.textInput}
+              autoCapitalize="none"
+              textContentType="password"
+              secureTextEntry={true}
+            />
+            {/* <Text style={styles.text}>Bekräfta lösenord</Text>
+            <TextInput
+              placeholder="Bekräfta lösenord"
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+              style={{
+                backgroundColor: 'lightgrey',
+                padding: 10,
+                borderRadius: 5,
+              }}
+              autoCapitalize="none"
+              secureTextEntry={true}
+              textContentType="password"
+            /> */}
 
-        <Button
-          title="Skapa Konto"
-          color={Theme.orange}
-          style={styles.button}
-          disabled={loading}
-          onPress={submit}
-        />
-      </View>
-    </View>
+            <View style={{ marginTop: 30 }}>
+              <Button
+                title="Skapa Konto"
+                color={Theme.orange}
+                style={styles.button}
+                disabled={loading}
+                onPress={submit}
+              />
+            </View>
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }
 

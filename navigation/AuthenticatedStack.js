@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Button } from 'react-native';
+import { Button, Platform } from 'react-native';
 import HomeScreen from '../screens/HomeScreen';
 import ChartListScreen from '../screens/ChartListScreen';
 import RegisterResultScreen from '../screens/RegisterResultScreen';
@@ -18,8 +18,12 @@ export default function AuthenticatedStack() {
   return (
     <Stack.Navigator
       initialRouteName="Home"
+      // options={{ headerTitleAlign: 'center' }}
       screenOptions={{
-        headerStyle: { backgroundColor: 'black' },
+        headerStyle: {
+          backgroundColor: 'black',
+          // alignItems: 'center',
+        },
         headerTintColor: Theme.orange,
       }}
     >
@@ -28,14 +32,16 @@ export default function AuthenticatedStack() {
         component={HomeScreen}
         options={({ navigation, route }) => ({
           title: userName,
+          headerTitleAlign: 'center',
           headerRight: () => (
             <Button
+              backgroundColor={null}
               onPress={() => {
                 console.log('profil');
                 navigation.navigate('ProfileScreen');
               }}
               title="Profil"
-              color="#fff"
+              color={Platform.OS === 'ios' ? '#fff' : 'black'}
             />
           ),
           headerLeft: () => (
@@ -44,7 +50,7 @@ export default function AuthenticatedStack() {
                 signOut();
               }}
               title="Logga Ut"
-              color="#fff"
+              color={Platform.OS === 'ios' ? '#fff' : 'black'}
             />
           ),
         })}

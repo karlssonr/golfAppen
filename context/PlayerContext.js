@@ -17,13 +17,13 @@ export default function PlayerContextProvider({ children }) {
       .set({ points: points, extraPoints: extraPoints })
       .then(() => {
         console.log('GolfRound Added');
-        alert('Golfrounds added');
+        // alert('Golfrunda skapad');
       });
   };
 
   const getPlayerScore = async (userID) => {
     setLoadingPlayerScore(true);
-    // console.log('getplayerscore');
+
     let snapshot = await firebase
       .firestore()
       .collection('players')
@@ -38,7 +38,7 @@ export default function PlayerContextProvider({ children }) {
         playerScore.push({ ...doc.data() });
       });
     }
-    // console.log('playerScore:  ', playerScore);
+
     setLoadingPlayerScore(false);
     return playerScore;
   };

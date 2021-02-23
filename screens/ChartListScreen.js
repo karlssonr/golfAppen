@@ -15,13 +15,11 @@ const Item = ({ name, totalScore, averageOfBest7Rounds }) => (
   <View style={{ ...styles.item }}>
     <Text style={{ ...styles.title, backgroundColor: null }}>{name}</Text>
 
-    <View style={{ flex: 1 }}></View>
-
-    <Text style={{ ...styles.points, backgroundColor: null }}>
+    <Text style={{ ...styles.totalScore, backgroundColor: null }}>
       {totalScore}
     </Text>
-    <View style={{ flex: 1 }}></View>
-    <Text style={{ ...styles.position, backgroundColor: null }}>
+
+    <Text style={{ ...styles.sevenBest, backgroundColor: null }}>
       {averageOfBest7Rounds}
     </Text>
   </View>
@@ -118,6 +116,8 @@ const ChartListScreen = () => {
     let totalScore = sumAllScores(golfroundsOfPlayer);
     let numberOfGolfrounds = golfroundsOfPlayer.scores.length;
 
+    let test = totalScore / numberOfGolfrounds;
+
     return totalScore / numberOfGolfrounds;
   };
 
@@ -154,17 +154,25 @@ const ChartListScreen = () => {
     <ScrollView style={{ backgroundColor: 'black' }}>
       <View style={styles.container}>
         <ImageBackground
-          source={require('../assets/greenball.png')}
+          source={require('../assets/pokal.png')}
           style={styles.imageBackgroundStyle}
         >
           <Text style={styles.header}>Tabell</Text>
         </ImageBackground>
         <View style={styles.namePhoneIDView}>
-          <Text style={{ ...styles.culumText, width: 140 }}>Namn</Text>
-          <View style={{ flex: 1 }}></View>
-          <Text style={styles.culumText}>Total</Text>
-          <View style={{ flex: 1 }}></View>
-          <Text style={{ ...styles.culumText }}>Medel av 7 bästa</Text>
+          <Text style={{ ...styles.culumText, width: '45%' }}>Namn</Text>
+          {/* <View style={{ flex: 1 }}></View> */}
+          <Text
+            style={{ ...styles.culumText, textAlign: 'center', width: '15%' }}
+          >
+            Total
+          </Text>
+          {/* <View style={{ flex: 1 }}></View> */}
+          <Text
+            style={{ ...styles.culumText, textAlign: 'right', width: '35%' }}
+          >
+            Medel av 7 bästa
+          </Text>
         </View>
 
         <View style={styles.chartView}>
@@ -173,7 +181,6 @@ const ChartListScreen = () => {
             <FlatList
               data={resultTable}
               renderItem={({ item }) => {
-                console.log('item: ', item);
                 return (
                   <Item
                     name={item.name}
@@ -230,24 +237,27 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 15,
-    width: 90,
+    width: '45%',
 
     color: 'white',
     fontFamily: Theme.fontFamilyText,
   },
-  points: {
+  totalScore: {
     fontSize: 15,
 
-    textAlign: 'right',
+    textAlign: 'center',
     color: Theme.orange,
     fontFamily: Theme.fontFamilyText,
     marginLeft: 0,
+    width: '15%',
   },
-  position: {
+  sevenBest: {
     fontSize: 15,
+    width: '35%',
+    textAlign: 'right',
 
     color: 'white',
-    marginRight: 15,
+    // marginRight: 15,
     fontFamily: Theme.fontFamilyText,
   },
   chartView: {
