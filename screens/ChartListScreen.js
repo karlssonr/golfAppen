@@ -32,6 +32,27 @@ const ChartListScreen = () => {
   const [players, setPlayers] = useState([]);
   const [resultTable, setResultTable] = useState([]);
 
+  const bubbleSort = (inputArr) => {
+    let len = inputArr.length;
+    let checked;
+    do {
+      checked = false;
+      for (let i = 0; i < len; i++) {
+        console.log(inputArr[i]?.averageOfBest7Rounds);
+        if (
+          inputArr[i]?.averageOfBest7Rounds >
+          inputArr[i + 1]?.averageOfBest7Rounds
+        ) {
+          let tmp = inputArr[i];
+          inputArr[i] = inputArr[i + 1];
+          inputArr[i + 1] = tmp;
+          checked = true;
+        }
+      }
+    } while (checked);
+    return inputArr;
+  };
+
   const sumAllScores = (golfroundsOfPlayer) => {
     let totalScore = 0;
     let pointsAsInt;
@@ -65,7 +86,12 @@ const ChartListScreen = () => {
       });
     });
 
-    setResultTable(resulTableScore);
+    //  resulTableScore.averageOfBest7Rounds.sort(getLowestNumber);
+    // console.log('test:  ', resulTableScore[0].averageOfBest7Rounds);
+    const sortedArray = bubbleSort(resulTableScore);
+    // console.log(sortedArray);
+
+    setResultTable(sortedArray);
   };
 
   const calcutaleAverageOfBest7Rounds = (golfroundsOfPlayer) => {
@@ -90,6 +116,7 @@ const ChartListScreen = () => {
         }
       }
     });
+
     return getAverageNumberOfArrayOfNumber(best7Rounds);
   };
   const getAverageNumberOfArrayOfNumber = (arrayOfNumbers) => {
@@ -112,11 +139,20 @@ const ChartListScreen = () => {
     return 0;
   };
 
+  const getHighestNumber = (number1, number2) => {
+    if (number1 > number2) {
+      return -1;
+    }
+    if (number1 < number2) {
+      return 1;
+    }
+
+    return 0;
+  };
+
   const calculateAverageScore = (golfroundsOfPlayer) => {
     let totalScore = sumAllScores(golfroundsOfPlayer);
     let numberOfGolfrounds = golfroundsOfPlayer.scores.length;
-
-    let test = totalScore / numberOfGolfrounds;
 
     return totalScore / numberOfGolfrounds;
   };

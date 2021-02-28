@@ -6,6 +6,7 @@ import ChartListScreen from '../screens/ChartListScreen';
 import RegisterResultScreen from '../screens/RegisterResultScreen';
 import MemberScreen from '../screens/MemberScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import LatestGolfRoundsScreen from '../screens/LatestGolfRoundsScreen';
 import Theme from '../theme/theme';
 import { AuthContext } from '../context/AuthContext';
 
@@ -44,15 +45,6 @@ export default function AuthenticatedStack() {
               color={Platform.OS === 'ios' ? '#fff' : 'black'}
             />
           ),
-          headerLeft: () => (
-            <Button
-              onPress={() => {
-                signOut();
-              }}
-              title="Logga Ut"
-              color={Platform.OS === 'ios' ? '#fff' : 'black'}
-            />
-          ),
         })}
       />
       <Stack.Screen
@@ -71,9 +63,27 @@ export default function AuthenticatedStack() {
         options={{ title: 'Medlemmar' }}
       />
       <Stack.Screen
+        name="LatestGolfRoundsScreen"
+        component={LatestGolfRoundsScreen}
+        options={{ title: 'Senaste rundorna' }}
+      />
+      <Stack.Screen
         name="ProfileScreen"
         component={ProfileScreen}
-        options={{ title: 'Profil' }}
+        options={() => ({
+          title: 'Profil',
+          headerTitleAlign: 'center',
+          headerRight: () => (
+            <Button
+              backgroundColor={null}
+              onPress={() => {
+                signOut();
+              }}
+              title="Logga ut"
+              color={Platform.OS === 'ios' ? '#fff' : 'black'}
+            />
+          ),
+        })}
       />
     </Stack.Navigator>
   );

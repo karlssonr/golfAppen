@@ -13,12 +13,14 @@ const IconAndTextButton = ({
   onPress,
   viewWidth,
   viewMarginBottom,
+  iconColor,
 }) => {
   // const styles = StyleSheet.create({});
 
   return (
     <View
       style={{
+        backgroundColor: null,
         flexDirection: 'row',
         justifyContent: 'flex-start',
         width: 200,
@@ -29,7 +31,11 @@ const IconAndTextButton = ({
       <TouchableOpacity style={{ flexDirection: 'row' }} onPress={onPress}>
         <Image
           source={imageSource}
-          style={{ width: imageWidth, height: imageHeight }}
+          style={{
+            width: imageWidth,
+            height: imageHeight,
+            tintColor: iconColor,
+          }}
         />
         <Text
           style={{

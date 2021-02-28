@@ -18,6 +18,7 @@ const HomeScreen = ({ navigation }) => {
         <IconAndTextButton
           imageSource={require('../assets/edit.png')}
           imageWidth={30}
+          iconColor={Theme.orange}
           imageHeight={30}
           title="Registrera Resultat"
           textColor="white"
@@ -28,15 +29,17 @@ const HomeScreen = ({ navigation }) => {
           imageSource={require('../assets/golfbag.png')}
           imageWidth={30}
           imageHeight={30}
+          iconColor={Theme.orange}
           title="Senaste rundorna"
-          textColor="grey"
+          textColor="white"
           textFontSize={20}
-          // onPress={() => navigation.navigate('RegisterResultScreen')}
+          onPress={() => navigation.navigate('LatestGolfRoundsScreen')}
         />
         <IconAndTextButton
           imageSource={require('../assets/list.png')}
           imageWidth={30}
           imageHeight={30}
+          iconColor={Theme.orange}
           title="Tabell"
           textColor="white"
           textFontSize={20}
@@ -55,6 +58,7 @@ const HomeScreen = ({ navigation }) => {
           imageSource={require('../assets/golfSwing.png')}
           imageWidth={30}
           imageHeight={30}
+          iconColor={Theme.orange}
           title="Medlemmar"
           textColor="white"
           textFontSize={20}

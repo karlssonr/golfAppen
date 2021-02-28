@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import { createStackNavigator } from '@react-navigation/stack';
 import ChartListScreen from '../screens/ChartListScreen';
 import HomeScreen from '../screens/HomeScreen';
