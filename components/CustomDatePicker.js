@@ -19,6 +19,7 @@ const CustomDatePicker = (props) => {
 
   const onChange = (e, selectedDate) => {
     setDate(moment(selectedDate));
+    props.onDateChange(selectedDate);
   };
 
   const onAndroidChange = (e, selectedDate) => {
@@ -35,7 +36,8 @@ const CustomDatePicker = (props) => {
   };
 
   const onPressDone = () => {
-    props.onDateChange(date);
+    // props.onDateChange(date);
+    console.log(date);
     setShow(false);
   };
 

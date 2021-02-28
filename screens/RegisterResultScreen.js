@@ -17,20 +17,24 @@ import Theme from '../theme/theme';
 import IconAndTextButton from '../components/IconAndTextButton';
 import Splash from './Splash';
 import CustomDatePicker from '../components/CustomDatePicker';
+import moment from 'moment';
+import firebase from '../firebase';
 
 const RegisterResultScreen = () => {
   const { postGolfRound, getPlayers } = useContext(PlayerContext);
+  const FB = firebase.firestore.Timestamp;
 
   const [players, setPlayers] = useState([]);
-  const [registerButtonDisabled, setRegisterButtonDisabled] = useState(false);
-
   const [loading, setLoading] = useState(false);
+
+  const [date, setDate] = useState(new Date());
 
   const [playerOne, setPlayerOne] = useState({
     name: null,
     points: '',
     extraPoints: '',
     userID: '',
+    date: date,
   });
 
   const [playerTwo, setPlayerTwo] = useState({
@@ -38,6 +42,7 @@ const RegisterResultScreen = () => {
     points: '',
     extraPoints: '',
     userID: '',
+    date: date,
   });
 
   const [playerThree, setPlayerThree] = useState({
@@ -45,6 +50,7 @@ const RegisterResultScreen = () => {
     points: '',
     extraPoints: '',
     userID: '',
+    date: date,
   });
 
   const [playerFour, setPlayerFour] = useState({
@@ -52,30 +58,8 @@ const RegisterResultScreen = () => {
     points: '',
     extraPoints: '',
     userID: '',
+    date: date,
   });
-
-  const [date, setDate] = useState(new Date(1598051730000));
-  const [mode, setMode] = useState('date');
-  const [show, setShow] = useState(false);
-
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShow(Platform.OS === 'ios');
-    setDate(currentDate);
-  };
-
-  const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
-  };
-
-  const showDatepicker = () => {
-    showMode('date');
-  };
-
-  const showTimepicker = () => {
-    showMode('time');
-  };
 
   const resetPlayerState = () => {
     setPlayerOne({ name: null, points: '', extraPoints: '', userID: '' });
@@ -84,7 +68,31 @@ const RegisterResultScreen = () => {
     setPlayerFour({ name: null, points: '', extraPoints: '', userID: '' });
   };
 
+  const convertToTimeStamp = async (date) => {
+    let timeStamp = new FB.fromDate(date);
+    console.log('timeStamp: ', timeStamp);
+
+    return timeStamp;
+  };
+
+  const setTodaysDate = () => {
+    let todaysDate = moment();
+    let timeStampFromToday = new FB.fromDate(todaysDate);
+    setDate(timeStampFromToday);
+  };
+
   const submit = async () => {
+    // console.log('date:', date.format('YYYY-MM-DD'));
+    // let newDate = date.format('YYYY-MM-DD') + 'T00:00:00';
+    let timeStamp = await convertToTimeStamp(date);
+
+    // setDate(newDate);
+    console.log('newDate: ', timeStamp);
+    // setDate(newDate);
+    // let today = new firebase.firestore.Timestamp.fromDate(newDate);
+
+    // console.log('!!!', today);
+
     try {
       // setLoading(true);
 
@@ -110,45 +118,54 @@ const RegisterResultScreen = () => {
       if (playersPlayed > 1) {
         if (playerOne.name !== null && playerOne.points !== '') {
           if (playerOne.extraPoints === '') {
-            postGolfRound(playerOne.userID, playerOne.points, '0');
+            postGolfRound(playerOne.userID, playerOne.points, '0', timeStamp);
           } else {
             postGolfRound(
               playerOne.userID,
               playerOne.points,
-              playerOne.extraPoints
+              playerOne.extraPoints,
+              timeStamp
             );
           }
         }
         if (playerTwo.name !== null && playerTwo.points !== '') {
           if (playerTwo.extraPoints === '') {
-            postGolfRound(playerTwo.userID, playerTwo.points, '0');
+            postGolfRound(playerTwo.userID, playerTwo.points, '0', timeStamp);
           } else {
             postGolfRound(
               playerTwo.userID,
               playerTwo.points,
-              playerTwo.extraPoints
+              playerTwo.extraPoints,
+              timeStamp
             );
           }
         }
         if (playerThree.name !== null && playerThree.points !== '') {
           if (playerThree.extraPoints === '') {
-            postGolfRound(playerThree.userID, playerThree.points, '0');
+            postGolfRound(
+              playerThree.userID,
+              playerThree.points,
+              '0',
+              timeStamp
+            );
           } else {
             postGolfRound(
               playerThree.userID,
               playerThree.points,
-              playerThree.extraPoints
+              playerThree.extraPoints,
+              timeStamp
             );
           }
         }
         if (playerFour.name !== null && playerFour.points !== '') {
           if (playerFour.extraPoints === '') {
-            postGolfRound(playerFour.userID, playerFour.points, '0');
+            postGolfRound(playerFour.userID, playerFour.points, '0', timeStamp);
           } else {
             postGolfRound(
               playerFour.userID,
               playerFour.points,
-              playerFour.extraPoints
+              playerFour.extraPoints,
+              timeStamp
             );
           }
         }
@@ -164,11 +181,11 @@ const RegisterResultScreen = () => {
     }
 
     alert('Golfrunda skapad');
-    // setLoading(false);
   };
 
   useEffect(() => {
     getPlayers().then(setPlayers);
+    // setTodaysDate();
   }, []);
 
   const mapPlayersFromDB = (players) => {
@@ -424,7 +441,9 @@ const RegisterResultScreen = () => {
                       borderColor: 'gray',
                       borderWidth: 1,
                     }}
-                    onDateChange={(value) => console.log('Date changed', value)}
+                    onDateChange={(value) => {
+                      setDate(value);
+                    }}
                   />
                 </View>
               </View>
