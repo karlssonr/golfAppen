@@ -388,21 +388,45 @@ const RegisterResultScreen = () => {
 
               <View
                 style={{
-                  marginHorizontal: 80,
-                  //  marginTop: 50
+                  backgroundColor: null,
                   top: -80,
-                  backgroundColor: '#FFFFFF',
+                  flexDirection: 'row',
+                  alignItems: 'flex-end',
                 }}
               >
-                <CustomDatePicker
-                  textStyle={{
-                    paddingVertical: 10,
-                    paddingHorizontal: 10,
-                    borderColor: 'gray',
-                    borderWidth: 1,
+                <Text
+                  style={{
+                    ...styles.text,
+                    left: 20,
+
+                    alignSelf: 'center',
+                    backgroundColor: null,
                   }}
-                  onDateChange={(value) => console.log('Date changed', value)}
-                />
+                >
+                  Datum
+                </Text>
+                <View style={{ flex: 1 }} />
+                <View
+                  style={{
+                    // marginHorizontal: 100,
+
+                    right: 10,
+
+                    borderColor: 'gray',
+                    borderWidth: 2,
+                    backgroundColor: 'white',
+                  }}
+                >
+                  <CustomDatePicker
+                    textStyle={{
+                      paddingVertical: 5,
+                      paddingHorizontal: 20,
+                      borderColor: 'gray',
+                      borderWidth: 1,
+                    }}
+                    onDateChange={(value) => console.log('Date changed', value)}
+                  />
+                </View>
               </View>
 
               <View style={{ bottom: 50, alignSelf: 'center' }}>

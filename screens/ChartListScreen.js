@@ -11,8 +11,11 @@ import Splash from './Splash';
 import { PlayerContext } from '../context/PlayerContext';
 import Theme from '../theme/theme';
 
-const Item = ({ name, totalScore, averageOfBest7Rounds }) => (
+const Item = ({ positionNumber, name, totalScore, averageOfBest7Rounds }) => (
   <View style={{ ...styles.item }}>
+    <Text style={{ ...styles.positionNumber, backgroundColor: null }}>
+      {positionNumber}
+    </Text>
     <Text style={{ ...styles.title, backgroundColor: null }}>{name}</Text>
 
     <Text style={{ ...styles.totalScore, backgroundColor: null }}>
@@ -38,7 +41,6 @@ const ChartListScreen = () => {
     do {
       checked = false;
       for (let i = 0; i < len; i++) {
-        console.log(inputArr[i]?.averageOfBest7Rounds);
         if (
           inputArr[i]?.averageOfBest7Rounds >
           inputArr[i + 1]?.averageOfBest7Rounds
@@ -50,7 +52,9 @@ const ChartListScreen = () => {
         }
       }
     } while (checked);
-    return inputArr;
+
+    const reversed = inputArr.reverse();
+    return reversed;
   };
 
   const sumAllScores = (golfroundsOfPlayer) => {
@@ -139,17 +143,6 @@ const ChartListScreen = () => {
     return 0;
   };
 
-  const getHighestNumber = (number1, number2) => {
-    if (number1 > number2) {
-      return -1;
-    }
-    if (number1 < number2) {
-      return 1;
-    }
-
-    return 0;
-  };
-
   const calculateAverageScore = (golfroundsOfPlayer) => {
     let totalScore = sumAllScores(golfroundsOfPlayer);
     let numberOfGolfrounds = golfroundsOfPlayer.scores.length;
@@ -196,7 +189,10 @@ const ChartListScreen = () => {
           <Text style={styles.header}>Tabell</Text>
         </ImageBackground>
         <View style={styles.namePhoneIDView}>
-          <Text style={{ ...styles.culumText, width: '45%' }}>Namn</Text>
+          <Text style={{ ...styles.culumText, width: '5%' }}></Text>
+          <Text style={{ ...styles.culumText, width: '40%', left: 10 }}>
+            Namn
+          </Text>
           {/* <View style={{ flex: 1 }}></View> */}
           <Text
             style={{ ...styles.culumText, textAlign: 'center', width: '15%' }}
@@ -216,9 +212,13 @@ const ChartListScreen = () => {
           {resultTable && (
             <FlatList
               data={resultTable}
-              renderItem={({ item }) => {
+              renderItem={({ item, index }) => {
+                let number = index + 1;
+                let positionNumber = number.toString();
+                // console.log(index);
                 return (
                   <Item
+                    positionNumber={positionNumber}
                     name={item.name}
                     totalScore={item.totalScore}
                     averageOfBest7Rounds={item.averageOfBest7Rounds}
@@ -271,9 +271,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  positionNumber: {
+    fontSize: 15,
+    color: 'white',
+    width: '5%',
+  },
   title: {
     fontSize: 15,
-    width: '45%',
+    left: 10,
+    width: '40%',
 
     color: 'white',
     fontFamily: Theme.fontFamilyText,
