@@ -21,13 +21,15 @@ import moment from 'moment';
 import firebase from '../firebase';
 
 const RegisterResultScreen = () => {
-  const { postGolfRound, getPlayers } = useContext(PlayerContext);
+  const { postGolfRound, getPlayers, postGolfGame } = useContext(PlayerContext);
   const FB = firebase.firestore.Timestamp;
 
   const [players, setPlayers] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const [date, setDate] = useState(new Date());
+
+  let golfGameArray = [];
 
   const [playerOne, setPlayerOne] = useState({
     name: null,
@@ -68,34 +70,21 @@ const RegisterResultScreen = () => {
     setPlayerFour({ name: null, points: '', extraPoints: '', userID: '' });
   };
 
-  const convertToTimeStamp = async (date) => {
-    let timeStamp = new FB.fromDate(date);
+  const convertToTimeStamp = async (dateToConvert) => {
+    let timeStamp = new FB.fromDate(dateToConvert);
     console.log('timeStamp: ', timeStamp);
 
     return timeStamp;
   };
 
-  const setTodaysDate = () => {
-    let todaysDate = moment();
-    let timeStampFromToday = new FB.fromDate(todaysDate);
-    setDate(timeStampFromToday);
-  };
-
   const submit = async () => {
-    // console.log('date:', date.format('YYYY-MM-DD'));
-    // let newDate = date.format('YYYY-MM-DD') + 'T00:00:00';
+    golfGameArray = [];
+
     let timeStamp = await convertToTimeStamp(date);
 
-    // setDate(newDate);
     console.log('newDate: ', timeStamp);
-    // setDate(newDate);
-    // let today = new firebase.firestore.Timestamp.fromDate(newDate);
-
-    // console.log('!!!', today);
 
     try {
-      // setLoading(true);
-
       let playersPlayed = 0;
 
       if (playerOne.name !== null && playerOne.points !== '') {
@@ -116,9 +105,18 @@ const RegisterResultScreen = () => {
       }
 
       if (playersPlayed > 1) {
+        golfGameArray.push({
+          date: timeStamp,
+        });
         if (playerOne.name !== null && playerOne.points !== '') {
           if (playerOne.extraPoints === '') {
             postGolfRound(playerOne.userID, playerOne.points, '0', timeStamp);
+            golfGameArray.push({
+              name: playerOne.name,
+              points: playerOne.points,
+              extraPoints: '0',
+              userID: playerOne.userID,
+            });
           } else {
             postGolfRound(
               playerOne.userID,
@@ -126,11 +124,23 @@ const RegisterResultScreen = () => {
               playerOne.extraPoints,
               timeStamp
             );
+            golfGameArray.push({
+              name: playerOne.name,
+              points: playerOne.points,
+              extraPoints: playerOne.extraPoints,
+              userID: playerOne.userID,
+            });
           }
         }
         if (playerTwo.name !== null && playerTwo.points !== '') {
           if (playerTwo.extraPoints === '') {
             postGolfRound(playerTwo.userID, playerTwo.points, '0', timeStamp);
+            golfGameArray.push({
+              name: playerTwo.name,
+              points: playerTwo.points,
+              extraPoints: '0',
+              userID: playerTwo.userID,
+            });
           } else {
             postGolfRound(
               playerTwo.userID,
@@ -138,6 +148,12 @@ const RegisterResultScreen = () => {
               playerTwo.extraPoints,
               timeStamp
             );
+            golfGameArray.push({
+              name: playerTwo.name,
+              points: playerTwo.points,
+              extraPoints: playerTwo.extraPoints,
+              userID: playerTwo.userID,
+            });
           }
         }
         if (playerThree.name !== null && playerThree.points !== '') {
@@ -148,6 +164,12 @@ const RegisterResultScreen = () => {
               '0',
               timeStamp
             );
+            golfGameArray.push({
+              name: playerThree.name,
+              points: playerThree.points,
+              extraPoints: '0',
+              userID: playerThree.userID,
+            });
           } else {
             postGolfRound(
               playerThree.userID,
@@ -155,11 +177,23 @@ const RegisterResultScreen = () => {
               playerThree.extraPoints,
               timeStamp
             );
+            golfGameArray.push({
+              name: playerThree.name,
+              points: playerThree.points,
+              extraPoints: playerThree.extraPoints,
+              userID: playerThree.userID,
+            });
           }
         }
         if (playerFour.name !== null && playerFour.points !== '') {
           if (playerFour.extraPoints === '') {
             postGolfRound(playerFour.userID, playerFour.points, '0', timeStamp);
+            golfGameArray.push({
+              name: playerFour.name,
+              points: playerFour.points,
+              extraPoints: '0',
+              userID: playerFour.userID,
+            });
           } else {
             postGolfRound(
               playerFour.userID,
@@ -167,6 +201,12 @@ const RegisterResultScreen = () => {
               playerFour.extraPoints,
               timeStamp
             );
+            golfGameArray.push({
+              name: playerFour.name,
+              points: playerFour.points,
+              extraPoints: playerFour.extraPoints,
+              userID: playerFour.userID,
+            });
           }
         }
       } else {
@@ -179,6 +219,8 @@ const RegisterResultScreen = () => {
     } catch (er) {
       console.log(er);
     }
+
+    postGolfGame(golfGameArray);
 
     alert('Golfrunda skapad');
   };

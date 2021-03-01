@@ -10,16 +10,6 @@ export default function PlayerContextProvider({ children }) {
   const [getPlayerLoading, setGetPlayerLoading] = useState(false);
 
   const postGolfRound = (userID, points, extraPoints, date) => {
-    // const FB = firebase.firestore.Timestamp;
-
-    // let today = new Date();
-
-    // let newDate = new FB.fromDate(today);
-    // // console.log(date);
-    // // let today = moment();
-    // // console.log('Today: ', today);
-    // // today.toString();
-    // console.log('date: ', newDate);
     firebase
       .firestore()
       .collection('players')
@@ -35,6 +25,89 @@ export default function PlayerContextProvider({ children }) {
         console.log('GolfRound Added');
         // alert('Golfrunda skapad');
       });
+  };
+
+  const postGolfGame = async (golfGameArray) => {
+    let arrayCount = golfGameArray.length;
+
+    console.log('GolfArray: ', golfGameArray.length);
+    if (arrayCount === 3) {
+      firebase
+        .firestore()
+        .collection('golfGames')
+        .doc()
+        .set({
+          date: golfGameArray[0].date,
+          playerOneName: golfGameArray[1].name,
+          playerOnePoints: golfGameArray[1].points,
+          playerOneExtraPoints: golfGameArray[1].extraPoints,
+          playerOneUserID: golfGameArray[1].userID,
+
+          playerTwoName: golfGameArray[2].name,
+          playerTwoPoints: golfGameArray[2].points,
+          playerTwoExtraPoints: golfGameArray[2].extraPoints,
+          playerTwoUserID: golfGameArray[2].userID,
+        })
+
+        .then(() => console.log('posted golf game'));
+    }
+
+    if (arrayCount === 4) {
+      firebase
+        .firestore()
+        .collection('golfGames')
+        .doc()
+        .set({
+          date: golfGameArray[0].date,
+          playerOneName: golfGameArray[1].name,
+          playerOnePoints: golfGameArray[1].points,
+          playerOneExtraPoints: golfGameArray[1].extraPoints,
+          playerOneUserID: golfGameArray[1].userID,
+
+          playerTwoName: golfGameArray[2].name,
+          playerTwoPoints: golfGameArray[2].points,
+          playerTwoExtraPoints: golfGameArray[2].extraPoints,
+          playerTwoUserID: golfGameArray[2].userID,
+
+          playerThreeName: golfGameArray[3].name,
+          playerThreePoints: golfGameArray[3].points,
+          playerThreeExtraPoints: golfGameArray[3].extraPoints,
+          playerThreeUserID: golfGameArray[3].userID,
+        })
+
+        .then(() => console.log('posted golf game'));
+    }
+
+    if (arrayCount === 5) {
+      firebase
+        .firestore()
+        .collection('golfGames')
+        .doc()
+        .set({
+          date: golfGameArray[0].date,
+          playerOneName: golfGameArray[1].name,
+          playerOnePoints: golfGameArray[1].points,
+          playerOneExtraPoints: golfGameArray[1].extraPoints,
+          playerOneUserID: golfGameArray[1].userID,
+
+          playerTwoName: golfGameArray[2].name,
+          playerTwoPoints: golfGameArray[2].points,
+          playerTwoExtraPoints: golfGameArray[2].extraPoints,
+          playerTwoUserID: golfGameArray[2].userID,
+
+          playerThreeName: golfGameArray[3].name,
+          playerThreePoints: golfGameArray[3].points,
+          playerThreeExtraPoints: golfGameArray[3].extraPoints,
+          playerThreeUserID: golfGameArray[3].userID,
+
+          playerFourName: golfGameArray[4].name,
+          playerFourPoints: golfGameArray[4].points,
+          playerFourExtraPoints: golfGameArray[4].extraPoints,
+          playerFourUserID: golfGameArray[4].userID,
+        })
+
+        .then(() => console.log('posted golf game'));
+    }
   };
 
   const getPlayerScore = async (userID) => {
@@ -83,6 +156,7 @@ export default function PlayerContextProvider({ children }) {
         getPlayerScore,
         loadingPlayerScore,
         getPlayerLoading,
+        postGolfGame,
       }}
     >
       {children}
