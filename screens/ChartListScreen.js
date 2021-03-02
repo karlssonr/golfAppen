@@ -54,6 +54,7 @@ const ChartListScreen = () => {
     } while (checked);
 
     const reversed = inputArr.reverse();
+
     return reversed;
   };
 

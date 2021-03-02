@@ -1,6 +1,5 @@
 import React, { createContext, useState } from 'react';
 import firebase from '../firebase';
-import moment from 'moment';
 
 export const PlayerContext = createContext();
 const auth = firebase.auth();
@@ -8,6 +7,7 @@ const auth = firebase.auth();
 export default function PlayerContextProvider({ children }) {
   const [loadingPlayerScore, setLoadingPlayerScore] = useState(false);
   const [getPlayerLoading, setGetPlayerLoading] = useState(false);
+  const [getGolfGamesLoading, setGetGolfGamesLoading] = useState(false);
 
   const postGolfRound = (userID, points, extraPoints, date) => {
     firebase
@@ -30,23 +30,27 @@ export default function PlayerContextProvider({ children }) {
   const postGolfGame = async (golfGameArray) => {
     let arrayCount = golfGameArray.length;
 
-    console.log('GolfArray: ', golfGameArray.length);
     if (arrayCount === 3) {
       firebase
         .firestore()
         .collection('golfGames')
         .doc()
         .set({
-          date: golfGameArray[0].date,
-          playerOneName: golfGameArray[1].name,
-          playerOnePoints: golfGameArray[1].points,
-          playerOneExtraPoints: golfGameArray[1].extraPoints,
-          playerOneUserID: golfGameArray[1].userID,
-
-          playerTwoName: golfGameArray[2].name,
-          playerTwoPoints: golfGameArray[2].points,
-          playerTwoExtraPoints: golfGameArray[2].extraPoints,
-          playerTwoUserID: golfGameArray[2].userID,
+          date: {
+            date: golfGameArray[0].date,
+          },
+          playerOne: {
+            name: golfGameArray[1].name,
+            points: golfGameArray[1].points,
+            extraPoints: golfGameArray[1].extraPoints,
+            userID: golfGameArray[1].userID,
+          },
+          playerTwo: {
+            name: golfGameArray[2].name,
+            points: golfGameArray[2].points,
+            extraPoints: golfGameArray[2].extraPoints,
+            userID: golfGameArray[2].userID,
+          },
         })
 
         .then(() => console.log('posted golf game'));
@@ -58,21 +62,27 @@ export default function PlayerContextProvider({ children }) {
         .collection('golfGames')
         .doc()
         .set({
-          date: golfGameArray[0].date,
-          playerOneName: golfGameArray[1].name,
-          playerOnePoints: golfGameArray[1].points,
-          playerOneExtraPoints: golfGameArray[1].extraPoints,
-          playerOneUserID: golfGameArray[1].userID,
-
-          playerTwoName: golfGameArray[2].name,
-          playerTwoPoints: golfGameArray[2].points,
-          playerTwoExtraPoints: golfGameArray[2].extraPoints,
-          playerTwoUserID: golfGameArray[2].userID,
-
-          playerThreeName: golfGameArray[3].name,
-          playerThreePoints: golfGameArray[3].points,
-          playerThreeExtraPoints: golfGameArray[3].extraPoints,
-          playerThreeUserID: golfGameArray[3].userID,
+          date: {
+            date: golfGameArray[0].date,
+          },
+          playerOne: {
+            name: golfGameArray[1].name,
+            points: golfGameArray[1].points,
+            extraPoints: golfGameArray[1].extraPoints,
+            userID: golfGameArray[1].userID,
+          },
+          playerTwo: {
+            name: golfGameArray[2].name,
+            points: golfGameArray[2].points,
+            extraPoints: golfGameArray[2].extraPoints,
+            userID: golfGameArray[2].userID,
+          },
+          playerThree: {
+            name: golfGameArray[3].name,
+            points: golfGameArray[3].points,
+            extraPoints: golfGameArray[3].extraPoints,
+            userID: golfGameArray[3].userID,
+          },
         })
 
         .then(() => console.log('posted golf game'));
@@ -84,26 +94,33 @@ export default function PlayerContextProvider({ children }) {
         .collection('golfGames')
         .doc()
         .set({
-          date: golfGameArray[0].date,
-          playerOneName: golfGameArray[1].name,
-          playerOnePoints: golfGameArray[1].points,
-          playerOneExtraPoints: golfGameArray[1].extraPoints,
-          playerOneUserID: golfGameArray[1].userID,
-
-          playerTwoName: golfGameArray[2].name,
-          playerTwoPoints: golfGameArray[2].points,
-          playerTwoExtraPoints: golfGameArray[2].extraPoints,
-          playerTwoUserID: golfGameArray[2].userID,
-
-          playerThreeName: golfGameArray[3].name,
-          playerThreePoints: golfGameArray[3].points,
-          playerThreeExtraPoints: golfGameArray[3].extraPoints,
-          playerThreeUserID: golfGameArray[3].userID,
-
-          playerFourName: golfGameArray[4].name,
-          playerFourPoints: golfGameArray[4].points,
-          playerFourExtraPoints: golfGameArray[4].extraPoints,
-          playerFourUserID: golfGameArray[4].userID,
+          date: {
+            date: golfGameArray[0].date,
+          },
+          playerOne: {
+            name: golfGameArray[1].name,
+            points: golfGameArray[1].points,
+            extraPoints: golfGameArray[1].extraPoints,
+            userID: golfGameArray[1].userID,
+          },
+          playerTwo: {
+            name: golfGameArray[2].name,
+            points: golfGameArray[2].points,
+            extraPoints: golfGameArray[2].extraPoints,
+            userID: golfGameArray[2].userID,
+          },
+          playerThree: {
+            name: golfGameArray[3].name,
+            points: golfGameArray[3].points,
+            extraPoints: golfGameArray[3].extraPoints,
+            userID: golfGameArray[3].userID,
+          },
+          playerFour: {
+            name: golfGameArray[4].name,
+            points: golfGameArray[4].points,
+            extraPoints: golfGameArray[4].extraPoints,
+            userID: golfGameArray[4].userID,
+          },
         })
 
         .then(() => console.log('posted golf game'));
@@ -143,9 +160,25 @@ export default function PlayerContextProvider({ children }) {
         players.push({ ...doc.data() });
       });
     }
-    console.log('getPlayers');
+
     setGetPlayerLoading(false);
     return players;
+  };
+
+  const getGolfGames = async () => {
+    setGetGolfGamesLoading(true);
+    let snapshot = await firebase.firestore().collection('golfGames').get();
+
+    let golfGames = [];
+
+    if (snapshot) {
+      snapshot.forEach((doc) => {
+        golfGames.push({ ...doc.data() });
+      });
+    }
+
+    setGetGolfGamesLoading(false);
+    return golfGames;
   };
 
   return (
@@ -157,6 +190,8 @@ export default function PlayerContextProvider({ children }) {
         loadingPlayerScore,
         getPlayerLoading,
         postGolfGame,
+        getGolfGames,
+        getGolfGamesLoading,
       }}
     >
       {children}

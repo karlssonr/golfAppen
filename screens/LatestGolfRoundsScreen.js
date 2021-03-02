@@ -1,39 +1,149 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, View, ImageBackground } from 'react-native';
-import { FlatList, ScrollView } from 'react-native-gesture-handler';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ImageBackground,
+  TouchableHighlight,
+  Platform,
+} from 'react-native';
+import {
+  FlatList,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native-gesture-handler';
 
 import Splash from './Splash';
 import { PlayerContext } from '../context/PlayerContext';
 import Theme from '../theme/theme';
-
-import CustomDatePicker from '../components/CustomDatePicker';
-
-// const GolfRoundRow = ({ name, totalScore, averageOfBest7Rounds }) => (
-//   <View style={{ ...styles.item }}>
-//     <Text style={{ ...styles.title, backgroundColor: null }}>{name}</Text>
-
-//     <Text style={{ ...styles.totalScore, backgroundColor: null }}>
-//       {totalScore}
-//     </Text>
-
-//     <Text style={{ ...styles.sevenBest, backgroundColor: null }}>
-//       {averageOfBest7Rounds}
-//     </Text>
-//   </View>
-// );
+import firebase from '../firebase';
+import moment from 'moment';
 
 const LatestGolfRoundsScreen = () => {
+  const { getGolfGames, getGolfGamesLoading } = useContext(PlayerContext);
+
+  const [golfGames, setGolfGames] = useState([]);
+
+  const getAndSetGolfGames = async () => {
+    await getGolfGames().then(setGolfGames);
+  };
+
+  useEffect(() => {
+    getAndSetGolfGames();
+  }, []);
+
+  const GolfRoundRow = ({ name, points, extraPoints }) => (
+    <View style={{ ...styles.golfRoundRow }}>
+      <Text style={{ ...styles.player, backgroundColor: null }}>{name}</Text>
+
+      <Text style={{ ...styles.score, backgroundColor: null }}>{points}</Text>
+
+      <Text style={{ ...styles.extraPoints, backgroundColor: null }}>
+        {extraPoints}
+      </Text>
+    </View>
+  );
+
   return (
-    <View style={{ marginHorizontal: 20, marginTop: 50 }}>
-      <CustomDatePicker
-        textStyle={{
-          paddingVertical: 15,
-          paddingHorizontal: 10,
-          borderColor: 'gray',
-          borderWidth: 1,
-        }}
-        onDateChange={(value) => console.log('Date changed', value)}
-      />
+    <View style={styles.container}>
+      {getGolfGamesLoading && <Splash />}
+      {golfGames && (
+        <FlatList
+          data={golfGames}
+          renderItem={({ item, index }) => {
+            let dateFromTimeStamp = item.date.date.toDate();
+
+            let date = moment(dateFromTimeStamp).format('MMMM Do, YYYY');
+
+            console.log('12: ', date);
+            console.log('item: ', item);
+
+            return (
+              <TouchableOpacity style={{ margin: 10 }}>
+                <View
+                  style={
+                    {
+                      // color: 'white',
+                      // backgroundColor: 'red',
+                      // width: '100%',
+                    }
+                  }
+                >
+                  <Text
+                    style={{
+                      color: 'white',
+                      backgroundColor: 'green',
+                      // width: '100%',
+                      alignSelf: 'center',
+                    }}
+                  >
+                    {date}
+                  </Text>
+                  <View style={styles.namePointsExtra}>
+                    {/* <Text style={{ ...styles.culumText, width: '5%' }}></Text> */}
+                    <Text
+                      style={{ ...styles.culumText, width: '40%', left: 10 }}
+                    >
+                      Namn
+                    </Text>
+
+                    <Text
+                      style={{
+                        ...styles.culumText,
+                        textAlign: 'center',
+                        width: '15%',
+                      }}
+                    >
+                      Poäng
+                    </Text>
+
+                    <Text
+                      style={{
+                        ...styles.culumText,
+                        textAlign: 'right',
+                        width: '35%',
+                      }}
+                    >
+                      Extra
+                    </Text>
+                  </View>
+                </View>
+                {item.playerOne && (
+                  <GolfRoundRow
+                    name={item.playerOne.name}
+                    points={item.playerOne.points}
+                    extraPoints={item.playerOne.extraPoints}
+                  />
+                )}
+
+                {item.playerTwo && (
+                  <GolfRoundRow
+                    name={item.playerTwo.name}
+                    points={item.playerTwo.points}
+                    extraPoints={item.playerTwo.extraPoints}
+                  />
+                )}
+
+                {item.playerThree && (
+                  <GolfRoundRow
+                    name={item.playerThree.name}
+                    points={item.playerThree.points}
+                    extraPoints={item.playerThree.extraPoints}
+                  />
+                )}
+                {item.playerFour && (
+                  <GolfRoundRow
+                    name={item.playerFour.name}
+                    points={item.playerFour.points}
+                    extraPoints={item.playerFour.extraPoints}
+                  />
+                )}
+              </TouchableOpacity>
+            );
+          }}
+          keyExtractor={(_, index) => index.toString()}
+        />
+      )}
     </View>
   );
 };
@@ -41,9 +151,62 @@ const LatestGolfRoundsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: null,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+    backgroundColor: 'black',
+    alignItems: 'stretch',
+    // justifyContent: 'center',
+  },
+  golfRoundRow: {
+    backgroundColor: '#333333',
+    padding: 1,
+    marginVertical: 1,
+    marginHorizontal: 1,
+    flexDirection: 'row',
+    // // justifyContent: 'center',
+    // flex: 1,
+    // width: '100%',
+  },
+
+  player: {
+    fontSize: 15,
+    left: 10,
+    width: '40%',
+    color: 'white',
+    fontFamily: Theme.fontFamilyText,
+  },
+  score: {
+    fontSize: 15,
+    textAlign: 'center',
+    color: Theme.orange,
+    fontFamily: Theme.fontFamilyText,
+    // marginLeft: 0,
+    width: '15%',
+    alignSelf: 'center',
+  },
+  extraPoints: {
+    fontSize: 15,
+    width: '35%',
+    textAlign: 'right',
+    color: 'white',
+    // marginRight: 15,
+    fontFamily: Theme.fontFamilyText,
+    right: 10,
+  },
+  namePointsExtra: {
+    width: '100%',
+    borderRadius: 2,
+    // justifyContent: 'space-evenly',
+    flexDirection: 'row',
+    // marginTop: 0,
+    borderColor: 'white',
+    backgroundColor: 'grey',
+
+    borderWidth: 1,
+    alignSelf: 'center',
+    fontFamily: Theme.fontFamilyText,
+  },
+  culumText: {
+    color: 'white',
+    fontFamily: Theme.fontFamilyText,
   },
 });
 
