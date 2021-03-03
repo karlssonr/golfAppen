@@ -22,32 +22,54 @@ export default function AuthContextProvider({ children }) {
     return unsubscribe;
   });
 
-  const updateUser = (displayName, phoneNumber, golfID) => {
-    firebase
+  const updateUser = async (nickName, displayName, phoneNumber, golfID) => {
+    console.log(nickName);
+    console.log(displayName);
+    console.log(phoneNumber);
+    console.log(golfID);
+
+    const ref = firebase
       .firestore()
       .collection('players')
-      .doc(auth.currentUser.uid)
-      .set({
+      .doc(auth.currentUser.uid);
+
+    if (nickName !== null) {
+      ref.update({
+        nickName: nickName,
+        userID: auth.currentUser.uid,
+      });
+    }
+
+    if (displayName !== null) {
+      ref.update({
         name: displayName,
-        golfID: golfID,
+        userID: auth.currentUser.uid,
+      });
+    }
+
+    if (phoneNumber !== null) {
+      ref.update({
         phoneNumber: phoneNumber,
         userID: auth.currentUser.uid,
-      })
-      .then(() => {
-        console.log('User updated');
       });
+    }
 
-    user
-      .updateProfile({
-        displayName: displayName,
-      })
-      .then(function () {
-        alert('Update succesfull');
-      })
-      .catch(function (error) {
-        alert(error);
-        console.log('updateUserError: ', error);
+    if (golfID !== null) {
+      ref.update({
+        golfID: golfID,
+        userID: auth.currentUser.uid,
       });
+    }
+
+    // ref.update({
+    //   nickName: nickName,
+    //   name: displayName,
+    //   golfID: golfID,
+    //   phoneNumber: phoneNumber,
+    //   userID: auth.currentUser.uid,
+    // });
+
+    alert('Profil updaterad');
   };
 
   const resetPassword = async (email) => {

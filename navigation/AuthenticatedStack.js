@@ -7,6 +7,7 @@ import RegisterResultScreen from '../screens/RegisterResultScreen';
 import MemberScreen from '../screens/MemberScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import LatestGolfRoundsScreen from '../screens/LatestGolfRoundsScreen';
+import MyGolfRoundsScreen from '../screens/MyGolfRoundsScreen';
 import Theme from '../theme/theme';
 import { AuthContext } from '../context/AuthContext';
 
@@ -65,8 +66,28 @@ export default function AuthenticatedStack() {
       <Stack.Screen
         name="LatestGolfRoundsScreen"
         component={LatestGolfRoundsScreen}
-        options={{ title: 'Senaste rundorna' }}
+        options={(navigation, route) => ({
+          title: 'Senaste rundorna',
+          headerTitleAlign: 'center',
+          headerRight: () => (
+            <Button
+              backgroundColor={null}
+              onPress={() => {
+                navigation.navigate('MyGolfRoundsScreen');
+              }}
+              title="Mina rundor"
+              color={Platform.OS === 'ios' ? Theme.orange : 'black'}
+            />
+          ),
+        })}
       />
+
+      <Stack.Screen
+        name="MyGolfRoundsScreen"
+        component={MyGolfRoundsScreen}
+        options={{ title: 'Mina rundor' }}
+      />
+
       <Stack.Screen
         name="ProfileScreen"
         component={ProfileScreen}

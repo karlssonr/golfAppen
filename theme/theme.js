@@ -1,8 +1,9 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 const Theme = {
-  orange: "#FF6601",
-  darkOrange: "#853017",
+  orange: '#FF6601',
+  darkOrange: '#853017',
+  black: '#333333',
   fontFamilyHeader: 'Georgia',
   fontFamilyText: 'Arial',
 };

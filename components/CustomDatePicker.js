@@ -44,6 +44,7 @@ const CustomDatePicker = (props) => {
   const renderDatePicker = () => {
     return (
       <DateTimePicker
+        // style={{ color: 'black' }}
         timeZoneOffsetInMinutes={0}
         value={new Date(date)}
         mode="date"

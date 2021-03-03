@@ -13,7 +13,7 @@ import firebase from '../firebase';
 import moment from 'moment';
 import IconAndTextButton from '../components/IconAndTextButton';
 
-const LatestGolfRoundsScreen = () => {
+const MyGolfRoundsScreen = () => {
   const { getGolfGames, getGolfGamesLoading } = useContext(PlayerContext);
 
   const [golfGames, setGolfGames] = useState([]);
@@ -212,4 +212,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LatestGolfRoundsScreen;
+export default MyGolfRoundsScreen;

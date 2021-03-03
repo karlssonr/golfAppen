@@ -17,23 +17,28 @@ import Splash from './Splash';
 import Theme from '../theme/theme';
 
 export default function SignUpScreen({ navigation }) {
-  const [displayName, setDisplayName] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [golfUserID, setGolfUserID] = useState('');
+  const [nickName, setNickName] = useState(null);
+  const [displayName, setDisplayName] = useState(null);
+  const [phoneNumber, setPhoneNumber] = useState(null);
+  const [golfUserID, setGolfUserID] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const { setIsLoggedIn, updateUser } = useContext(AuthContext);
+  const { updateUser, user } = useContext(AuthContext);
 
   const submit = async () => {
     try {
       setLoading(true);
-      updateUser(displayName, phoneNumber, golfUserID);
+      updateUser(nickName, displayName, phoneNumber, golfUserID);
       console.log('submitting sign up');
     } catch (er) {
       Alert.alert(er);
     }
 
     setLoading(false);
+    setDisplayName(null);
+    setGolfUserID(null);
+    setNickName(null);
+    setPhoneNumber(null);
   };
 
   if (loading) {
@@ -48,6 +53,15 @@ export default function SignUpScreen({ navigation }) {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <View style={{ width: '50%' }}>
+            <Text style={styles.text}>Alias</Text>
+            <TextInput
+              placeholder="Ange alias"
+              value={nickName}
+              onChangeText={setNickName}
+              style={styles.textInput}
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
             <Text style={styles.text}>Namn</Text>
             <TextInput
               placeholder="Ange namn"

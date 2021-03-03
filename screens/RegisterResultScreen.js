@@ -283,7 +283,7 @@ const RegisterResultScreen = () => {
 
                     width: 180,
                     alignSelf: 'center',
-                    marginLeft: 10,
+                    marginLeft: 15,
                   }}
                 >
                   Spelare
@@ -447,13 +447,14 @@ const RegisterResultScreen = () => {
 
               <View
                 style={{
+                  flex: 1,
                   backgroundColor: null,
-                  top: -80,
+                  top: -70,
                   flexDirection: 'row',
-                  alignItems: 'flex-end',
+                  alignItems: 'center',
                 }}
               >
-                <Text
+                {/* <Text
                   style={{
                     ...styles.text,
                     left: 20,
@@ -463,23 +464,22 @@ const RegisterResultScreen = () => {
                   }}
                 >
                   Datum
-                </Text>
+                </Text> */}
                 <View style={{ flex: 1 }} />
                 <View
                   style={{
                     // marginHorizontal: 100,
-
-                    right: 10,
-
+                    // right: 15,
                     borderColor: 'gray',
-                    borderWidth: 2,
+                    borderWidth: 1,
                     backgroundColor: 'white',
+                    alignSelf: 'center',
                   }}
                 >
                   <CustomDatePicker
                     textStyle={{
-                      paddingVertical: 5,
-                      paddingHorizontal: 20,
+                      paddingVertical: 3,
+                      paddingHorizontal: 100,
                       borderColor: 'gray',
                       borderWidth: 1,
                     }}
@@ -488,9 +488,13 @@ const RegisterResultScreen = () => {
                     }}
                   />
                 </View>
+
+                <View style={{ flex: 1 }} />
               </View>
 
-              <View style={{ bottom: 50, alignSelf: 'center' }}>
+              <View
+                style={{ bottom: 30, alignSelf: 'center', marginBottom: 60 }}
+              >
                 <IconAndTextButton
                   imageSource={require('../assets/edit.png')}
                   imageWidth={30}
@@ -517,7 +521,7 @@ const styles = StyleSheet.create({
 
   dropDownPickerStyle: {
     backgroundColor: '#fafafa',
-    width: 180,
+    width: 170,
     marginLeft: 10,
     marginTop: 15,
   },
@@ -530,7 +534,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'black',
-    //alignItems: "center",
+    // alignItems: 'center',
     // justifyContent: 'flex-start',
   },
   textInput: {
@@ -557,7 +561,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
   },
   text: {
-    fontSize: 22,
+    fontSize: 18,
     // marginTop: 20,
     // width: '20%',
     color: 'white',

@@ -5,7 +5,7 @@ import Theme from '../theme/theme';
 export default function Splash() {
   return (
     <View style={styles.container}>
-      <Text>App Logo</Text>
+      {/* <Text>App Logo</Text> */}
       <ActivityIndicator animating={true} color={Theme.orange} />
     </View>
   );
