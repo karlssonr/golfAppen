@@ -66,15 +66,13 @@ export default function AuthenticatedStack() {
       <Stack.Screen
         name="LatestGolfRoundsScreen"
         component={LatestGolfRoundsScreen}
-        options={(navigation, route) => ({
+        options={({ navigation, route }) => ({
           title: 'Senaste rundorna',
           headerTitleAlign: 'center',
           headerRight: () => (
             <Button
               backgroundColor={null}
-              onPress={() => {
-                navigation.navigate('MyGolfRoundsScreen');
-              }}
+              onPress={() => navigation.navigate('MyGolfRoundsScreen')}
               title="Mina rundor"
               color={Platform.OS === 'ios' ? Theme.orange : 'black'}
             />

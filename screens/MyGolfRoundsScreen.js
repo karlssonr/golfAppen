@@ -8,22 +8,28 @@ import {
 
 import Splash from './Splash';
 import { PlayerContext } from '../context/PlayerContext';
+import { AuthContext } from '../context/AuthContext';
 import Theme from '../theme/theme';
 import firebase from '../firebase';
 import moment from 'moment';
 import IconAndTextButton from '../components/IconAndTextButton';
 
 const MyGolfRoundsScreen = () => {
-  const { getGolfGames, getGolfGamesLoading } = useContext(PlayerContext);
+  const { getPlayerScore, loadingPlayerScore, getPlayer } = useContext(
+    PlayerContext
+  );
+  const { user } = useContext(AuthContext);
 
   const [golfGames, setGolfGames] = useState([]);
 
   const getAndSetGolfGames = async () => {
-    await getGolfGames().then(setGolfGames);
+    await getPlayerScore(user.uid).then(setGolfGames);
+    // await getPlayer(user.uid);
   };
 
   useEffect(() => {
     getAndSetGolfGames();
+    console.log('userID: ', user.displayName);
   }, []);
 
   const GolfRoundRow = ({ name, points, extraPoints }) => (
@@ -41,21 +47,21 @@ const MyGolfRoundsScreen = () => {
   return (
     <View style={styles.container}>
       <View style={{ marginBottom: 30 }}>
-        {getGolfGamesLoading && <Splash />}
+        {loadingPlayerScore && <Splash />}
         {golfGames && (
           <FlatList
             style={{ marginBottom: 50 }}
             data={golfGames}
             renderItem={({ item, index }) => {
-              let dateFromTimeStamp = item.date.date.toDate();
+              let dateFromTimeStamp = item.date.toDate();
 
               let date = moment(dateFromTimeStamp).format('MMMM Do, YYYY');
+              //   console.log(golfGames);
 
-              console.log('12: ', date);
-              console.log('item: ', item);
+              //   console.log('item: ', item);
 
               return (
-                <TouchableOpacity style={{ margin: 10 }}>
+                <TouchableOpacity style={{ margin: 10, marginBottom: 40 }}>
                   <View
                     style={
                       {
@@ -81,7 +87,6 @@ const MyGolfRoundsScreen = () => {
                       {date}
                     </Text>
                     <View style={styles.namePointsExtra}>
-                      {/* <Text style={{ ...styles.culumText, width: '5%' }}></Text> */}
                       <Text
                         style={{ ...styles.culumText, width: '40%', left: 10 }}
                       >
@@ -109,36 +114,12 @@ const MyGolfRoundsScreen = () => {
                       </Text>
                     </View>
                   </View>
-                  {item.playerOne && (
-                    <GolfRoundRow
-                      name={item.playerOne.name}
-                      points={item.playerOne.points}
-                      extraPoints={item.playerOne.extraPoints}
-                    />
-                  )}
 
-                  {item.playerTwo && (
-                    <GolfRoundRow
-                      name={item.playerTwo.name}
-                      points={item.playerTwo.points}
-                      extraPoints={item.playerTwo.extraPoints}
-                    />
-                  )}
-
-                  {item.playerThree && (
-                    <GolfRoundRow
-                      name={item.playerThree.name}
-                      points={item.playerThree.points}
-                      extraPoints={item.playerThree.extraPoints}
-                    />
-                  )}
-                  {item.playerFour && (
-                    <GolfRoundRow
-                      name={item.playerFour.name}
-                      points={item.playerFour.points}
-                      extraPoints={item.playerFour.extraPoints}
-                    />
-                  )}
+                  <GolfRoundRow
+                    name={user.displayName}
+                    points={item.points}
+                    extraPoints={item.extraPoints}
+                  />
                 </TouchableOpacity>
               );
             }}

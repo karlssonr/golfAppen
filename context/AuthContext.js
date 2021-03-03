@@ -23,11 +23,6 @@ export default function AuthContextProvider({ children }) {
   });
 
   const updateUser = async (nickName, displayName, phoneNumber, golfID) => {
-    console.log(nickName);
-    console.log(displayName);
-    console.log(phoneNumber);
-    console.log(golfID);
-
     const ref = firebase
       .firestore()
       .collection('players')
@@ -45,6 +40,17 @@ export default function AuthContextProvider({ children }) {
         name: displayName,
         userID: auth.currentUser.uid,
       });
+      user
+        .updateProfile({
+          displayName: displayName,
+        })
+        .then(function () {
+          alert('Update succesfull');
+        })
+        .catch(function (error) {
+          alert(error);
+          console.log('updateUserError: ', error);
+        });
     }
 
     if (phoneNumber !== null) {
@@ -60,14 +66,6 @@ export default function AuthContextProvider({ children }) {
         userID: auth.currentUser.uid,
       });
     }
-
-    // ref.update({
-    //   nickName: nickName,
-    //   name: displayName,
-    //   golfID: golfID,
-    //   phoneNumber: phoneNumber,
-    //   userID: auth.currentUser.uid,
-    // });
 
     alert('Profil updaterad');
   };

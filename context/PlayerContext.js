@@ -165,6 +165,12 @@ export default function PlayerContextProvider({ children }) {
     return players;
   };
 
+  const getPlayer = async (userID) => {
+    let snapshot = await firebase.firestore().collection('players').doc(userID);
+    console.log('snapshot: ', snapshot);
+    return snapshot;
+  };
+
   const getGolfGames = async () => {
     setGetGolfGamesLoading(true);
     let snapshot = await firebase.firestore().collection('golfGames').get();
@@ -192,6 +198,7 @@ export default function PlayerContextProvider({ children }) {
         postGolfGame,
         getGolfGames,
         getGolfGamesLoading,
+        getPlayer,
       }}
     >
       {children}

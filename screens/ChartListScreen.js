@@ -83,8 +83,11 @@ const ChartListScreen = () => {
       avrageScore = calculateAverageScore(golfroundsOfPlayer);
       averageOfBest7Rounds = calcutaleAverageOfBest7Rounds(golfroundsOfPlayer);
 
+      // console.log(' golfroundofplayer: ', golfroundsOfPlayer);
+
       resulTableScore.push({
         name: golfroundsOfPlayer.name,
+        nickName: golfroundsOfPlayer.nickName,
         totalScore: totalScore,
         avrageScore: avrageScore,
         averageOfBest7Rounds: averageOfBest7Rounds.toFixed(2),
@@ -159,10 +162,11 @@ const ChartListScreen = () => {
 
       array.push({
         name: player.name,
+        nickName: player.nickName,
         scores: scores,
       });
     }
-
+    // sconsole.log(array);
     return array;
   };
 
@@ -214,13 +218,20 @@ const ChartListScreen = () => {
             <FlatList
               data={resultTable}
               renderItem={({ item, index }) => {
+                // console.log('item: ', item);
                 let number = index + 1;
                 let positionNumber = number.toString();
+                let name = '';
+                if (item.nickName) {
+                  name = item.nickName;
+                } else {
+                  name = item.name;
+                }
                 // console.log(index);
                 return (
                   <Item
                     positionNumber={positionNumber}
-                    name={item.name}
+                    name={name}
                     totalScore={item.totalScore}
                     averageOfBest7Rounds={item.averageOfBest7Rounds}
                   />

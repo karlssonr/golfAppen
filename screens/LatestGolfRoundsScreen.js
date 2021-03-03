@@ -1,19 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import {
-  FlatList,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native-gesture-handler';
+import { FlatList } from 'react-native-gesture-handler';
 
 import Splash from './Splash';
 import { PlayerContext } from '../context/PlayerContext';
 import Theme from '../theme/theme';
-import firebase from '../firebase';
 import moment from 'moment';
-import IconAndTextButton from '../components/IconAndTextButton';
 
-const LatestGolfRoundsScreen = () => {
+const LatestGolfRoundsScreen = ({ navigation }) => {
   const { getGolfGames, getGolfGamesLoading } = useContext(PlayerContext);
 
   const [golfGames, setGolfGames] = useState([]);
@@ -22,8 +16,17 @@ const LatestGolfRoundsScreen = () => {
     await getGolfGames().then(setGolfGames);
   };
 
+  const sortGolfGamesArray = (golfGames) => {
+    golfGames.sort(function (x, y) {
+      console.log('x: ', x.date.date.seconds);
+      console.log('y: ', y.date.date.seconds);
+      return x.date.date.seconds - y.date.date.seconds;
+    });
+  };
+
   useEffect(() => {
     getAndSetGolfGames();
+    sortGolfGamesArray(golfGames);
   }, []);
 
   const GolfRoundRow = ({ name, points, extraPoints }) => (
@@ -47,24 +50,14 @@ const LatestGolfRoundsScreen = () => {
             style={{ marginBottom: 50 }}
             data={golfGames}
             renderItem={({ item, index }) => {
+              // console.log('item: ', golfGames);
               let dateFromTimeStamp = item.date.date.toDate();
 
               let date = moment(dateFromTimeStamp).format('MMMM Do, YYYY');
 
-              console.log('12: ', date);
-              console.log('item: ', item);
-
               return (
-                <TouchableOpacity style={{ margin: 10 }}>
-                  <View
-                    style={
-                      {
-                        // color: 'white',
-                        // backgroundColor: 'red',
-                        // width: '100%',
-                      }
-                    }
-                  >
+                <View style={{ margin: 10 }}>
+                  <View style={{}}>
                     <Text
                       style={{
                         fontSize: 15,
@@ -83,7 +76,11 @@ const LatestGolfRoundsScreen = () => {
                     <View style={styles.namePointsExtra}>
                       {/* <Text style={{ ...styles.culumText, width: '5%' }}></Text> */}
                       <Text
-                        style={{ ...styles.culumText, width: '40%', left: 10 }}
+                        style={{
+                          ...styles.culumText,
+                          width: '40%',
+                          left: 10,
+                        }}
                       >
                         Namn
                       </Text>
@@ -139,7 +136,7 @@ const LatestGolfRoundsScreen = () => {
                       extraPoints={item.playerFour.extraPoints}
                     />
                   )}
-                </TouchableOpacity>
+                </View>
               );
             }}
             keyExtractor={(_, index) => index.toString()}
