@@ -10,16 +10,20 @@ export default function PlayerContextProvider({ children }) {
   const [getGolfGamesLoading, setGetGolfGamesLoading] = useState(false);
 
   const postGolfRound = (userID, points, extraPoints, date) => {
+    // console.log('date: ', date.seconds);
+
+    let docID = date.seconds.toString();
     firebase
       .firestore()
       .collection('players')
       .doc(userID)
       .collection('golfRounds')
-      .doc()
+      .doc(docID)
       .set({
         points: points,
         extraPoints: extraPoints,
         date: date,
+        docID: docID,
       })
       .then(() => {
         console.log('GolfRound Added');
@@ -30,11 +34,13 @@ export default function PlayerContextProvider({ children }) {
   const postGolfGame = async (golfGameArray) => {
     let arrayCount = golfGameArray.length;
 
+    let docID = golfGameArray[0].date.seconds.toString();
+
     if (arrayCount === 3) {
       firebase
         .firestore()
         .collection('golfGames')
-        .doc()
+        .doc(docID)
         .set({
           date: {
             date: golfGameArray[0].date,
@@ -60,7 +66,7 @@ export default function PlayerContextProvider({ children }) {
       firebase
         .firestore()
         .collection('golfGames')
-        .doc()
+        .doc(docID)
         .set({
           date: {
             date: golfGameArray[0].date,
@@ -92,7 +98,7 @@ export default function PlayerContextProvider({ children }) {
       firebase
         .firestore()
         .collection('golfGames')
-        .doc()
+        .doc(docID)
         .set({
           date: {
             date: golfGameArray[0].date,
@@ -171,6 +177,33 @@ export default function PlayerContextProvider({ children }) {
     return snapshot;
   };
 
+  const updateGolfRound = async (
+    docID,
+    userID,
+
+    points,
+    extraPoints,
+    date
+  ) => {
+    const golfRoundRef = firebase
+      .firestore()
+      .collection('players')
+      .doc(userID)
+      .collection('golfRounds')
+      .doc(docID);
+
+    const golfGameRef = firebase.firestore().collection('golfGames').doc(docID);
+
+    golfRoundRef
+      .update({
+        date: date,
+        points: points,
+        extraPoints: extraPoints,
+        docID: docID,
+      })
+      .then(() => console.log('golfround updated'));
+  };
+
   const getGolfGames = async () => {
     setGetGolfGamesLoading(true);
     let snapshot = await firebase.firestore().collection('golfGames').get();
@@ -179,6 +212,9 @@ export default function PlayerContextProvider({ children }) {
 
     if (snapshot) {
       snapshot.forEach((doc) => {
+        // console.log(doc);
+        let id = doc.data();
+        console.log(id);
         golfGames.push({ ...doc.data() });
       });
     }
@@ -199,6 +235,7 @@ export default function PlayerContextProvider({ children }) {
         getGolfGames,
         getGolfGamesLoading,
         getPlayer,
+        updateGolfRound,
       }}
     >
       {children}

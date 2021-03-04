@@ -213,7 +213,7 @@ const RegisterResultScreen = () => {
         return;
       }
 
-      resetPlayerState();
+      // resetPlayerState();
 
       console.log('Posting golf round');
     } catch (er) {

@@ -1,5 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Modal,
+  Pressable,
+  Alert,
+  TextInput,
+} from 'react-native';
 import {
   FlatList,
   ScrollView,
@@ -12,37 +20,52 @@ import { AuthContext } from '../context/AuthContext';
 import Theme from '../theme/theme';
 import firebase from '../firebase';
 import moment from 'moment';
-import IconAndTextButton from '../components/IconAndTextButton';
+import CustomDatePicker from '../components/CustomDatePicker';
+
+const GolfRoundRow = ({ name, points, extraPoints }) => (
+  <View style={{ ...styles.golfRoundRow }}>
+    <Text style={{ ...styles.player, backgroundColor: null }}>{name}</Text>
+
+    <Text style={{ ...styles.score, backgroundColor: null }}>{points}</Text>
+
+    <Text style={{ ...styles.extraPoints, backgroundColor: null }}>
+      {extraPoints}
+    </Text>
+  </View>
+);
 
 const MyGolfRoundsScreen = () => {
-  const { getPlayerScore, loadingPlayerScore, getPlayer } = useContext(
+  const { getPlayerScore, loadingPlayerScore, updateGolfRound } = useContext(
     PlayerContext
   );
   const { user } = useContext(AuthContext);
 
   const [golfGames, setGolfGames] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const [score, setScore] = useState('');
+  const [extraPoints, setExtraPoints] = useState('');
+  const [docID, setDocID] = useState('');
+  const [date, setDate] = useState(moment());
+
+  const FB = firebase.firestore.Timestamp;
 
   const getAndSetGolfGames = async () => {
     await getPlayerScore(user.uid).then(setGolfGames);
     // await getPlayer(user.uid);
   };
 
+  const convertToTimeStamp = async (dateToConvert) => {
+    let timeStamp = new FB.fromDate(dateToConvert);
+    console.log('timeStamp: ', timeStamp);
+
+    return timeStamp;
+  };
+
   useEffect(() => {
     getAndSetGolfGames();
     console.log('userID: ', user.displayName);
   }, []);
-
-  const GolfRoundRow = ({ name, points, extraPoints }) => (
-    <View style={{ ...styles.golfRoundRow }}>
-      <Text style={{ ...styles.player, backgroundColor: null }}>{name}</Text>
-
-      <Text style={{ ...styles.score, backgroundColor: null }}>{points}</Text>
-
-      <Text style={{ ...styles.extraPoints, backgroundColor: null }}>
-        {extraPoints}
-      </Text>
-    </View>
-  );
 
   return (
     <View style={styles.container}>
@@ -55,13 +78,29 @@ const MyGolfRoundsScreen = () => {
             renderItem={({ item, index }) => {
               let dateFromTimeStamp = item.date.toDate();
 
-              let date = moment(dateFromTimeStamp).format('MMMM Do, YYYY');
+              let golfRoundDate = moment(dateFromTimeStamp).format(
+                'MMMM Do, YYYY'
+              );
+
+              //   console.log('golfrounddate: ', golfRoundDate);
+              //   console.log('datefromtimestamp: ', dateFromTimeStamp);
+
               //   console.log(golfGames);
 
               //   console.log('item: ', item);
 
               return (
-                <TouchableOpacity style={{ margin: 10, marginBottom: 40 }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    // console.log(index);
+                    setScore(item.points);
+                    setExtraPoints(item.extraPoints);
+                    setDocID(item.docID);
+                    setDate(dateFromTimeStamp);
+                    setModalVisible(true);
+                  }}
+                  style={{ margin: 10, marginBottom: 20 }}
+                >
                   <View
                     style={
                       {
@@ -84,7 +123,7 @@ const MyGolfRoundsScreen = () => {
                         alignSelf: 'center',
                       }}
                     >
-                      {date}
+                      {golfRoundDate}
                     </Text>
                     <View style={styles.namePointsExtra}>
                       <Text
@@ -127,6 +166,88 @@ const MyGolfRoundsScreen = () => {
           />
         )}
       </View>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Uppdatera golfrunda!</Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                // backgroundColor: 'red',
+              }}
+            >
+              <View
+                style={{
+                  // marginHorizontal: 100,
+                  // right: 15,
+                  borderColor: 'gray',
+                  borderWidth: 1,
+                  backgroundColor: 'white',
+                  //   alignSelf: 'center',
+                }}
+              >
+                <CustomDatePicker
+                  defaultDate={date}
+                  textStyle={{
+                    paddingVertical: 3,
+                    paddingHorizontal: 10,
+                    borderColor: 'gray',
+                    borderWidth: 1,
+                  }}
+                  onDateChange={(value) => {
+                    setDate(value);
+                  }}
+                />
+              </View>
+              <TextInput
+                placeholder="Poäng"
+                value={score}
+                onChangeText={(text) => setScore(text)}
+                keyboardType="number-pad"
+                style={{ ...styles.textInput }}
+              />
+
+              <TextInput
+                placeholder="Extra poäng"
+                value={extraPoints}
+                onChangeText={(text) => setExtraPoints(text)}
+                keyboardType="number-pad"
+                style={{ ...styles.textInput }}
+              />
+            </View>
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={async () => {
+                const timeStampDate = await convertToTimeStamp(date);
+                const name = user.displayName;
+                const userID = user.uid;
+
+                updateGolfRound(
+                  docID,
+                  userID,
+                  score,
+                  extraPoints,
+                  timeStampDate
+                );
+
+                getAndSetGolfGames();
+                setModalVisible(!modalVisible);
+              }}
+            >
+              <Text style={styles.textStyle}>Updatera</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -136,7 +257,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'black',
     alignItems: 'stretch',
-    // justifyContent: 'center',
   },
   golfRoundRow: {
     backgroundColor: Theme.black,
@@ -144,9 +264,6 @@ const styles = StyleSheet.create({
     marginVertical: 1,
     marginHorizontal: 1,
     flexDirection: 'row',
-    // // justifyContent: 'center',
-    // flex: 1,
-    // width: '100%',
   },
 
   player: {
@@ -170,16 +287,16 @@ const styles = StyleSheet.create({
     width: '35%',
     textAlign: 'right',
     color: 'white',
-    // marginRight: 15,
+
     fontFamily: Theme.fontFamilyText,
     right: 10,
   },
   namePointsExtra: {
     width: '100%',
     borderRadius: 2,
-    // justifyContent: 'space-evenly',
+
     flexDirection: 'row',
-    // marginTop: 0,
+
     borderColor: 'white',
     backgroundColor: 'grey',
 
@@ -190,6 +307,59 @@ const styles = StyleSheet.create({
   culumText: {
     color: 'white',
     fontFamily: Theme.fontFamilyText,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: Theme.black,
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 10,
+    padding: 8,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: '#F194FF',
+  },
+  buttonClose: {
+    backgroundColor: 'green',
+    marginTop: 20,
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    fontSize: 20,
+    marginBottom: 15,
+    textAlign: 'center',
+    color: Theme.orange,
+    // fontWeight: 'bold',
+  },
+  textInput: {
+    height: 27,
+    borderColor: 'gray',
+    borderWidth: 2,
+    backgroundColor: 'white',
+    marginLeft: 5,
+    width: '20%',
   },
 });
 
