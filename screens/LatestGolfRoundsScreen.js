@@ -7,27 +7,51 @@ import { PlayerContext } from '../context/PlayerContext';
 import Theme from '../theme/theme';
 import moment from 'moment';
 
-const LatestGolfRoundsScreen = ({ navigation }) => {
+const LatestGolfRoundsScreen = () => {
   const { getGolfGames, getGolfGamesLoading } = useContext(PlayerContext);
 
   const [golfGames, setGolfGames] = useState([]);
 
+  const [golfGamesFromDB, setGolfGamesFromDB] = useState([]);
+
+  const Moment = require('moment');
+
   const getAndSetGolfGames = async () => {
-    await getGolfGames().then(setGolfGames);
+    await getGolfGames().then(setGolfGamesFromDB);
   };
 
   const sortGolfGamesArray = (golfGames) => {
-    golfGames.sort(function (x, y) {
-      console.log('x: ', x.date.date.seconds);
-      console.log('y: ', y.date.date.seconds);
-      return x.date.date.seconds - y.date.date.seconds;
+    let sortedArray = [];
+    let arrayToSort = [];
+
+    golfGames.forEach((golfGame) => {
+      let dateFromTimeStamp = golfGame.date.date.toDate();
+      let date = moment(dateFromTimeStamp).format('YYYYMMDD');
+
+      arrayToSort.push({
+        ...golfGame,
+        date: {
+          date: date,
+        },
+      });
     });
+
+    sortedArray = arrayToSort.sort(
+      (a, b) =>
+        new Moment(a.date.date).format('YYYYMMDD') -
+        new Moment(b.date.date).format('YYYYMMDD')
+    );
+    sortedArray.reverse();
+    setGolfGames(sortedArray);
   };
 
   useEffect(() => {
     getAndSetGolfGames();
-    sortGolfGamesArray(golfGames);
   }, []);
+
+  useEffect(() => {
+    sortGolfGamesArray(golfGamesFromDB);
+  }, [golfGamesFromDB]);
 
   const GolfRoundRow = ({ name, points, extraPoints }) => (
     <View style={{ ...styles.golfRoundRow }}>
@@ -50,10 +74,7 @@ const LatestGolfRoundsScreen = ({ navigation }) => {
             style={{ marginBottom: 50 }}
             data={golfGames}
             renderItem={({ item, index }) => {
-              // console.log('item: ', golfGames);
-              let dateFromTimeStamp = item.date.date.toDate();
-
-              let date = moment(dateFromTimeStamp).format('MMMM Do, YYYY');
+              let date = moment(item.date.date).format('MMMM Do, YYYY');
 
               return (
                 <View style={{ margin: 10 }}>
@@ -74,7 +95,6 @@ const LatestGolfRoundsScreen = ({ navigation }) => {
                       {date}
                     </Text>
                     <View style={styles.namePointsExtra}>
-                      {/* <Text style={{ ...styles.culumText, width: '5%' }}></Text> */}
                       <Text
                         style={{
                           ...styles.culumText,
@@ -152,7 +172,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'black',
     alignItems: 'stretch',
-    // justifyContent: 'center',
   },
   golfRoundRow: {
     backgroundColor: Theme.black,
@@ -160,9 +179,6 @@ const styles = StyleSheet.create({
     marginVertical: 1,
     marginHorizontal: 1,
     flexDirection: 'row',
-    // // justifyContent: 'center',
-    // flex: 1,
-    // width: '100%',
   },
 
   player: {
@@ -177,7 +193,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: Theme.orange,
     fontFamily: Theme.fontFamilyText,
-    // marginLeft: 0,
+
     width: '15%',
     alignSelf: 'center',
   },
@@ -186,16 +202,16 @@ const styles = StyleSheet.create({
     width: '35%',
     textAlign: 'right',
     color: 'white',
-    // marginRight: 15,
+
     fontFamily: Theme.fontFamilyText,
     right: 10,
   },
   namePointsExtra: {
     width: '100%',
     borderRadius: 2,
-    // justifyContent: 'space-evenly',
+
     flexDirection: 'row',
-    // marginTop: 0,
+
     borderColor: 'white',
     backgroundColor: 'grey',
 
