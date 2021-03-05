@@ -218,7 +218,6 @@ const ChartListScreen = () => {
             <FlatList
               data={resultTable}
               renderItem={({ item, index }) => {
-                // console.log('item: ', item);
                 let number = index + 1;
                 let positionNumber = number.toString();
                 let name = '';
@@ -227,7 +226,7 @@ const ChartListScreen = () => {
                 } else {
                   name = item.name;
                 }
-                // console.log(index);
+
                 return (
                   <Item
                     positionNumber={positionNumber}
@@ -269,7 +268,7 @@ const styles = StyleSheet.create({
   },
   header: {
     color: 'white',
-    fontSize: 50,
+    fontSize: 40,
     alignSelf: 'center',
     marginTop: 120,
     fontFamily: Theme.fontFamilyHeader,

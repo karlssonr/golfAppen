@@ -251,12 +251,13 @@ const RegisterResultScreen = () => {
   }
 
   return (
-    <ScrollView style={{ backgroundColor: 'black' }}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={{ flex: 1 }}
-      >
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={200}
+      style={{ flex: 1, backgroundColor: 'black' }}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <ScrollView style={{ backgroundColor: 'black' }}>
           <View style={styles.container}>
             {/* <View style={{ height: '30%' }}> */}
             <ImageBackground
@@ -507,9 +508,9 @@ const RegisterResultScreen = () => {
               </View>
             </View>
           </View>
-        </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
-    </ScrollView>
+        </ScrollView>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -553,7 +554,6 @@ const styles = StyleSheet.create({
     fontFamily: Theme.fontFamilyHeader,
   },
   textView: {
-    // marginTop: -30,
     top: -90,
     flexDirection: 'row',
 
@@ -562,8 +562,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 18,
-    // marginTop: 20,
-    // width: '20%',
+
     color: 'white',
     backgroundColor: undefined,
     fontFamily: Theme.fontFamilyText,

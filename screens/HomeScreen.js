@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   },
   header: {
     color: 'white',
-    fontSize: 60,
+    fontSize: 40,
     alignSelf: 'center',
     marginBottom: 10,
     fontFamily: Theme.fontFamilyHeader,
