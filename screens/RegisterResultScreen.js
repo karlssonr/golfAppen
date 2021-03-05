@@ -213,7 +213,7 @@ const RegisterResultScreen = () => {
         return;
       }
 
-      // resetPlayerState();
+      resetPlayerState();
 
       console.log('Posting golf round');
     } catch (er) {
@@ -450,21 +450,21 @@ const RegisterResultScreen = () => {
                   flex: 1,
                   backgroundColor: null,
                   top: -70,
-                  flexDirection: 'row',
+                  flexDirection: 'column',
                   alignItems: 'center',
                 }}
               >
-                {/* <Text
+                <Text
                   style={{
                     ...styles.text,
-                    left: 20,
+                    // left: 20,
 
                     alignSelf: 'center',
                     backgroundColor: null,
                   }}
                 >
                   Datum
-                </Text> */}
+                </Text>
                 <View style={{ flex: 1 }} />
                 <View
                   style={{
@@ -479,7 +479,7 @@ const RegisterResultScreen = () => {
                   <CustomDatePicker
                     textStyle={{
                       paddingVertical: 3,
-                      paddingHorizontal: 100,
+                      paddingHorizontal: 20,
                       borderColor: 'gray',
                       borderWidth: 1,
                     }}

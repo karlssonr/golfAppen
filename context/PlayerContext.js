@@ -173,7 +173,7 @@ export default function PlayerContextProvider({ children }) {
 
   const getPlayer = async (userID) => {
     let snapshot = await firebase.firestore().collection('players').doc(userID);
-    console.log('snapshot: ', snapshot);
+
     return snapshot;
   };
 
@@ -201,7 +201,9 @@ export default function PlayerContextProvider({ children }) {
         extraPoints: extraPoints,
         docID: docID,
       })
-      .then(() => console.log('golfround updated'));
+      .then(() => {
+        console.log('golfround updated');
+      });
   };
 
   const getGolfGames = async () => {

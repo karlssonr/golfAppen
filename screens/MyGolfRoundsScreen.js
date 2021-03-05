@@ -8,11 +8,7 @@ import {
   Alert,
   TextInput,
 } from 'react-native';
-import {
-  FlatList,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native-gesture-handler';
+import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
 
 import Splash from './Splash';
 import { PlayerContext } from '../context/PlayerContext';
@@ -41,6 +37,7 @@ const MyGolfRoundsScreen = () => {
   const { user } = useContext(AuthContext);
 
   const [golfGames, setGolfGames] = useState([]);
+  const [golfRoundsFromDB, setGolfRoundsFromDB] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
 
   const [score, setScore] = useState('');
@@ -48,11 +45,36 @@ const MyGolfRoundsScreen = () => {
   const [docID, setDocID] = useState('');
   const [date, setDate] = useState(moment());
 
+  const Moment = require('moment');
+
   const FB = firebase.firestore.Timestamp;
 
   const getAndSetGolfGames = async () => {
-    await getPlayerScore(user.uid).then(setGolfGames);
+    await getPlayerScore(user.uid).then(setGolfRoundsFromDB);
     // await getPlayer(user.uid);
+  };
+
+  const sortGolfGamesArray = (golfGames) => {
+    let sortedArray = [];
+    let arrayToSort = [];
+
+    golfGames.forEach((golfGame) => {
+      let dateFromTimeStamp = golfGame.date.toDate();
+      let newDate = moment(dateFromTimeStamp).format('YYYYMMDD');
+
+      arrayToSort.push({
+        ...golfGame,
+        date: newDate,
+      });
+    });
+
+    sortedArray = arrayToSort.sort(
+      (a, b) =>
+        new Moment(a.date).format('YYYYMMDD') -
+        new Moment(b.date).format('YYYYMMDD')
+    );
+    sortedArray.reverse();
+    setGolfGames(sortedArray);
   };
 
   const convertToTimeStamp = async (dateToConvert) => {
@@ -64,8 +86,15 @@ const MyGolfRoundsScreen = () => {
 
   useEffect(() => {
     getAndSetGolfGames();
-    console.log('userID: ', user.displayName);
   }, []);
+
+  useEffect(() => {
+    sortGolfGamesArray(golfRoundsFromDB);
+  }, [golfRoundsFromDB]);
+
+  useEffect(() => {
+    getAndSetGolfGames();
+  }, [score, extraPoints]);
 
   return (
     <View style={styles.container}>
@@ -76,23 +105,15 @@ const MyGolfRoundsScreen = () => {
             style={{ marginBottom: 50 }}
             data={golfGames}
             renderItem={({ item, index }) => {
-              let dateFromTimeStamp = item.date.toDate();
+              let dateFromTimeStamp = new Date(moment(item.date));
 
               let golfRoundDate = moment(dateFromTimeStamp).format(
                 'MMMM Do, YYYY'
               );
 
-              //   console.log('golfrounddate: ', golfRoundDate);
-              //   console.log('datefromtimestamp: ', dateFromTimeStamp);
-
-              //   console.log(golfGames);
-
-              //   console.log('item: ', item);
-
               return (
                 <TouchableOpacity
                   onPress={() => {
-                    // console.log(index);
                     setScore(item.points);
                     setExtraPoints(item.extraPoints);
                     setDocID(item.docID);
@@ -182,17 +203,13 @@ const MyGolfRoundsScreen = () => {
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                // backgroundColor: 'red',
               }}
             >
               <View
                 style={{
-                  // marginHorizontal: 100,
-                  // right: 15,
                   borderColor: 'gray',
                   borderWidth: 1,
                   backgroundColor: 'white',
-                  //   alignSelf: 'center',
                 }}
               >
                 <CustomDatePicker
@@ -227,6 +244,8 @@ const MyGolfRoundsScreen = () => {
             <Pressable
               style={[styles.button, styles.buttonClose]}
               onPress={async () => {
+                setModalVisible(!modalVisible);
+
                 const timeStampDate = await convertToTimeStamp(date);
                 const name = user.displayName;
                 const userID = user.uid;
@@ -240,7 +259,6 @@ const MyGolfRoundsScreen = () => {
                 );
 
                 getAndSetGolfGames();
-                setModalVisible(!modalVisible);
               }}
             >
               <Text style={styles.textStyle}>Updatera</Text>
