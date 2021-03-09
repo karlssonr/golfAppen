@@ -8,6 +8,9 @@ import MemberScreen from '../screens/MemberScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import LatestGolfRoundsScreen from '../screens/LatestGolfRoundsScreen';
 import MyGolfRoundsScreen from '../screens/MyGolfRoundsScreen';
+import ChatRoom from '../chat/ChatRoom';
+import CreateChatRoom from '../chat/CreateChatRoom';
+import Messages from '../chat/Messages';
 import Theme from '../theme/theme';
 import { AuthContext } from '../context/AuthContext';
 
@@ -84,6 +87,38 @@ export default function AuthenticatedStack() {
         name="MyGolfRoundsScreen"
         component={MyGolfRoundsScreen}
         options={{ title: 'Mina rundor' }}
+      />
+
+      <Stack.Screen
+        name="CreateChatRoom"
+        component={CreateChatRoom}
+        options={{ title: 'Skapa chatt' }}
+      />
+
+      <Stack.Screen
+        name="Messages"
+        component={Messages}
+        options={({ route }) => ({
+          title: route.params.thread.name,
+        })}
+      />
+      <Stack.Screen
+        name="ChatRoom"
+        component={ChatRoom}
+        options={({ navigation, route }) => ({
+          title: 'Chatt rum',
+          headerTitleAlign: 'center',
+          headerRight: () => (
+            <Button
+              backgroundColor={null}
+              onPress={() => {
+                navigation.navigate('CreateChatRoom');
+              }}
+              title="Skapa chatt"
+              color={Platform.OS === 'ios' ? Theme.orange : 'black'}
+            />
+          ),
+        })}
       />
 
       <Stack.Screen

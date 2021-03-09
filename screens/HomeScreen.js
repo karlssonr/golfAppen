@@ -49,10 +49,11 @@ const HomeScreen = ({ navigation }) => {
           imageSource={require('../assets/stats.png')}
           imageWidth={30}
           imageHeight={30}
-          title="Statistik"
-          textColor="grey"
+          title="Chat"
+          textColor="white"
+          iconColor={Theme.orange}
           textFontSize={20}
-          // onPress={() => navigation.navigate('RegisterResultScreen')}
+          onPress={() => navigation.navigate('ChatRoom')}
         />
         <IconAndTextButton
           imageSource={require('../assets/golfSwing.png')}
