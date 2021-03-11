@@ -20,7 +20,7 @@ export default function ChatRoom({ navigation }) {
       .collection('MESSAGE_THREADS')
       .orderBy('latestMessage.createdAt', 'desc')
       .onSnapshot((querySnapshot) => {
-        const threads = querySnapshot.docs.map((documentSnapshot) => {
+        const threadsSnapshot = querySnapshot.docs.map((documentSnapshot) => {
           return {
             _id: documentSnapshot.id,
             name: '',
@@ -29,7 +29,7 @@ export default function ChatRoom({ navigation }) {
           };
         });
 
-        setThreads(threads);
+        setThreads(threadsSnapshot);
         console.log(threads);
         if (loading) {
           setLoading(false);

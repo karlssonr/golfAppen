@@ -27,12 +27,12 @@ export default function SignUpScreen({ navigation }) {
   const { setIsLoggedIn, signUp } = useContext(AuthContext);
 
   const submit = async () => {
-    if (password !== confirmPassword) {
-      setError('Password do not match');
-      Alert.alert(error);
+    // if (password !== confirmPassword) {
+    //   setError('Password do not match');
+    //   Alert.alert(error);
 
-      return;
-    }
+    //   return;
+    // }
 
     try {
       setError('');
