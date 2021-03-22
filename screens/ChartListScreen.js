@@ -83,8 +83,6 @@ const ChartListScreen = () => {
       avrageScore = calculateAverageScore(golfroundsOfPlayer);
       averageOfBest7Rounds = calcutaleAverageOfBest7Rounds(golfroundsOfPlayer);
 
-      // console.log(' golfroundofplayer: ', golfroundsOfPlayer);
-
       resulTableScore.push({
         name: golfroundsOfPlayer.name,
         nickName: golfroundsOfPlayer.nickName,
@@ -94,10 +92,7 @@ const ChartListScreen = () => {
       });
     });
 
-    //  resulTableScore.averageOfBest7Rounds.sort(getLowestNumber);
-    // console.log('test:  ', resulTableScore[0].averageOfBest7Rounds);
     const sortedArray = bubbleSort(resulTableScore);
-    // console.log(sortedArray);
 
     setResultTable(sortedArray);
   };
@@ -166,7 +161,7 @@ const ChartListScreen = () => {
         scores: scores,
       });
     }
-    // sconsole.log(array);
+
     return array;
   };
 
@@ -185,7 +180,7 @@ const ChartListScreen = () => {
   }, [players]);
 
   return (
-    <ScrollView style={{ backgroundColor: 'black' }}>
+    <ScrollView style={{ backgroundColor: Theme.colors.black }}>
       <View style={styles.container}>
         <ImageBackground
           source={require('../assets/pokal.png')}
@@ -198,13 +193,13 @@ const ChartListScreen = () => {
           <Text style={{ ...styles.culumText, width: '40%', left: 10 }}>
             Namn
           </Text>
-          {/* <View style={{ flex: 1 }}></View> */}
+
           <Text
             style={{ ...styles.culumText, textAlign: 'center', width: '15%' }}
           >
             Total
           </Text>
-          {/* <View style={{ flex: 1 }}></View> */}
+
           <Text
             style={{ ...styles.culumText, textAlign: 'right', width: '35%' }}
           >
@@ -240,15 +235,7 @@ const ChartListScreen = () => {
             />
           )}
         </View>
-        <View
-          style={{
-            // backgroundColor: 'red',
-            alignSelf: 'center',
-            alignItems: 'center',
-            marginTop: 50,
-            marginBottom: 50,
-          }}
-        >
+        <View style={styles.KGHIOBox}>
           <Text style={styles.text}>Vänd luren för detaljer</Text>
           <Text style={styles.kghio}>KGHIO 2021</Text>
         </View>
@@ -258,24 +245,30 @@ const ChartListScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  KGHIOBox: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    marginTop: 50,
+    marginBottom: 50,
+  },
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: Theme.colors.black,
     alignItems: 'center',
   },
   flatList: {
-    backgroundColor: 'white',
+    backgroundColor: Theme.colors.white,
   },
   header: {
-    color: 'white',
-    fontSize: 40,
+    color: Theme.colors.white,
+    fontSize: Theme.fontSize.header,
     alignSelf: 'center',
     marginTop: 120,
     fontFamily: Theme.fontFamilyHeader,
   },
 
   item: {
-    backgroundColor: 'black',
+    backgroundColor: Theme.colors.black,
     padding: 1,
     marginVertical: 1,
     marginHorizontal: 1,
@@ -283,12 +276,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   positionNumber: {
-    fontSize: 15,
-    color: 'white',
+    fontSize: Theme.fontSize.text,
+    color: Theme.colors.white,
     width: '5%',
   },
   title: {
-    fontSize: 15,
+    fontSize: Theme.fontSize.text,
     left: 10,
     width: '40%',
 
@@ -296,7 +289,7 @@ const styles = StyleSheet.create({
     fontFamily: Theme.fontFamilyText,
   },
   totalScore: {
-    fontSize: 15,
+    fontSize: Theme.fontSize.text,
 
     textAlign: 'center',
     color: Theme.orange,
@@ -305,35 +298,34 @@ const styles = StyleSheet.create({
     width: '15%',
   },
   sevenBest: {
-    fontSize: 15,
+    fontSize: Theme.fontSize.text,
     width: '35%',
     textAlign: 'right',
 
-    color: 'white',
-    // marginRight: 15,
+    color: Theme.colors.white,
+
     fontFamily: Theme.fontFamilyText,
   },
   chartView: {
-    backgroundColor: 'grey',
+    backgroundColor: Theme.colors.grey,
     flexDirection: 'column',
     width: '100%',
     marginTop: 0,
-    // height: '45%',
   },
 
   kghio: {
     fontSize: 20,
-    color: 'white',
+    color: Theme.colors.white,
     marginTop: 20,
     fontFamily: Theme.fontFamilyText,
   },
   text: {
-    color: 'white',
+    color: Theme.colors.white,
     marginTop: 10,
     fontFamily: Theme.fontFamilyText,
   },
   culumText: {
-    color: 'white',
+    color: Theme.colors.white,
     fontFamily: Theme.fontFamilyText,
   },
   imageBackgroundStyle: {
@@ -348,8 +340,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     flexDirection: 'row',
     marginTop: 0,
-    borderColor: 'white',
-    backgroundColor: 'grey',
+    borderColor: Theme.colors.white,
+    backgroundColor: Theme.colors.grey,
 
     borderWidth: 1,
     alignSelf: 'center',

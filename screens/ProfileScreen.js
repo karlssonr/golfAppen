@@ -85,7 +85,7 @@ export default function SignUpScreen({ navigation }) {
               value={golfUserID}
               onChangeText={setGolfUserID}
               style={{
-                backgroundColor: 'lightgrey',
+                backgroundColor: Theme.colors.lightGrey,
                 padding: 10,
                 borderRadius: 5,
               }}
@@ -94,7 +94,7 @@ export default function SignUpScreen({ navigation }) {
             <View style={{ marginTop: 30 }}>
               <Button
                 title="Updatera Profil"
-                color={Theme.orange}
+                color={Theme.colors.orange}
                 style={styles.button}
                 disabled={loading}
                 onPress={submit}
@@ -110,7 +110,7 @@ export default function SignUpScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: Theme.colors.black,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -119,12 +119,12 @@ const styles = StyleSheet.create({
   },
   text: {
     fontWeight: '600',
-    fontSize: 16,
-    color: Theme.orange,
+    fontSize: Theme.fontSize.formText,
+    color: Theme.colors.orange,
     fontFamily: Theme.fontFamilyText,
   },
   textInput: {
-    backgroundColor: 'lightgrey',
+    backgroundColor: Theme.colors.lightGrey,
     padding: 10,
     borderRadius: 5,
     marginBottom: 10,

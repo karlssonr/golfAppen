@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
+import Theme from '../theme/theme';
 
 const CustomDatePicker = (props) => {
   const { textStyle, defaultDate } = props;
@@ -85,7 +86,7 @@ const CustomDatePicker = (props) => {
                 onPress={() => setShow(false)}
               >
                 <TouchableHighlight
-                  underlayColor={'#FFFFFF'}
+                  underlayColor={Theme.colors.white}
                   style={{
                     flex: 1,
                     borderTopColor: '#E9E9E9E9',
@@ -95,7 +96,7 @@ const CustomDatePicker = (props) => {
                 >
                   <View
                     style={{
-                      backgroundColor: '#FFFFFF',
+                      backgroundColor: Theme.colors.white,
                       height: 256,
                       overflow: 'hidden',
                     }}

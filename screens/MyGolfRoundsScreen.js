@@ -51,14 +51,13 @@ const MyGolfRoundsScreen = () => {
 
   const getAndSetGolfGames = async () => {
     await getPlayerScore(user.uid).then(setGolfRoundsFromDB);
-    // await getPlayer(user.uid);
   };
 
-  const sortGolfGamesArray = (golfGames) => {
+  const sortGolfGamesArray = (golfGamesArray) => {
     let sortedArray = [];
     let arrayToSort = [];
 
-    golfGames.forEach((golfGame) => {
+    golfGamesArray.forEach((golfGame) => {
       let dateFromTimeStamp = golfGame.date.toDate();
       let newDate = moment(dateFromTimeStamp).format('YYYYMMDD');
 
@@ -120,7 +119,7 @@ const MyGolfRoundsScreen = () => {
                     setDate(dateFromTimeStamp);
                     setModalVisible(true);
                   }}
-                  style={{ margin: 10, marginBottom: 20 }}
+                  style={styles.touchableOpacity}
                 >
                   <View
                     style={
@@ -131,21 +130,7 @@ const MyGolfRoundsScreen = () => {
                       }
                     }
                   >
-                    <Text
-                      style={{
-                        fontSize: 15,
-                        paddingHorizontal: 10,
-                        borderRadius: 5,
-                        borderWidth: 1,
-                        borderColor: '#fff',
-                        color: '#fff',
-                        backgroundColor: 'green',
-                        // width: '100%',
-                        alignSelf: 'center',
-                      }}
-                    >
-                      {golfRoundDate}
-                    </Text>
+                    <Text style={styles.golfRoundDate}>{golfRoundDate}</Text>
                     <View style={styles.namePointsExtra}>
                       <Text
                         style={{ ...styles.culumText, width: '40%', left: 10 }}
@@ -207,9 +192,9 @@ const MyGolfRoundsScreen = () => {
             >
               <View
                 style={{
-                  borderColor: 'gray',
+                  borderColor: Theme.colors.grey,
                   borderWidth: 1,
-                  backgroundColor: 'white',
+                  backgroundColor: Theme.colors.white,
                 }}
               >
                 <CustomDatePicker
@@ -217,7 +202,7 @@ const MyGolfRoundsScreen = () => {
                   textStyle={{
                     paddingVertical: 3,
                     paddingHorizontal: 10,
-                    borderColor: 'gray',
+                    borderColor: Theme.colors.grey,
                     borderWidth: 1,
                   }}
                   onDateChange={(value) => {
@@ -271,13 +256,27 @@ const MyGolfRoundsScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  touchableOpacity: {
+    margin: 10,
+    marginBottom: 20,
+  },
+  golfRoundDate: {
+    fontSize: 15,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: Theme.colors.white,
+    color: Theme.colors.white,
+    backgroundColor: Theme.colors.lightBlack,
+    alignSelf: 'center',
+  },
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: Theme.colors.black,
     alignItems: 'stretch',
   },
   golfRoundRow: {
-    backgroundColor: Theme.black,
+    backgroundColor: Theme.colors.lightBlack,
     padding: 1,
     marginVertical: 1,
     marginHorizontal: 1,
@@ -294,7 +293,7 @@ const styles = StyleSheet.create({
   score: {
     fontSize: 15,
     textAlign: 'center',
-    color: Theme.orange,
+    color: Theme.colors.orange,
     fontFamily: Theme.fontFamilyText,
     // marginLeft: 0,
     width: '15%',
@@ -304,7 +303,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     width: '35%',
     textAlign: 'right',
-    color: 'white',
+    color: Theme.colors.white,
 
     fontFamily: Theme.fontFamilyText,
     right: 10,
@@ -315,15 +314,15 @@ const styles = StyleSheet.create({
 
     flexDirection: 'row',
 
-    borderColor: 'white',
-    backgroundColor: 'grey',
+    borderColor: Theme.colors.white,
+    backgroundColor: Theme.colors.grey,
 
     borderWidth: 1,
     alignSelf: 'center',
     fontFamily: Theme.fontFamilyText,
   },
   culumText: {
-    color: 'white',
+    color: Theme.colors.white,
     fontFamily: Theme.fontFamilyText,
   },
   centeredView: {
@@ -334,7 +333,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 20,
-    backgroundColor: Theme.black,
+    backgroundColor: Theme.colors.lightBlack,
     borderRadius: 20,
     padding: 35,
     alignItems: 'center',
@@ -356,11 +355,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#F194FF',
   },
   buttonClose: {
-    backgroundColor: 'green',
+    backgroundColor: Theme.colors.green,
     marginTop: 20,
   },
   textStyle: {
-    color: 'white',
+    color: Theme.colors.white,
     fontWeight: 'bold',
     textAlign: 'center',
   },
@@ -368,14 +367,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 15,
     textAlign: 'center',
-    color: Theme.orange,
+    color: Theme.colors.orange,
     // fontWeight: 'bold',
   },
   textInput: {
     height: 27,
-    borderColor: 'gray',
+    borderColor: Theme.colors.grey,
     borderWidth: 2,
-    backgroundColor: 'white',
+    backgroundColor: Theme.colors.white,
     marginLeft: 5,
     width: '20%',
   },

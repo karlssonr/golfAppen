@@ -4,7 +4,7 @@ import firebase from '../firebase';
 
 export default function Messages({ route }) {
   const { thread } = route.params;
-  const user = firebase.auth().currentUser;
+  const user = firebase.auth().currentUser.toJSON();
 
   //   console.log('user: ', route);
 
@@ -45,11 +45,14 @@ export default function Messages({ route }) {
           };
 
           if (!firebaseData.system) {
+            // console.log('system');
             data.user = {
               ...firebaseData.user,
               name: firebaseData.user.displayName,
             };
           }
+
+          //   console.log('firebasedata: ', data);
 
           return data;
         });
@@ -60,7 +63,7 @@ export default function Messages({ route }) {
     return () => unsubscribeListener();
   }, []);
 
-  console.log('messages: ', messages);
+  //   console.log('messages: ', messages);
 
   async function handleSend(newMessage = []) {
     const text = messages[0].text;
@@ -92,15 +95,30 @@ export default function Messages({ route }) {
         { merge: true }
       );
 
-    setMessages(GiftedChat.append(messages, newMessage));
+    // setMessages(GiftedChat.append(messages, newMessage));
+    setMessages((previousMessages) =>
+      GiftedChat.append(previousMessages, newMessage)
+    );
+
+    // setCheckbox(prevState => {
+    //   return new Map(prevState).set(name, checked);
+    // });
+
+    // setMessages((previousMessages) =>      GiftedChat.append(previousMessages, sendMessage),    );
   }
 
   return (
     <GiftedChat
+      isAnimated={true}
+      renderAllAvatars={true}
+      renderUsernameOnMessage={true}
+      useNativeDriver={true}
       messages={messages}
-      onSend={(newMessage) => handleSend(newMessage)}
+      onSend={handleSend}
       user={{
         _id: user.uid,
+        displayName: user.displayName,
+        name: user.displayName,
       }}
     />
   );

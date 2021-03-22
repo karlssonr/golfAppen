@@ -5,10 +5,11 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
-  ActivityIndicator,
 } from 'react-native';
 import firebase from '../firebase';
 import Separator from '../components/Separator';
+import Splash from '../screens/Splash';
+import Theme from '../theme/theme';
 
 export default function ChatRoom({ navigation }) {
   const [threads, setThreads] = useState([]);
@@ -30,7 +31,7 @@ export default function ChatRoom({ navigation }) {
         });
 
         setThreads(threadsSnapshot);
-        console.log(threads);
+
         if (loading) {
           setLoading(false);
         }
@@ -39,12 +40,9 @@ export default function ChatRoom({ navigation }) {
     return () => unsubscribe();
   }, []);
 
-  if (loading) {
-    return <ActivityIndicator size="large" color="#555" />;
-  }
-
   return (
     <View style={styles.container}>
+      {loading && <Splash />}
       <FlatList
         data={threads}
         keyExtractor={(item) => item._id}
@@ -70,10 +68,12 @@ export default function ChatRoom({ navigation }) {
   );
 }
 
+// #dee2eb
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#dee2eb',
+    backgroundColor: Theme.colors.black,
   },
   title: {
     marginTop: 20,
@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: Theme.colors.lightBlack,
   },
   content: {
     flexShrink: 1,
@@ -97,12 +98,12 @@ const styles = StyleSheet.create({
   nameText: {
     fontWeight: '600',
     fontSize: 18,
-    color: '#000',
+    color: Theme.colors.orange,
   },
   dateText: {},
   contentText: {
     color: '#949494',
-    fontSize: 16,
+    fontSize: Theme.fontSize.formText,
     marginTop: 2,
   },
 });

@@ -24,20 +24,14 @@ export default function SignUpScreen({ navigation }) {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const { setIsLoggedIn, signUp } = useContext(AuthContext);
+  const { signUp, createUser } = useContext(AuthContext);
 
   const submit = async () => {
-    // if (password !== confirmPassword) {
-    //   setError('Password do not match');
-    //   Alert.alert(error);
-
-    //   return;
-    // }
-
     try {
       setError('');
       setLoading(true);
-      signUp(email, password);
+      await signUp(email, password);
+      await createUser();
       console.log('submitting sign up');
     } catch {
       setError('Failed to create an account');
@@ -96,7 +90,7 @@ export default function SignUpScreen({ navigation }) {
             <View style={{ marginTop: 30 }}>
               <Button
                 title="Skapa Konto"
-                color={Theme.orange}
+                color={Theme.colors.orange}
                 style={styles.button}
                 disabled={loading}
                 onPress={submit}
@@ -112,7 +106,7 @@ export default function SignUpScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: Theme.colors.black,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -121,12 +115,12 @@ const styles = StyleSheet.create({
   },
   text: {
     fontWeight: '600',
-    fontSize: 16,
-    color: Theme.orange,
+    fontSize: Theme.fontSize.formText,
+    color: Theme.colors.orange,
     fontFamily: Theme.fontFamilyText,
   },
   textInput: {
-    backgroundColor: 'lightgrey',
+    backgroundColor: Theme.colors.lightGrey,
     padding: 10,
     borderRadius: 5,
     marginBottom: 10,

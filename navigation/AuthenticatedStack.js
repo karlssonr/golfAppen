@@ -53,24 +53,24 @@ export default function AuthenticatedStack() {
       />
       <Stack.Screen
         name="RegisterResultScreen"
-        options={{ title: 'Registrera Resultat' }}
+        options={{ title: '' }}
         component={RegisterResultScreen}
       />
       <Stack.Screen
         name="ChartListScreen"
         component={ChartListScreen}
-        options={{ title: 'Tabell' }}
+        options={{ title: '' }}
       />
       <Stack.Screen
         name="MemberScreen"
         component={MemberScreen}
-        options={{ title: 'Medlemmar' }}
+        options={{ title: '' }}
       />
       <Stack.Screen
         name="LatestGolfRoundsScreen"
         component={LatestGolfRoundsScreen}
         options={({ navigation, route }) => ({
-          title: 'Senaste rundorna',
+          title: '',
           headerTitleAlign: 'center',
           headerRight: () => (
             <Button
@@ -106,7 +106,7 @@ export default function AuthenticatedStack() {
         name="ChatRoom"
         component={ChatRoom}
         options={({ navigation, route }) => ({
-          title: 'Chatt rum',
+          title: '',
           headerTitleAlign: 'center',
           headerRight: () => (
             <Button

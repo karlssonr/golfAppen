@@ -18,18 +18,18 @@ const AppNavigation = () => (
     <Stack.Screen name="KGHIO" component={HomeScreen} />
     <Stack.Screen
       name="RegisterResultScreen"
-      options={{ title: 'Registrera Resultat' }}
+      // options={{ title: 'Registrera Resultat' }}
       component={RegisterResultScreen}
     />
     <Stack.Screen
       name="ChartListScreen"
       component={ChartListScreen}
-      options={{ title: 'Tabell' }}
+      // options={{ title: 'Tabell' }}
     />
     <Stack.Screen
       name="MemberScreen"
       component={MemberScreen}
-      options={{ title: 'Medlemmar' }}
+      // options={{ title: 'Medlemmar' }}
     />
   </Stack.Navigator>
 );

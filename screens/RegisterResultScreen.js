@@ -8,7 +8,6 @@ import {
   TouchableWithoutFeedback,
   Platform,
   KeyboardAvoidingView,
-  Button,
 } from 'react-native';
 import { TextInput, ScrollView } from 'react-native-gesture-handler';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -17,7 +16,6 @@ import Theme from '../theme/theme';
 import IconAndTextButton from '../components/IconAndTextButton';
 import Splash from './Splash';
 import CustomDatePicker from '../components/CustomDatePicker';
-import moment from 'moment';
 import firebase from '../firebase';
 
 const RegisterResultScreen = () => {
@@ -227,13 +225,12 @@ const RegisterResultScreen = () => {
 
   useEffect(() => {
     getPlayers().then(setPlayers);
-    // setTodaysDate();
   }, []);
 
-  const mapPlayersFromDB = (players) => {
+  const mapPlayersFromDB = (playersFromDB) => {
     let array = [];
 
-    players.forEach((player) => {
+    playersFromDB.forEach((player) => {
       array.push({
         label: player.name,
         value: player.name,
@@ -254,31 +251,22 @@ const RegisterResultScreen = () => {
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       keyboardVerticalOffset={200}
-      style={{ flex: 1, backgroundColor: 'black' }}
+      style={styles.keyboardAvoidingView}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <ScrollView style={{ backgroundColor: 'black' }}>
+        <ScrollView style={styles.scrollView}>
           <View style={styles.container}>
             {/* <View style={{ height: '30%' }}> */}
             <ImageBackground
               source={require('../assets/greenball.png')}
-              style={{
-                width: '100%',
-                height: undefined,
-                aspectRatio: 1,
-
-                top: -90,
-
-                // backgroundColor: 'white'
-              }}
+              style={styles.imageBackground}
             >
               <Text style={styles.header}>Registrera Resultat</Text>
             </ImageBackground>
-            {/* </View> */}
 
             <View>
               <View style={{ ...styles.textView }}>
-                <Text
+                {/* <Text
                   style={{
                     ...styles.text,
 
@@ -288,9 +276,9 @@ const RegisterResultScreen = () => {
                   }}
                 >
                   Spelare
-                </Text>
-                <Text style={{ ...styles.text, width: '20%' }}>Poäng</Text>
-                <Text style={{ ...styles.text, width: '20%' }}>Extra</Text>
+                </Text> */}
+                {/* <Text style={{ ...styles.text, width: '20%' }}>Poäng</Text>
+                <Text style={{ ...styles.text, width: '20%' }}>Extra</Text> */}
               </View>
               <View style={{ ...styles.textInputView, zIndex: 5 }}>
                 <DropDownPicker
@@ -301,7 +289,7 @@ const RegisterResultScreen = () => {
                   style={styles.dropDownPickerStyle}
                   itemStyle={{ justifyContent: 'flex-start' }}
                   labelStyle={styles.dropDownLabelStyle}
-                  dropDownStyle={{ backgroundColor: '#fafafa' }}
+                  dropDownStyle={{ backgroundColor: Theme.colors.white }}
                   onChangeItem={(item) => {
                     setPlayerOne({
                       ...playerOne,
@@ -341,7 +329,7 @@ const RegisterResultScreen = () => {
                   style={styles.dropDownPickerStyle}
                   itemStyle={{ justifyContent: 'flex-start' }}
                   labelStyle={styles.dropDownLabelStyle}
-                  dropDownStyle={{ backgroundColor: '#fafafa' }}
+                  dropDownStyle={{ backgroundColor: Theme.colors.white }}
                   onChangeItem={(item) =>
                     setPlayerTwo({
                       ...playerTwo,
@@ -379,7 +367,7 @@ const RegisterResultScreen = () => {
                   style={styles.dropDownPickerStyle}
                   itemStyle={{ justifyContent: 'flex-start' }}
                   labelStyle={styles.dropDownLabelStyle}
-                  dropDownStyle={{ backgroundColor: '#fafafa' }}
+                  dropDownStyle={{ backgroundColor: Theme.colors.white }}
                   onChangeItem={(item) =>
                     setPlayerThree({
                       ...playerThree,
@@ -417,7 +405,7 @@ const RegisterResultScreen = () => {
                   style={styles.dropDownPickerStyle}
                   itemStyle={{ justifyContent: 'flex-start' }}
                   labelStyle={styles.dropDownLabelStyle}
-                  dropDownStyle={{ backgroundColor: '#fafafa' }}
+                  dropDownStyle={{ backgroundColor: Theme.colors.white }}
                   onChangeItem={(item) =>
                     setPlayerFour({
                       ...playerFour,
@@ -446,20 +434,10 @@ const RegisterResultScreen = () => {
                 ></TextInput>
               </View>
 
-              <View
-                style={{
-                  flex: 1,
-                  backgroundColor: null,
-                  top: -70,
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                }}
-              >
+              <View style={styles.dateView}>
                 <Text
                   style={{
                     ...styles.text,
-                    // left: 20,
-
                     alignSelf: 'center',
                     backgroundColor: null,
                   }}
@@ -467,23 +445,9 @@ const RegisterResultScreen = () => {
                   Datum
                 </Text>
                 <View style={{ flex: 1 }} />
-                <View
-                  style={{
-                    // marginHorizontal: 100,
-                    // right: 15,
-                    borderColor: 'gray',
-                    borderWidth: 1,
-                    backgroundColor: 'white',
-                    alignSelf: 'center',
-                  }}
-                >
+                <View style={styles.datePickerView}>
                   <CustomDatePicker
-                    textStyle={{
-                      paddingVertical: 3,
-                      paddingHorizontal: 20,
-                      borderColor: 'gray',
-                      borderWidth: 1,
-                    }}
+                    textStyle={styles.customDatePicker}
                     onDateChange={(value) => {
                       setDate(value);
                     }}
@@ -501,8 +465,8 @@ const RegisterResultScreen = () => {
                   imageWidth={30}
                   imageHeight={30}
                   title="Registrera Resultat"
-                  textColor="white"
-                  textFontSize={20}
+                  textColor={Theme.colors.white}
+                  textFontSize={Theme.fontSize.button}
                   onPress={submit}
                 />
               </View>
@@ -515,42 +479,73 @@ const RegisterResultScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  customDatePicker: {
+    paddingVertical: 3,
+    paddingHorizontal: 20,
+    borderColor: Theme.colors.grey,
+    borderWidth: 1,
+  },
+  datePickerView: {
+    borderColor: Theme.colors.grey,
+    borderWidth: 1,
+    backgroundColor: Theme.colors.white,
+    alignSelf: 'center',
+  },
+  dateView: {
+    flex: 1,
+    backgroundColor: null,
+    top: -70,
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+
+  imageBackground: {
+    width: '100%',
+    height: undefined,
+    aspectRatio: 1,
+    top: -90,
+  },
+  scrollView: {
+    backgroundColor: Theme.colors.black,
+  },
+  keyboardAvoidingView: {
+    flex: 1,
+    backgroundColor: Theme.colors.black,
+  },
   playerDropdown: {
     marginTop: 20,
     marginRight: 20,
   },
 
   dropDownPickerStyle: {
-    backgroundColor: '#fafafa',
+    backgroundColor: Theme.colors.white,
     width: 170,
     marginLeft: 10,
     marginTop: 15,
   },
   dropDownLabelStyle: {
-    fontSize: 14,
+    fontSize: Theme.fontSize.smallText,
     textAlign: 'left',
     color: '#000',
   },
 
   container: {
     flex: 1,
-    backgroundColor: 'black',
-    // alignItems: 'center',
-    // justifyContent: 'flex-start',
+    backgroundColor: Theme.colors.black,
   },
   textInput: {
     height: 30,
-    borderColor: 'gray',
+    borderColor: Theme.colors.grey,
     borderWidth: 2,
-    backgroundColor: 'white',
+    backgroundColor: Theme.colors.white,
     marginTop: 15,
     width: '20%',
   },
   header: {
-    fontSize: 40,
+    fontSize: Theme.fontSize.header,
     marginTop: 120,
     alignSelf: 'center',
-    color: 'white',
+    color: Theme.colors.white,
     fontFamily: Theme.fontFamilyHeader,
   },
   textView: {
@@ -562,8 +557,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 18,
-
-    color: 'white',
+    color: Theme.colors.white,
     backgroundColor: undefined,
     fontFamily: Theme.fontFamilyText,
   },

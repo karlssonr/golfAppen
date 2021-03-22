@@ -22,6 +22,26 @@ export default function AuthContextProvider({ children }) {
     return unsubscribe;
   });
 
+  const createUser = async () => {
+    try {
+      await firebase
+        .firestore()
+        .collection('players')
+        .doc(auth.currentUser.uid)
+        .set({
+          name: '',
+          nickName: '',
+          phoneNumber: '',
+          golfID: '',
+          userID: auth.currentUser.uid,
+        });
+    } catch (error) {
+      console.log('error:', error);
+    }
+
+    alert('Profil skapad');
+  };
+
   const updateUser = async (nickName, displayName, phoneNumber, golfID) => {
     const ref = firebase
       .firestore()
@@ -31,21 +51,19 @@ export default function AuthContextProvider({ children }) {
     if (nickName !== null) {
       ref.update({
         nickName: nickName,
-        userID: auth.currentUser.uid,
       });
     }
 
     if (displayName !== null) {
       ref.update({
         name: displayName,
-        userID: auth.currentUser.uid,
       });
       user
         .updateProfile({
           displayName: displayName,
         })
         .then(function () {
-          alert('Update succesfull');
+          // alert('Update succesfull');
         })
         .catch(function (error) {
           alert(error);
@@ -56,14 +74,12 @@ export default function AuthContextProvider({ children }) {
     if (phoneNumber !== null) {
       ref.update({
         phoneNumber: phoneNumber,
-        userID: auth.currentUser.uid,
       });
     }
 
     if (golfID !== null) {
       ref.update({
         golfID: golfID,
-        userID: auth.currentUser.uid,
       });
     }
 
@@ -82,7 +98,7 @@ export default function AuthContextProvider({ children }) {
       });
   };
 
-  const signUp = (email, password) => {
+  const signUp = async (email, password) => {
     return auth
       .createUserWithEmailAndPassword(email, password)
       .catch(function (error) {
@@ -131,6 +147,7 @@ export default function AuthContextProvider({ children }) {
         signUp,
         resetPassword,
         updateUser,
+        createUser,
       }}
     >
       {children}

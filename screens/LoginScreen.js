@@ -48,15 +48,6 @@ export default function LogIn({ navigation }) {
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
-          <Text
-            style={{
-              fontWeight: 'bold',
-              fontSize: 24,
-              marginBottom: 10,
-              color: Theme.orange,
-              fontFamily: Theme.fontFamilyText,
-            }}
-          ></Text>
           <View style={{ width: '50%' }}>
             <Text style={styles.text}>Email</Text>
             <TextInput
@@ -64,12 +55,7 @@ export default function LogIn({ navigation }) {
               placeholder="Enter email"
               value={email}
               onChangeText={setEmail}
-              style={{
-                backgroundColor: 'lightgrey',
-                padding: 10,
-                borderRadius: 5,
-                marginBottom: 10,
-              }}
+              style={{ ...styles.textInput, marginBottom: 10 }}
               autoCapitalize="none"
             />
             <Text style={styles.text}>Lösenord</Text>
@@ -77,11 +63,7 @@ export default function LogIn({ navigation }) {
               placeholder="Enter password"
               value={password}
               onChangeText={setPassword}
-              style={{
-                backgroundColor: 'lightgrey',
-                padding: 10,
-                borderRadius: 5,
-              }}
+              style={styles.textInput}
               autoCapitalize="none"
               secureTextEntry={true}
             />
@@ -89,21 +71,21 @@ export default function LogIn({ navigation }) {
               <Button
                 title="Logga In"
                 onPress={submit}
-                color={Theme.orange}
+                color={Theme.colors.orange}
                 style={styles.button}
               />
 
               <Button
                 title="Skapa Konto"
                 onPress={() => navigation.navigate('SignUpScreen')}
-                color={Theme.orange}
+                color={Theme.colors.orange}
                 style={styles.button}
               />
 
               <Button
                 title="Glömt lösenord?"
                 onPress={() => navigation.navigate('ForgotPasswordScreen')}
-                color={Theme.orange}
+                color={Theme.colors.orange}
                 style={styles.button}
               />
             </View>
@@ -117,7 +99,7 @@ export default function LogIn({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: Theme.colors.black,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -126,8 +108,13 @@ const styles = StyleSheet.create({
   },
   text: {
     fontWeight: '600',
-    fontSize: 16,
-    color: Theme.orange,
+    fontSize: Theme.fontSize.formText,
+    color: Theme.colors.orange,
     fontFamily: Theme.fontFamilyText,
+  },
+  textInput: {
+    backgroundColor: Theme.colors.lightGrey,
+    padding: 10,
+    borderRadius: 5,
   },
 });

@@ -66,7 +66,7 @@ export default function CreateChatRoom({ navigation }) {
             <View style={{ marginTop: 30 }}>
               <Button
                 title="Skapa chatt"
-                color={Theme.orange}
+                color={Theme.colors.orange}
                 style={styles.button}
                 onPress={handleButtonPress}
               />
@@ -81,7 +81,7 @@ export default function CreateChatRoom({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: Theme.colors.black,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -90,12 +90,12 @@ const styles = StyleSheet.create({
   },
   text: {
     fontWeight: '600',
-    fontSize: 16,
-    color: Theme.orange,
+    fontSize: Theme.fontSize.formText,
+    color: Theme.colors.orange,
     fontFamily: Theme.fontFamilyText,
   },
   textInput: {
-    backgroundColor: 'lightgrey',
+    backgroundColor: Theme.colors.lightGrey,
     padding: 10,
     borderRadius: 5,
     marginBottom: 10,

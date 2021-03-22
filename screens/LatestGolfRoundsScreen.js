@@ -79,21 +79,7 @@ const LatestGolfRoundsScreen = () => {
               return (
                 <View style={{ margin: 10 }}>
                   <View style={{}}>
-                    <Text
-                      style={{
-                        fontSize: 15,
-                        paddingHorizontal: 10,
-                        borderRadius: 5,
-                        borderWidth: 1,
-                        borderColor: '#fff',
-                        color: '#fff',
-                        backgroundColor: 'green',
-                        // width: '100%',
-                        alignSelf: 'center',
-                      }}
-                    >
-                      {date}
-                    </Text>
+                    <Text style={styles.date}>{date}</Text>
                     <View style={styles.namePointsExtra}>
                       <Text
                         style={{
@@ -168,13 +154,24 @@ const LatestGolfRoundsScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  date: {
+    fontSize: Theme.fontSize.text,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: Theme.colors.white,
+    color: Theme.colors.white,
+    backgroundColor: Theme.colors.lightBlack,
+
+    alignSelf: 'center',
+  },
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: Theme.colors.black,
     alignItems: 'stretch',
   },
   golfRoundRow: {
-    backgroundColor: Theme.black,
+    backgroundColor: Theme.colors.lightBlack,
     padding: 1,
     marginVertical: 1,
     marginHorizontal: 1,
@@ -182,26 +179,26 @@ const styles = StyleSheet.create({
   },
 
   player: {
-    fontSize: 15,
+    fontSize: Theme.fontSize.text,
     left: 10,
     width: '40%',
-    color: 'white',
+    color: Theme.colors.white,
     fontFamily: Theme.fontFamilyText,
   },
   score: {
-    fontSize: 15,
+    fontSize: Theme.fontSize.text,
     textAlign: 'center',
-    color: Theme.orange,
+    color: Theme.colors.orange,
     fontFamily: Theme.fontFamilyText,
 
     width: '15%',
     alignSelf: 'center',
   },
   extraPoints: {
-    fontSize: 15,
+    fontSize: Theme.fontSize.text,
     width: '35%',
     textAlign: 'right',
-    color: 'white',
+    color: Theme.colors.white,
 
     fontFamily: Theme.fontFamilyText,
     right: 10,
@@ -212,15 +209,15 @@ const styles = StyleSheet.create({
 
     flexDirection: 'row',
 
-    borderColor: 'white',
-    backgroundColor: 'grey',
+    borderColor: Theme.colors.white,
+    backgroundColor: Theme.colors.grey,
 
     borderWidth: 1,
     alignSelf: 'center',
     fontFamily: Theme.fontFamilyText,
   },
   culumText: {
-    color: 'white',
+    color: Theme.colors.white,
     fontFamily: Theme.fontFamilyText,
   },
 });

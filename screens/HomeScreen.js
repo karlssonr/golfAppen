@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { StyleSheet, Text, View, Button, ImageBackground } from 'react-native';
 import IconAndTextButton from '../components/IconAndTextButton';
+import VectorIconAndTextButton from '../components/VectorIconAndTextButton';
 
 import Theme from '../theme/theme';
 
@@ -9,7 +10,7 @@ const HomeScreen = ({ navigation }) => {
     <View style={styles.container}>
       <ImageBackground
         source={require('../assets/image8.png')}
-        style={{ width: '100%', height: undefined, aspectRatio: 1 }}
+        style={styles.imageBackgroundStyle}
       >
         <Text style={styles.header}>KGHIO 2021</Text>
       </ImageBackground>
@@ -18,34 +19,35 @@ const HomeScreen = ({ navigation }) => {
         <IconAndTextButton
           imageSource={require('../assets/edit.png')}
           imageWidth={30}
-          iconColor={Theme.orange}
+          iconColor={Theme.colors.orange}
           imageHeight={30}
           title="Registrera Resultat"
-          textColor="white"
-          textFontSize={20}
+          textColor={Theme.colors.white}
+          textFontSize={Theme.fontSize.button}
           onPress={() => navigation.navigate('RegisterResultScreen')}
         />
         <IconAndTextButton
           imageSource={require('../assets/golfbag.png')}
           imageWidth={30}
           imageHeight={30}
-          iconColor={Theme.orange}
+          iconColor={Theme.colors.orange}
           title="Senaste rundorna"
-          textColor="white"
-          textFontSize={20}
+          textColor={Theme.colors.white}
+          textFontSize={Theme.fontSize.button}
           onPress={() => navigation.navigate('LatestGolfRoundsScreen')}
         />
         <IconAndTextButton
           imageSource={require('../assets/list.png')}
           imageWidth={30}
           imageHeight={30}
-          iconColor={Theme.orange}
+          iconColor={Theme.colors.orange}
           title="Tabell"
-          textColor="white"
-          textFontSize={20}
+          textColor={Theme.colors.white}
+          textFontSize={Theme.fontSize.button}
           onPress={() => navigation.navigate('ChartListScreen')}
         />
-        <IconAndTextButton
+
+        {/* <IconAndTextButton
           imageSource={require('../assets/stats.png')}
           imageWidth={30}
           imageHeight={30}
@@ -54,15 +56,38 @@ const HomeScreen = ({ navigation }) => {
           iconColor={Theme.orange}
           textFontSize={20}
           onPress={() => navigation.navigate('ChatRoom')}
+        /> */}
+
+        <VectorIconAndTextButton
+          iconName="wechat"
+          iconWidth={30}
+          iconHeight={30}
+          iconFontSize={25}
+          title="Chatt"
+          textColor={Theme.colors.white}
+          iconColor={Theme.colors.orange}
+          textFontSize={Theme.fontSize.button}
+          onPress={() => navigation.navigate('ChatRoom')}
+        />
+
+        <IconAndTextButton
+          imageSource={require('../assets/stats.png')}
+          imageWidth={30}
+          imageHeight={30}
+          title="Statestik"
+          textColor={Theme.colors.white}
+          iconColor={Theme.colors.grey}
+          textFontSize={Theme.fontSize.button}
+          onPress={() => navigation.navigate('ChatRoom')}
         />
         <IconAndTextButton
           imageSource={require('../assets/golfSwing.png')}
           imageWidth={30}
           imageHeight={30}
-          iconColor={Theme.orange}
+          iconColor={Theme.colors.orange}
           title="Medlemmar"
-          textColor="white"
-          textFontSize={20}
+          textColor={Theme.colors.white}
+          textFontSize={Theme.fontSize.button}
           onPress={() => navigation.navigate('MemberScreen')}
         />
         <IconAndTextButton
@@ -70,8 +95,8 @@ const HomeScreen = ({ navigation }) => {
           imageWidth={30}
           imageHeight={30}
           title="Champs"
-          textColor="grey"
-          textFontSize={20}
+          textColor={Theme.colors.grey}
+          textFontSize={Theme.fontSize.button}
 
           // onPress={() => navigation.navigate('RegisterResultScreen')}
         />
@@ -85,11 +110,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: undefined,
     aspectRatio: 1,
-
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    marginBottom: '0%',
-    backgroundColor: 'black',
   },
 
   container: {

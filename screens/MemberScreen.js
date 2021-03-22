@@ -77,7 +77,7 @@ const MemberScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: Theme.colors.black,
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
@@ -85,17 +85,17 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-end',
-    backgroundColor: 'black',
+    backgroundColor: Theme.colors.black,
   },
   header: {
-    color: 'white',
-    fontSize: 40,
+    color: Theme.colors.white,
+    fontSize: Theme.fontSize.header,
     alignSelf: 'center',
     marginTop: 180,
     fontFamily: Theme.fontFamilyHeader,
   },
   text: {
-    color: 'white',
+    color: Theme.colors.white,
     fontFamily: Theme.fontFamilyText,
   },
   namePhoneIDView: {
@@ -104,21 +104,21 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     flexDirection: 'row',
     marginTop: 0,
-    borderColor: 'white',
-    backgroundColor: 'grey',
+    borderColor: Theme.colors.white,
+    backgroundColor: Theme.colors.grey,
 
     borderWidth: 1,
     alignSelf: 'center',
     fontFamily: Theme.fontFamilyText,
   },
   chartView: {
-    backgroundColor: 'grey',
+    backgroundColor: Theme.colors.grey,
     flexDirection: 'column',
     width: '100%',
     marginTop: 0,
   },
   item: {
-    backgroundColor: 'black',
+    backgroundColor: Theme.colors.black,
     padding: 1,
     marginVertical: 1,
     marginHorizontal: 1,
@@ -126,24 +126,24 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   name: {
-    fontSize: 15,
+    fontSize: Theme.fontSize.text,
 
-    color: 'white',
+    color: Theme.colors.white,
     fontFamily: Theme.fontFamilyText,
     width: '37%',
   },
   phoneNumber: {
-    fontSize: 15,
+    fontSize: Theme.fontSize.text,
 
     width: '33%',
     textAlign: 'center',
-    color: 'white',
+    color: Theme.colors.white,
     fontFamily: Theme.fontFamilyText,
   },
   golfID: {
-    fontSize: 15,
+    fontSize: Theme.fontSize.text,
 
-    color: 'white',
+    color: Theme.colors.white,
 
     width: '30%',
     textAlign: 'right',
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
 
   kghio: {
     fontSize: 20,
-    color: 'white',
+    color: Theme.colors.white,
     marginTop: 40,
     fontFamily: Theme.fontFamilyText,
   },
