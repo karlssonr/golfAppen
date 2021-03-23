@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import Theme from '../theme/theme';
 
 const IconAndTextButton = ({
   title,
@@ -11,41 +10,43 @@ const IconAndTextButton = ({
   imageWidth,
   imageHeight,
   onPress,
-  viewWidth,
   viewMarginBottom,
   iconColor,
 }) => {
-  // const styles = StyleSheet.create({});
-
+  const styles = StyleSheet.create({
+    view: {
+      backgroundColor: null,
+      flexDirection: 'row',
+      justifyContent: 'space-evenly',
+      width: '90  %',
+      margin: 5,
+      marginBottom: viewMarginBottom,
+    },
+    text: {
+      fontSize: textFontSize,
+      marginLeft: 10,
+      color: textColor,
+      alignSelf: 'center',
+      width: '80%',
+      textAlign: 'left',
+      backgroundColor: null,
+    },
+    image: {
+      width: imageWidth,
+      height: imageHeight,
+      tintColor: iconColor,
+      // left: 22,
+      marginLeft: 100,
+    },
+    touchableOpacity: {
+      flexDirection: 'row',
+    },
+  });
   return (
-    <View
-      style={{
-        backgroundColor: null,
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        width: 200,
-        margin: 5,
-        marginBottom: viewMarginBottom,
-      }}
-    >
-      <TouchableOpacity style={{ flexDirection: 'row' }} onPress={onPress}>
-        <Image
-          source={imageSource}
-          style={{
-            width: imageWidth,
-            height: imageHeight,
-            tintColor: iconColor,
-          }}
-        />
-        <Text
-          style={{
-            fontSize: textFontSize,
-            marginLeft: 20,
-            color: textColor,
-          }}
-        >
-          {title}
-        </Text>
+    <View style={styles.view}>
+      <TouchableOpacity style={styles.touchableOpacity} onPress={onPress}>
+        <Image source={imageSource} style={styles.image} />
+        <Text style={styles.text}>{title}</Text>
       </TouchableOpacity>
     </View>
   );

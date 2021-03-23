@@ -10,8 +10,6 @@ export default function PlayerContextProvider({ children }) {
   const [getGolfGamesLoading, setGetGolfGamesLoading] = useState(false);
 
   const postGolfRound = (userID, points, extraPoints, date) => {
-    // console.log('date: ', date.seconds);
-
     let docID = date.seconds.toString();
     firebase
       .firestore()
@@ -27,7 +25,6 @@ export default function PlayerContextProvider({ children }) {
       })
       .then(() => {
         console.log('GolfRound Added');
-        // alert('Golfrunda skapad');
       });
   };
 

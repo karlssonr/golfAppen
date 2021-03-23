@@ -1,37 +1,38 @@
-/* eslint-disable react/react-in-jsx-scope */
-import { createStackNavigator } from '@react-navigation/stack';
-import ChartListScreen from '../screens/ChartListScreen';
-import HomeScreen from '../screens/HomeScreen';
-import RegisterResultScreen from '../screens/RegisterResultScreen';
-import MemberScreen from '../screens/MemberScreen';
+// /* eslint-disable react/react-in-jsx-scope */
+// import { createStackNavigator } from '@react-navigation/stack';
+// import ChartListScreen from '../screens/ChartListScreen';
+// import HomeScreen from '../screens/HomeScreen';
+// import RegisterResultScreen from '../screens/RegisterResultScreen';
+// import MemberScreen from '../screens/MemberScreen';
+// import Theme from '../theme/theme'
 
-const Stack = createStackNavigator();
+// const Stack = createStackNavigator();
 
-const AppNavigation = () => (
-  <Stack.Navigator
-    initialRouteName="Home"
-    screenOptions={{
-      headerStyle: { backgroundColor: 'black' },
-      headerTintColor: '#ff4500',
-    }}
-  >
-    <Stack.Screen name="KGHIO" component={HomeScreen} />
-    <Stack.Screen
-      name="RegisterResultScreen"
-      // options={{ title: 'Registrera Resultat' }}
-      component={RegisterResultScreen}
-    />
-    <Stack.Screen
-      name="ChartListScreen"
-      component={ChartListScreen}
-      // options={{ title: 'Tabell' }}
-    />
-    <Stack.Screen
-      name="MemberScreen"
-      component={MemberScreen}
-      // options={{ title: 'Medlemmar' }}
-    />
-  </Stack.Navigator>
-);
+// const AppNavigation = () => (
+//   <Stack.Navigator
+//     initialRouteName="Home"
+//     screenOptions={{
+//       headerStyle: { backgroundColor: 'black' },
+//       headerTintColor: '#ff4500',
+//     }}
+//   >
+//     <Stack.Screen name="KGHIO" component={HomeScreen} />
+//     <Stack.Screen
+//       name="RegisterResultScreen"
+//       // options={{ title: 'Registrera Resultat' }}
+//       component={RegisterResultScreen}
+//     />
+//     <Stack.Screen
+//       name="ChartListScreen"
+//       component={ChartListScreen}
+//       // options={{ title: 'Tabell' }}
+//     />
+//     <Stack.Screen
+//       name="MemberScreen"
+//       component={MemberScreen}
+//       // options={{ title: 'Medlemmar' }}
+//     />
+//   </Stack.Navigator>
+// );
 
-export default AppNavigation;
+// export default AppNavigation;

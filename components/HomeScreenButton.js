@@ -17,8 +17,6 @@ const ButtonWithBackround = ({
   touchableOpacityWidth,
   zIndex,
   marginLeft,
-
-  // backgroundColor,
 }) => {
   const content = (
     <View
@@ -27,15 +25,12 @@ const ButtonWithBackround = ({
         {
           backgroundColor: color,
           marginBottom: marginBottom,
-          // marginTop: marginTop,
           width: width,
           height: height,
           alignSelf: alignSelf,
           marginRight: marginRight,
           padding: padding,
           marginLeft: marginLeft,
-
-          // backgroundColor: backgroundColor
         },
       ]}
     >
@@ -62,14 +57,13 @@ const ButtonWithBackround = ({
 const styles = StyleSheet.create({
   button: {
     padding: 15,
-    // width: 0,
     borderRadius: 10,
     alignItems: 'center',
     margin: 5,
   },
   text: {
-    color: 'black',
-    fontSize: 20,
+    color: Theme.colors.black,
+    fontSize: Theme.fontSize.button,
     fontFamily: Theme.fontFamilyText,
   },
 });

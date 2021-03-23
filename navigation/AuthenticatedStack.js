@@ -23,19 +23,17 @@ export default function AuthenticatedStack() {
   return (
     <Stack.Navigator
       initialRouteName="Home"
-      // options={{ headerTitleAlign: 'center' }}
       screenOptions={{
         headerStyle: {
-          backgroundColor: 'black',
-          // alignItems: 'center',
+          backgroundColor: Theme.colors.black,
         },
-        headerTintColor: Theme.orange,
+        headerTintColor: Theme.colors.orange,
       }}
     >
       <Stack.Screen
         name="Home"
         component={HomeScreen}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: userName,
           headerTitleAlign: 'center',
           headerRight: () => (
@@ -46,7 +44,9 @@ export default function AuthenticatedStack() {
                 navigation.navigate('ProfileScreen');
               }}
               title="Profil"
-              color={Platform.OS === 'ios' ? '#fff' : 'black'}
+              color={
+                Platform.OS === 'ios' ? Theme.colors.white : Theme.colors.black
+              }
             />
           ),
         })}
@@ -69,7 +69,7 @@ export default function AuthenticatedStack() {
       <Stack.Screen
         name="LatestGolfRoundsScreen"
         component={LatestGolfRoundsScreen}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: '',
           headerTitleAlign: 'center',
           headerRight: () => (
@@ -77,7 +77,9 @@ export default function AuthenticatedStack() {
               backgroundColor={null}
               onPress={() => navigation.navigate('MyGolfRoundsScreen')}
               title="Mina rundor"
-              color={Platform.OS === 'ios' ? Theme.orange : 'black'}
+              color={
+                Platform.OS === 'ios' ? Theme.colors.orange : Theme.colors.black
+              }
             />
           ),
         })}
@@ -105,7 +107,7 @@ export default function AuthenticatedStack() {
       <Stack.Screen
         name="ChatRoom"
         component={ChatRoom}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: '',
           headerTitleAlign: 'center',
           headerRight: () => (
@@ -115,7 +117,9 @@ export default function AuthenticatedStack() {
                 navigation.navigate('CreateChatRoom');
               }}
               title="Skapa chatt"
-              color={Platform.OS === 'ios' ? Theme.orange : 'black'}
+              color={
+                Platform.OS === 'ios' ? Theme.colors.orange : Theme.colors.black
+              }
             />
           ),
         })}
@@ -134,7 +138,9 @@ export default function AuthenticatedStack() {
                 signOut();
               }}
               title="Logga ut"
-              color={Platform.OS === 'ios' ? '#fff' : 'black'}
+              color={
+                Platform.OS === 'ios' ? Theme.colors.white : Theme.colors.black
+              }
             />
           ),
         })}

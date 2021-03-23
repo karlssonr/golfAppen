@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Theme from '../theme/theme';
 
 const VectorIconAndTextButton = ({
   title,
@@ -17,46 +16,40 @@ const VectorIconAndTextButton = ({
   iconColor,
   iconFontSize,
 }) => {
-  // const styles = StyleSheet.create({});
+  const styles = StyleSheet.create({
+    text: {
+      fontSize: textFontSize,
+      marginLeft: 10,
+      color: textColor,
+      alignSelf: 'center',
+      width: '80%',
+      textAlign: 'left',
+      backgroundColor: null,
+    },
+    icon: {
+      width: iconWidth,
+      height: iconHeight,
+      color: iconColor,
+      fontSize: iconFontSize,
+      // left: 22,
+      marginLeft: 100,
+    },
+    view: {
+      backgroundColor: null,
+      flexDirection: 'row',
+      justifyContent: 'space-evenly',
+      width: '90%',
+      margin: 5,
+      marginBottom: viewMarginBottom,
+    },
+    touchableOpacity: { flexDirection: 'row' },
+  });
 
   return (
-    <View
-      style={{
-        backgroundColor: null,
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        width: 200,
-        margin: 5,
-        marginBottom: viewMarginBottom,
-      }}
-    >
-      <TouchableOpacity style={{ flexDirection: 'row' }} onPress={onPress}>
-        <Icon
-          name={iconName}
-          style={{
-            width: iconWidth,
-            height: iconHeight,
-            color: iconColor,
-            fontSize: iconFontSize,
-          }}
-        />
-        {/* <Image
-          source={imageSource}
-          style={{
-            width: imageWidth,
-            height: imageHeight,
-            tintColor: iconColor,
-          }}
-        /> */}
-        <Text
-          style={{
-            fontSize: textFontSize,
-            marginLeft: 20,
-            color: textColor,
-          }}
-        >
-          {title}
-        </Text>
+    <View style={styles.view}>
+      <TouchableOpacity style={styles.touchableOpacity} onPress={onPress}>
+        <Icon name={iconName} style={styles.icon} />
+        <Text style={styles.text}>{title}</Text>
       </TouchableOpacity>
     </View>
   );

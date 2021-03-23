@@ -12,8 +12,8 @@ export default function UnauthenticatedStack() {
     <Stack.Navigator
       initialRouteName="LoginScreen"
       screenOptions={{
-        headerStyle: { backgroundColor: 'black' },
-        headerTintColor: Theme.orange,
+        headerStyle: { backgroundColor: Theme.colors.black },
+        headerTintColor: Theme.colors.orange,
       }}
     >
       <Stack.Screen

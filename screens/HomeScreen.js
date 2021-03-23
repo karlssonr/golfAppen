@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: Theme.colors.black,
 
     justifyContent: 'center',
   },
@@ -126,8 +126,8 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
   header: {
-    color: 'white',
-    fontSize: 40,
+    color: Theme.colors.white,
+    fontSize: Theme.fontSize.header,
     alignSelf: 'center',
     marginBottom: 10,
     fontFamily: Theme.fontFamilyHeader,

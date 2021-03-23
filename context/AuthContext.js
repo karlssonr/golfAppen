@@ -62,9 +62,7 @@ export default function AuthContextProvider({ children }) {
         .updateProfile({
           displayName: displayName,
         })
-        .then(function () {
-          // alert('Update succesfull');
-        })
+        .then(function () {})
         .catch(function (error) {
           alert(error);
           console.log('updateUserError: ', error);
