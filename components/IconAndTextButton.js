@@ -24,7 +24,7 @@ const IconAndTextButton = ({
     },
     text: {
       fontSize: textFontSize,
-      marginLeft: 10,
+      marginLeft: 20,
       color: textColor,
       alignSelf: 'center',
       width: '80%',

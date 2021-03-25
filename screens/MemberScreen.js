@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   },
   header: {
     color: Theme.colors.white,
-    fontSize: Theme.fontSize.header,
+    fontSize: Theme.fontSize.H1,
     alignSelf: 'center',
     marginTop: 180,
     fontFamily: Theme.fontFamilyHeader,
@@ -126,14 +126,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   name: {
-    fontSize: Theme.fontSize.text,
+    fontSize: Theme.fontSize.caption,
 
     color: Theme.colors.white,
     fontFamily: Theme.fontFamilyText,
     width: '37%',
   },
   phoneNumber: {
-    fontSize: Theme.fontSize.text,
+    fontSize: Theme.fontSize.caption,
 
     width: '33%',
     textAlign: 'center',
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     fontFamily: Theme.fontFamilyText,
   },
   golfID: {
-    fontSize: Theme.fontSize.text,
+    fontSize: Theme.fontSize.caption,
 
     color: Theme.colors.white,
 

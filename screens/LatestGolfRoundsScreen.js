@@ -16,15 +16,23 @@ const LatestGolfRoundsScreen = () => {
 
   const Moment = require('moment');
 
+  useEffect(() => {
+    getAndSetGolfGames();
+  }, []);
+
+  useEffect(() => {
+    sortGolfGamesArray(golfGamesFromDB);
+  }, [golfGamesFromDB]);
+
   const getAndSetGolfGames = async () => {
     await getGolfGames().then(setGolfGamesFromDB);
   };
 
-  const sortGolfGamesArray = (golfGames) => {
+  const sortGolfGamesArray = (golfGamesArray) => {
     let sortedArray = [];
     let arrayToSort = [];
 
-    golfGames.forEach((golfGame) => {
+    golfGamesArray.forEach((golfGame) => {
       let dateFromTimeStamp = golfGame.date.date.toDate();
       let date = moment(dateFromTimeStamp).format('YYYYMMDD');
 
@@ -44,14 +52,6 @@ const LatestGolfRoundsScreen = () => {
     sortedArray.reverse();
     setGolfGames(sortedArray);
   };
-
-  useEffect(() => {
-    getAndSetGolfGames();
-  }, []);
-
-  useEffect(() => {
-    sortGolfGamesArray(golfGamesFromDB);
-  }, [golfGamesFromDB]);
 
   const GolfRoundRow = ({ name, points, extraPoints }) => (
     <View style={{ ...styles.golfRoundRow }}>
@@ -155,7 +155,7 @@ const LatestGolfRoundsScreen = () => {
 
 const styles = StyleSheet.create({
   date: {
-    fontSize: Theme.fontSize.text,
+    fontSize: Theme.fontSize.caption,
     paddingHorizontal: 10,
     borderRadius: 5,
     borderWidth: 1,
@@ -179,14 +179,14 @@ const styles = StyleSheet.create({
   },
 
   player: {
-    fontSize: Theme.fontSize.text,
+    fontSize: Theme.fontSize.caption,
     left: 10,
     width: '40%',
     color: Theme.colors.white,
     fontFamily: Theme.fontFamilyText,
   },
   score: {
-    fontSize: Theme.fontSize.text,
+    fontSize: Theme.fontSize.caption,
     textAlign: 'center',
     color: Theme.colors.orange,
     fontFamily: Theme.fontFamilyText,
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   extraPoints: {
-    fontSize: Theme.fontSize.text,
+    fontSize: Theme.fontSize.caption,
     width: '35%',
     textAlign: 'right',
     color: Theme.colors.white,
@@ -217,6 +217,7 @@ const styles = StyleSheet.create({
     fontFamily: Theme.fontFamilyText,
   },
   culumText: {
+    fontSize: Theme.fontSize.caption,
     color: Theme.colors.white,
     fontFamily: Theme.fontFamilyText,
   },

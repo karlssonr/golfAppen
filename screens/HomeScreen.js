@@ -18,9 +18,9 @@ const HomeScreen = ({ navigation }) => {
       <View style={styles.homeView}>
         <IconAndTextButton
           imageSource={require('../assets/edit.png')}
-          imageWidth={30}
+          imageWidth={Theme.fontSize.buttonIcon}
           iconColor={Theme.colors.orange}
-          imageHeight={30}
+          imageHeight={Theme.fontSize.buttonIcon}
           title="Registrera Resultat"
           textColor={Theme.colors.white}
           textFontSize={Theme.fontSize.button}
@@ -28,8 +28,8 @@ const HomeScreen = ({ navigation }) => {
         />
         <IconAndTextButton
           imageSource={require('../assets/golfbag.png')}
-          imageWidth={30}
-          imageHeight={30}
+          imageWidth={Theme.fontSize.buttonIcon}
+          imageHeight={Theme.fontSize.buttonIcon}
           iconColor={Theme.colors.orange}
           title="Senaste rundorna"
           textColor={Theme.colors.white}
@@ -38,8 +38,8 @@ const HomeScreen = ({ navigation }) => {
         />
         <IconAndTextButton
           imageSource={require('../assets/list.png')}
-          imageWidth={30}
-          imageHeight={30}
+          imageWidth={Theme.fontSize.buttonIcon}
+          imageHeight={Theme.fontSize.buttonIcon}
           iconColor={Theme.colors.orange}
           title="Tabell"
           textColor={Theme.colors.white}
@@ -60,8 +60,8 @@ const HomeScreen = ({ navigation }) => {
 
         <VectorIconAndTextButton
           iconName="wechat"
-          iconWidth={30}
-          iconHeight={30}
+          iconWidth={Theme.fontSize.buttonIcon}
+          iconHeight={Theme.fontSize.buttonIcon}
           iconFontSize={25}
           title="Chatt"
           textColor={Theme.colors.white}
@@ -72,18 +72,18 @@ const HomeScreen = ({ navigation }) => {
 
         <IconAndTextButton
           imageSource={require('../assets/stats.png')}
-          imageWidth={30}
-          imageHeight={30}
-          title="Statestik"
-          textColor={Theme.colors.white}
+          imageWidth={Theme.fontSize.buttonIcon}
+          imageHeight={Theme.fontSize.buttonIcon}
+          title="Statistik"
+          textColor={Theme.colors.grey}
           iconColor={Theme.colors.grey}
           textFontSize={Theme.fontSize.button}
-          onPress={() => navigation.navigate('ChatRoom')}
+          // onPress={() => navigation.navigate('ChatRoom')}
         />
         <IconAndTextButton
           imageSource={require('../assets/golfSwing.png')}
-          imageWidth={30}
-          imageHeight={30}
+          imageWidth={Theme.fontSize.buttonIcon}
+          imageHeight={Theme.fontSize.buttonIcon}
           iconColor={Theme.colors.orange}
           title="Medlemmar"
           textColor={Theme.colors.white}
@@ -92,8 +92,8 @@ const HomeScreen = ({ navigation }) => {
         />
         <IconAndTextButton
           imageSource={require('../assets/crown.png')}
-          imageWidth={30}
-          imageHeight={30}
+          imageWidth={Theme.fontSize.buttonIcon}
+          imageHeight={Theme.fontSize.buttonIcon}
           title="Champs"
           textColor={Theme.colors.grey}
           textFontSize={Theme.fontSize.button}
@@ -127,9 +127,10 @@ const styles = StyleSheet.create({
   },
   header: {
     color: Theme.colors.white,
-    fontSize: Theme.fontSize.header,
-    alignSelf: 'center',
+    fontSize: Theme.fontSize.H1,
+    alignSelf: 'flex-start',
     marginBottom: 10,
+    marginLeft: 20,
     fontFamily: Theme.fontFamilyHeader,
     marginTop: 80,
   },

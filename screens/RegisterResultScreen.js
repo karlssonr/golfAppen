@@ -61,6 +61,10 @@ const RegisterResultScreen = () => {
     date: date,
   });
 
+  useEffect(() => {
+    getPlayers().then(setPlayers);
+  }, []);
+
   const resetPlayerState = () => {
     setPlayerOne({ name: null, points: '', extraPoints: '', userID: '' });
     setPlayerTwo({ name: null, points: '', extraPoints: '', userID: '' });
@@ -223,10 +227,6 @@ const RegisterResultScreen = () => {
     alert('Golfrunda skapad');
   };
 
-  useEffect(() => {
-    getPlayers().then(setPlayers);
-  }, []);
-
   const mapPlayersFromDB = (playersFromDB) => {
     let array = [];
 
@@ -346,7 +346,7 @@ const RegisterResultScreen = () => {
                   }
                   keyboardType="number-pad"
                   style={{ ...styles.textInput }}
-                ></TextInput>
+                />
                 <TextInput
                   placeholder="Extra poäng"
                   value={playerTwo.extraPoints}
@@ -355,7 +355,7 @@ const RegisterResultScreen = () => {
                   }
                   keyboardType="number-pad"
                   style={{ ...styles.textInput }}
-                ></TextInput>
+                />
               </View>
 
               <View style={{ ...styles.textInputView, zIndex: 3 }}>
@@ -384,7 +384,7 @@ const RegisterResultScreen = () => {
                   }
                   keyboardType="number-pad"
                   style={{ ...styles.textInput }}
-                ></TextInput>
+                />
                 <TextInput
                   placeholder="Extra poäng"
                   value={playerThree.extraPoints}
@@ -393,7 +393,7 @@ const RegisterResultScreen = () => {
                   }
                   keyboardType="number-pad"
                   style={{ ...styles.textInput }}
-                ></TextInput>
+                />
               </View>
 
               <View style={{ ...styles.textInputView, zIndex: 2 }}>
@@ -422,7 +422,7 @@ const RegisterResultScreen = () => {
                   }
                   keyboardType="number-pad"
                   style={{ ...styles.textInput }}
-                ></TextInput>
+                />
                 <TextInput
                   placeholder="Extra poäng"
                   value={players.extraPoints}
@@ -431,7 +431,7 @@ const RegisterResultScreen = () => {
                   }
                   keyboardType="number-pad"
                   style={{ ...styles.textInput }}
-                ></TextInput>
+                />
               </View>
 
               <View style={styles.dateView}>
@@ -462,8 +462,9 @@ const RegisterResultScreen = () => {
               >
                 <IconAndTextButton
                   imageSource={require('../assets/edit.png')}
-                  imageWidth={30}
-                  imageHeight={30}
+                  iconColor={Theme.colors.orange}
+                  imageWidth={Theme.fontSize.buttonIcon}
+                  imageHeight={Theme.fontSize.buttonIcon}
                   title="Registrera Resultat"
                   textColor={Theme.colors.white}
                   textFontSize={Theme.fontSize.button}
@@ -484,12 +485,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderColor: Theme.colors.grey,
     borderWidth: 1,
+    borderRadius: 5,
   },
   datePickerView: {
     borderColor: Theme.colors.grey,
     borderWidth: 1,
     backgroundColor: Theme.colors.white,
     alignSelf: 'center',
+    borderRadius: 5,
   },
   dateView: {
     flex: 1,
@@ -524,7 +527,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   dropDownLabelStyle: {
-    fontSize: Theme.fontSize.smallText,
+    fontSize: Theme.fontSize.paragraph,
     textAlign: 'left',
     color: '#000',
   },
@@ -540,9 +543,10 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.colors.white,
     marginTop: 15,
     width: '20%',
+    borderRadius: 5,
   },
   header: {
-    fontSize: Theme.fontSize.header,
+    fontSize: Theme.fontSize.H1,
     marginTop: 120,
     alignSelf: 'center',
     color: Theme.colors.white,

@@ -19,7 +19,7 @@ const VectorIconAndTextButton = ({
   const styles = StyleSheet.create({
     text: {
       fontSize: textFontSize,
-      marginLeft: 10,
+      marginLeft: 20,
       color: textColor,
       alignSelf: 'center',
       width: '80%',

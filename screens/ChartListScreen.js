@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
   },
   header: {
     color: Theme.colors.white,
-    fontSize: Theme.fontSize.header,
+    fontSize: Theme.fontSize.H1,
     alignSelf: 'center',
     marginTop: 120,
     fontFamily: Theme.fontFamilyHeader,
@@ -276,12 +276,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   positionNumber: {
-    fontSize: Theme.fontSize.text,
+    fontSize: Theme.fontSize.caption,
     color: Theme.colors.white,
     width: '5%',
   },
   title: {
-    fontSize: Theme.fontSize.text,
+    fontSize: Theme.fontSize.caption,
     left: 10,
     width: '40%',
 
@@ -289,16 +289,16 @@ const styles = StyleSheet.create({
     fontFamily: Theme.fontFamilyText,
   },
   totalScore: {
-    fontSize: Theme.fontSize.text,
+    fontSize: Theme.fontSize.caption,
 
     textAlign: 'center',
-    color: Theme.orange,
+    color: Theme.colors.orange,
     fontFamily: Theme.fontFamilyText,
     marginLeft: 0,
     width: '15%',
   },
   sevenBest: {
-    fontSize: Theme.fontSize.text,
+    fontSize: Theme.fontSize.caption,
     width: '35%',
     textAlign: 'right',
 

@@ -261,13 +261,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   golfRoundDate: {
-    fontSize: 15,
+    fontSize: Theme.fontSize.caption,
     paddingHorizontal: 10,
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: Theme.colors.white,
+    borderColor: null,
     color: Theme.colors.white,
-    backgroundColor: Theme.colors.lightBlack,
+    backgroundColor: null,
     alignSelf: 'center',
   },
   container: {
@@ -284,14 +284,14 @@ const styles = StyleSheet.create({
   },
 
   player: {
-    fontSize: 15,
+    fontSize: Theme.fontSize.caption,
     left: 10,
     width: '40%',
     color: 'white',
     fontFamily: Theme.fontFamilyText,
   },
   score: {
-    fontSize: 15,
+    fontSize: Theme.fontSize.caption,
     textAlign: 'center',
     color: Theme.colors.orange,
     fontFamily: Theme.fontFamilyText,
@@ -300,7 +300,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   extraPoints: {
-    fontSize: 15,
+    fontSize: Theme.fontSize.caption,
     width: '35%',
     textAlign: 'right',
     color: Theme.colors.white,
