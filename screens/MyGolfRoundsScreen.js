@@ -49,6 +49,18 @@ const MyGolfRoundsScreen = () => {
 
   const FB = firebase.firestore.Timestamp;
 
+  useEffect(() => {
+    getAndSetGolfGames();
+  }, []);
+
+  useEffect(() => {
+    sortGolfGamesArray(golfRoundsFromDB);
+  }, [golfRoundsFromDB]);
+
+  useEffect(() => {
+    getAndSetGolfGames();
+  }, [score, extraPoints]);
+
   const getAndSetGolfGames = async () => {
     await getPlayerScore(user.uid).then(setGolfRoundsFromDB);
   };
@@ -82,18 +94,6 @@ const MyGolfRoundsScreen = () => {
 
     return timeStamp;
   };
-
-  useEffect(() => {
-    getAndSetGolfGames();
-  }, []);
-
-  useEffect(() => {
-    sortGolfGamesArray(golfRoundsFromDB);
-  }, [golfRoundsFromDB]);
-
-  useEffect(() => {
-    getAndSetGolfGames();
-  }, [score, extraPoints]);
 
   return (
     <View style={styles.container}>
@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   golfRoundDate: {
-    fontSize: Theme.fontSize.caption,
+    fontSize: Theme.fontSize.largeCaption,
     paddingHorizontal: 10,
     borderRadius: 5,
     borderWidth: 1,
@@ -324,6 +324,7 @@ const styles = StyleSheet.create({
   culumText: {
     color: Theme.colors.white,
     fontFamily: Theme.fontFamilyText,
+    fontSize: Theme.fontSize.caption,
   },
   centeredView: {
     flex: 1,

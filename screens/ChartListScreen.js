@@ -327,6 +327,7 @@ const styles = StyleSheet.create({
   culumText: {
     color: Theme.colors.white,
     fontFamily: Theme.fontFamilyText,
+    fontSize: Theme.fontSize.caption,
   },
   imageBackgroundStyle: {
     width: '100%',

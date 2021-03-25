@@ -155,13 +155,13 @@ const LatestGolfRoundsScreen = () => {
 
 const styles = StyleSheet.create({
   date: {
-    fontSize: Theme.fontSize.caption,
+    fontSize: Theme.fontSize.largeCaption,
     paddingHorizontal: 10,
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: Theme.colors.white,
+    borderColor: null,
     color: Theme.colors.white,
-    backgroundColor: Theme.colors.lightBlack,
+    backgroundColor: null,
 
     alignSelf: 'center',
   },

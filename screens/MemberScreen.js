@@ -97,6 +97,7 @@ const styles = StyleSheet.create({
   text: {
     color: Theme.colors.white,
     fontFamily: Theme.fontFamilyText,
+    fontSize: Theme.fontSize.caption,
   },
   namePhoneIDView: {
     width: '100%',
@@ -106,7 +107,6 @@ const styles = StyleSheet.create({
     marginTop: 0,
     borderColor: Theme.colors.white,
     backgroundColor: Theme.colors.grey,
-
     borderWidth: 1,
     alignSelf: 'center',
     fontFamily: Theme.fontFamilyText,
@@ -127,14 +127,12 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: Theme.fontSize.caption,
-
     color: Theme.colors.white,
     fontFamily: Theme.fontFamilyText,
     width: '37%',
   },
   phoneNumber: {
     fontSize: Theme.fontSize.caption,
-
     width: '33%',
     textAlign: 'center',
     color: Theme.colors.white,
@@ -142,9 +140,7 @@ const styles = StyleSheet.create({
   },
   golfID: {
     fontSize: Theme.fontSize.caption,
-
     color: Theme.colors.white,
-
     width: '30%',
     textAlign: 'right',
     fontFamily: Theme.fontFamilyText,
@@ -160,7 +156,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: undefined,
     aspectRatio: 1,
-
     marginTop: -120,
   },
 });
