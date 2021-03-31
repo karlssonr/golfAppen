@@ -213,7 +213,7 @@ export default function PlayerContextProvider({ children }) {
       snapshot.forEach((doc) => {
         // console.log(doc);
         let id = doc.data();
-        console.log(id);
+        // console.log(id);
         golfGames.push({ ...doc.data() });
       });
     }

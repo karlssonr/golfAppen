@@ -1,3 +1,6 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable radix */
 import React, { useState, useEffect, useContext } from 'react';
 import {
   StyleSheet,
@@ -35,23 +38,50 @@ const ChartListScreen = () => {
   const [players, setPlayers] = useState([]);
   const [resultTable, setResultTable] = useState([]);
 
+  useEffect(() => {
+    getAndSetPlayers();
+  }, []);
+
+  useEffect(() => {
+    getEachPlayerScore(players).then((value) => {
+      assignResultsForEachPlayer(value);
+    });
+  }, [players]);
+
   const bubbleSort = (inputArr) => {
     let len = inputArr.length;
     let checked;
+    // console.log('lenght', len);
     do {
       checked = false;
       for (let i = 0; i < len; i++) {
         if (
-          inputArr[i]?.averageOfBest7Rounds >
-          inputArr[i + 1]?.averageOfBest7Rounds
+          inputArr[i]?.totalOfBestSevenRounds >
+          inputArr[i + 1]?.totalOfBestSevenRounds
         ) {
           let tmp = inputArr[i];
           inputArr[i] = inputArr[i + 1];
           inputArr[i + 1] = tmp;
+
           checked = true;
         }
       }
     } while (checked);
+
+    // console.log('inputarray8: ', inputArr[8]);
+    // console.log('inputarray7: ', inputArr[7]);
+
+    // console.log(
+    //   '11:  ',
+    //   inputArr[7]?.totalOfBestSevenRounds >
+    //     inputArr[7 + 1]?.totalOfBestSevenRounds
+    // );
+
+    // console.log(
+    //   '11:  ',
+
+    //   inputArr[8 + 1]?.totalOfBestSevenRounds
+    // );
 
     const reversed = inputArr.reverse();
 
@@ -77,11 +107,15 @@ const ChartListScreen = () => {
     let avrageScore = 0;
     let averageOfBest7Rounds = 0;
     let resulTableScore = [];
+    let totalOfBestSevenRounds = 0;
 
     golfroundsOfPlayers.forEach((golfroundsOfPlayer) => {
       totalScore = sumAllScores(golfroundsOfPlayer);
       avrageScore = calculateAverageScore(golfroundsOfPlayer);
-      averageOfBest7Rounds = calcutaleAverageOfBest7Rounds(golfroundsOfPlayer);
+      averageOfBest7Rounds = calcutaleBestSevenRounds(golfroundsOfPlayer);
+      totalOfBestSevenRounds = getBestSevenRoundsToltalScore(
+        golfroundsOfPlayer
+      );
 
       resulTableScore.push({
         name: golfroundsOfPlayer.name,
@@ -89,15 +123,18 @@ const ChartListScreen = () => {
         totalScore: totalScore,
         avrageScore: avrageScore,
         averageOfBest7Rounds: averageOfBest7Rounds.toFixed(2),
+        totalOfBestSevenRounds: totalOfBestSevenRounds,
       });
     });
 
     const sortedArray = bubbleSort(resulTableScore);
 
+    console.log('SortedArray: ', sortedArray);
+
     setResultTable(sortedArray);
   };
 
-  const calcutaleAverageOfBest7Rounds = (golfroundsOfPlayer) => {
+  const calcutaleBestSevenRounds = (golfroundsOfPlayer) => {
     let best7Rounds = [];
 
     let pointsAsInt;
@@ -131,6 +168,42 @@ const ChartListScreen = () => {
     return sum / arrayOfNumbers.length;
   };
 
+  const calculateBestOfSevenRoundsTotalScore = (arrayOfScores) => {
+    let sum = 0;
+
+    arrayOfScores.forEach((number) => {
+      sum = sum + number;
+    });
+
+    return sum;
+  };
+
+  const getBestSevenRoundsToltalScore = (golfroundsOfPlayer) => {
+    let best7Rounds = [];
+
+    let pointsAsInt;
+    let extraPointsAsInt;
+    let scoreOfRound;
+
+    golfroundsOfPlayer.scores.forEach((scoreOfGolfroundOfPlayer) => {
+      pointsAsInt = parseInt(scoreOfGolfroundOfPlayer.points);
+      extraPointsAsInt = parseInt(scoreOfGolfroundOfPlayer.extraPoints);
+      scoreOfRound = pointsAsInt + extraPointsAsInt;
+
+      if (best7Rounds.length < 7) {
+        best7Rounds.push(scoreOfRound);
+      } else {
+        best7Rounds.sort(getLowestNumber);
+
+        if (best7Rounds[0] < scoreOfRound) {
+          best7Rounds[0] = scoreOfRound;
+        }
+      }
+    });
+
+    return calculateBestOfSevenRoundsTotalScore(best7Rounds);
+  };
+
   const getLowestNumber = (number1, number2) => {
     if (number1 < number2) {
       return -1;
@@ -149,10 +222,10 @@ const ChartListScreen = () => {
     return totalScore / numberOfGolfrounds;
   };
 
-  const getEachPlayerScore = async (players) => {
+  const getEachPlayerScore = async (playersArray) => {
     let array = [];
 
-    for (const player of players) {
+    for (const player of playersArray) {
       let scores = await getPlayerScore(player.userID);
 
       array.push({
@@ -168,16 +241,6 @@ const ChartListScreen = () => {
   const getAndSetPlayers = async () => {
     await getPlayers().then(setPlayers);
   };
-
-  useEffect(() => {
-    getAndSetPlayers();
-  }, []);
-
-  useEffect(() => {
-    getEachPlayerScore(players).then((value) => {
-      assignResultsForEachPlayer(value);
-    });
-  }, [players]);
 
   return (
     <ScrollView style={{ backgroundColor: Theme.colors.black }}>
@@ -226,7 +289,7 @@ const ChartListScreen = () => {
                   <Item
                     positionNumber={positionNumber}
                     name={name}
-                    totalScore={item.totalScore}
+                    totalScore={item.totalOfBestSevenRounds}
                     averageOfBest7Rounds={item.averageOfBest7Rounds}
                   />
                 );
@@ -264,7 +327,7 @@ const styles = StyleSheet.create({
     fontSize: Theme.fontSize.H1,
     alignSelf: 'center',
     marginTop: 120,
-    fontFamily: Theme.fontFamilyHeader,
+    fontFamily: Theme.fontFamily.fontFamilyHeader,
   },
 
   item: {

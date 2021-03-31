@@ -10,6 +10,7 @@ import LatestGolfRoundsScreen from '../screens/LatestGolfRoundsScreen';
 import MyGolfRoundsScreen from '../screens/MyGolfRoundsScreen';
 import ChatRoom from '../chat/ChatRoom';
 import CreateChatRoom from '../chat/CreateChatRoom';
+import Stats from '../screens/Stats';
 import Messages from '../chat/Messages';
 import Theme from '../theme/theme';
 import { AuthContext } from '../context/AuthContext';
@@ -56,6 +57,7 @@ export default function AuthenticatedStack() {
         options={{ title: '' }}
         component={RegisterResultScreen}
       />
+      <Stack.Screen name="Stats" options={{ title: '' }} component={Stats} />
       <Stack.Screen
         name="ChartListScreen"
         component={ChartListScreen}

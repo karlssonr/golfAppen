@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     fontSize: Theme.fontSize.H1,
     alignSelf: 'center',
     marginTop: 180,
-    fontFamily: Theme.fontFamilyHeader,
+    fontFamily: Theme.fontFamily.fontFamilyHeader,
   },
   text: {
     color: Theme.colors.white,

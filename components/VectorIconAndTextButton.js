@@ -32,7 +32,7 @@ const VectorIconAndTextButton = ({
       color: iconColor,
       fontSize: iconFontSize,
       // left: 22,
-      marginLeft: 100,
+      marginLeft: '25%',
     },
     view: {
       backgroundColor: null,

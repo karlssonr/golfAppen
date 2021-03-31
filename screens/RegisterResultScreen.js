@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, { useState, useContext, useEffect } from 'react';
 import {
   StyleSheet,
@@ -10,13 +11,14 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import { TextInput, ScrollView } from 'react-native-gesture-handler';
-import DropDownPicker from 'react-native-dropdown-picker';
+// import DropDownPicker from 'react-native-dropdown-picker';
 import { PlayerContext } from '../context/PlayerContext';
 import Theme from '../theme/theme';
 import IconAndTextButton from '../components/IconAndTextButton';
 import Splash from './Splash';
 import CustomDatePicker from '../components/CustomDatePicker';
 import firebase from '../firebase';
+import ModalDropdown from 'react-native-modal-dropdown';
 
 const RegisterResultScreen = () => {
   const { postGolfRound, getPlayers, postGolfGame } = useContext(PlayerContext);
@@ -103,7 +105,7 @@ const RegisterResultScreen = () => {
       }
 
       if (playersPlayed < 1) {
-        alert('Minst 2 spelare och pöäng måste rapporteras');
+        alert('Minst 2 spelare och poäng måste rapporteras');
       }
 
       if (playersPlayed > 1) {
@@ -228,16 +230,14 @@ const RegisterResultScreen = () => {
   };
 
   const mapPlayersFromDB = (playersFromDB) => {
-    let array = [];
+    let array = ['Select player...'];
 
+    // console.log('playersFromDB: ', playersFromDB);
     playersFromDB.forEach((player) => {
-      array.push({
-        label: player.name,
-        value: player.name,
-        userID: player.userID,
-      });
+      array.push(player.name);
     });
 
+    console.log('playersArray: ', array);
     return array;
   };
 
@@ -281,7 +281,7 @@ const RegisterResultScreen = () => {
                 <Text style={{ ...styles.text, width: '20%' }}>Extra</Text> */}
               </View>
               <View style={{ ...styles.textInputView, zIndex: 5 }}>
-                <DropDownPicker
+                {/* <DropDownPicker
                   placeholder="Välj spelare"
                   items={playersArray}
                   defaultValue={playerOne.name}
@@ -296,6 +296,21 @@ const RegisterResultScreen = () => {
                       name: item.value,
                       userID: item.userID,
                     });
+                  }}
+                /> */}
+
+                <ModalDropdown
+                  defaultValue="Select player..."
+                  options={playersArray}
+                  animated={true}
+                  dropdownStyle={styles.modalDropdownStyle}
+                  style={styles.modalStyle}
+                  textStyle={styles.modalTextStyle}
+                  onSelect={(index, value) => {
+                    if (index === 0) {
+                      value = null;
+                    }
+                    console.log(value);
                   }}
                 />
 
@@ -321,7 +336,7 @@ const RegisterResultScreen = () => {
               </View>
 
               <View style={{ ...styles.textInputView, zIndex: 4 }}>
-                <DropDownPicker
+                {/* <DropDownPicker
                   placeholder="Välj spelare"
                   items={playersArray}
                   defaultValue={playerTwo.name}
@@ -337,6 +352,21 @@ const RegisterResultScreen = () => {
                       userID: item.userID,
                     })
                   }
+                /> */}
+
+                <ModalDropdown
+                  defaultValue="Select player..."
+                  options={playersArray}
+                  animated={true}
+                  dropdownStyle={styles.modalDropdownStyle}
+                  style={styles.modalStyle}
+                  textStyle={styles.modalTextStyle}
+                  onSelect={(index, value) => {
+                    if (index === 0) {
+                      value = null;
+                    }
+                    console.log(value);
+                  }}
                 />
                 <TextInput
                   placeholder="Poäng"
@@ -359,7 +389,7 @@ const RegisterResultScreen = () => {
               </View>
 
               <View style={{ ...styles.textInputView, zIndex: 3 }}>
-                <DropDownPicker
+                {/* <DropDownPicker
                   placeholder="Välj spelare"
                   items={playersArray}
                   defaultValue={playerThree.name}
@@ -375,6 +405,21 @@ const RegisterResultScreen = () => {
                       userID: item.userID,
                     })
                   }
+                /> */}
+
+                <ModalDropdown
+                  defaultValue="Select player..."
+                  options={playersArray}
+                  animated={true}
+                  dropdownStyle={styles.modalDropdownStyle}
+                  style={styles.modalStyle}
+                  textStyle={styles.modalTextStyle}
+                  onSelect={(index, value) => {
+                    if (index === 0) {
+                      value = null;
+                    }
+                    console.log(value);
+                  }}
                 />
                 <TextInput
                   placeholder="Poäng"
@@ -397,7 +442,7 @@ const RegisterResultScreen = () => {
               </View>
 
               <View style={{ ...styles.textInputView, zIndex: 2 }}>
-                <DropDownPicker
+                {/* <DropDownPicker
                   placeholder="Välj spelare"
                   items={playersArray}
                   defaultValue={playerFour.name}
@@ -413,6 +458,21 @@ const RegisterResultScreen = () => {
                       userID: item.userID,
                     })
                   }
+                /> */}
+
+                <ModalDropdown
+                  defaultValue="Select player..."
+                  options={playersArray}
+                  animated={true}
+                  dropdownStyle={styles.modalDropdownStyle}
+                  style={styles.modalStyle}
+                  textStyle={styles.modalTextStyle}
+                  onSelect={(index, value) => {
+                    if (index === 0) {
+                      value = null;
+                    }
+                    console.log(value);
+                  }}
                 />
                 <TextInput
                   placeholder="Poäng"
@@ -480,6 +540,29 @@ const RegisterResultScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  modalTextStyle: {
+    fontSize: Theme.fontSize.largeCaption,
+    marginTop: 3,
+    marginLeft: 3,
+    width: '100%',
+  },
+  modalStyle: {
+    backgroundColor: Theme.colors.white,
+    width: '40%',
+    marginLeft: 10,
+    marginTop: 15,
+    height: 30,
+    borderColor: Theme.colors.grey,
+    borderWidth: 2,
+    borderRadius: 5,
+    alignItems: 'flex-start',
+  },
+
+  modalDropdownStyle: {
+    width: '35%',
+    left: 0,
+    fontSize: Theme.fontSize.largeCaption,
+  },
   customDatePicker: {
     paddingVertical: 3,
     paddingHorizontal: 20,
@@ -544,13 +627,14 @@ const styles = StyleSheet.create({
     marginTop: 15,
     width: '20%',
     borderRadius: 5,
+    fontSize: Theme.fontSize.largeCaption,
   },
   header: {
     fontSize: Theme.fontSize.H1,
     marginTop: 120,
     alignSelf: 'center',
     color: Theme.colors.white,
-    fontFamily: Theme.fontFamilyHeader,
+    fontFamily: Theme.fontFamily.fontFamilyHeader,
   },
   textView: {
     top: -90,
@@ -563,7 +647,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: Theme.colors.white,
     backgroundColor: undefined,
-    fontFamily: Theme.fontFamilyText,
+    fontFamily: Theme.fontFamily.fontFamilyText,
   },
   textInputView: {
     top: -90,

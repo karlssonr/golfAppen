@@ -78,7 +78,7 @@ const HomeScreen = ({ navigation }) => {
           textColor={Theme.colors.grey}
           iconColor={Theme.colors.grey}
           textFontSize={Theme.fontSize.button}
-          // onPress={() => navigation.navigate('ChatRoom')}
+          onPress={() => navigation.navigate('Stats')}
         />
         <IconAndTextButton
           imageSource={require('../assets/golfSwing.png')}
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     marginBottom: 10,
     marginLeft: 20,
-    fontFamily: Theme.fontFamilyHeader,
+    fontFamily: Theme.fontFamily.fontFamilyHeader,
     marginTop: 80,
   },
 });

@@ -36,7 +36,7 @@ const IconAndTextButton = ({
       height: imageHeight,
       tintColor: iconColor,
       // left: 22,
-      marginLeft: 100,
+      marginLeft: '25%',
     },
     touchableOpacity: {
       flexDirection: 'row',
