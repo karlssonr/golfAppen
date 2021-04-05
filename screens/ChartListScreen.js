@@ -299,7 +299,7 @@ const ChartListScreen = () => {
           )}
         </View>
         <View style={styles.KGHIOBox}>
-          <Text style={styles.text}>Vänd luren för detaljer</Text>
+          {/* <Text style={styles.text}>Vänd luren för detaljer</Text> */}
           <Text style={styles.kghio}>KGHIO 2021</Text>
         </View>
       </View>

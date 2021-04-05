@@ -19,6 +19,7 @@ import Splash from './Splash';
 import CustomDatePicker from '../components/CustomDatePicker';
 import firebase from '../firebase';
 import ModalDropdown from 'react-native-modal-dropdown';
+import RNPicker from 'rn-modal-picker';
 
 const RegisterResultScreen = () => {
   const { postGolfRound, getPlayers, postGolfGame } = useContext(PlayerContext);
@@ -26,6 +27,9 @@ const RegisterResultScreen = () => {
 
   const [players, setPlayers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [placeHolderText, setPlaceHolderText] = useState('Select player');
+  const [selectedText, setSelectedText] = useState('Select player...');
+  const [selectedValue, setSelectedValue] = useState('');
 
   const [date, setDate] = useState(new Date());
 
@@ -230,14 +234,17 @@ const RegisterResultScreen = () => {
   };
 
   const mapPlayersFromDB = (playersFromDB) => {
-    let array = ['Select player...'];
+    let array = [{ id: null, name: 'Select player...' }];
 
     // console.log('playersFromDB: ', playersFromDB);
     playersFromDB.forEach((player) => {
-      array.push(player.name);
+      array.push({
+        id: player.userID,
+        name: player.name,
+      });
     });
 
-    console.log('playersArray: ', array);
+    // console.log('playersArray: ', array);
     return array;
   };
 
@@ -247,6 +254,7 @@ const RegisterResultScreen = () => {
     return <Splash />;
   }
 
+  // console.log(playersArray);
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -281,36 +289,41 @@ const RegisterResultScreen = () => {
                 <Text style={{ ...styles.text, width: '20%' }}>Extra</Text> */}
               </View>
               <View style={{ ...styles.textInputView, zIndex: 5 }}>
-                {/* <DropDownPicker
-                  placeholder="Välj spelare"
-                  items={playersArray}
-                  defaultValue={playerOne.name}
-                  containerStyle={{ height: 45 }}
-                  style={styles.dropDownPickerStyle}
-                  itemStyle={{ justifyContent: 'flex-start' }}
-                  labelStyle={styles.dropDownLabelStyle}
-                  dropDownStyle={{ backgroundColor: Theme.colors.white }}
-                  onChangeItem={(item) => {
+                <RNPicker
+                  dataSource={playersArray}
+                  // dummyDataSource={this.state.dataSource}
+                  // defaultValue={playersArray[0].name}
+                  pickerTitle={'Select player'}
+                  // showSearchBar={true}
+                  disablePicker={false}
+                  changeAnimation={'none'}
+                  showPickerTitle={true}
+                  pickerStyle={styles.pickerStyle}
+                  itemSeparatorStyle={styles.itemSeparatorStyle}
+                  pickerItemTextStyle={styles.listTextViewStyle}
+                  selectedLabel={playerOne.name}
+                  placeHolderLabel={playerOne.name || 'Select player...'}
+                  selectLabelTextStyle={styles.selectLabelTextStyle}
+                  placeHolderTextStyle={styles.placeHolderTextStyle}
+                  dropDownImageStyle={styles.dropDownImageStyle}
+                  selectedValue={(index, item) => {
+                    if (index === 0) {
+                      setPlayerOne({
+                        ...playerOne,
+                        name: '',
+                        userID: item.id,
+                      });
+                    }
+
                     setPlayerOne({
                       ...playerOne,
-                      name: item.value,
-                      userID: item.userID,
+                      name: item.name,
+                      userID: item.id,
                     });
-                  }}
-                /> */}
 
-                <ModalDropdown
-                  defaultValue="Select player..."
-                  options={playersArray}
-                  animated={true}
-                  dropdownStyle={styles.modalDropdownStyle}
-                  style={styles.modalStyle}
-                  textStyle={styles.modalTextStyle}
-                  onSelect={(index, value) => {
-                    if (index === 0) {
-                      value = null;
-                    }
-                    console.log(value);
+                    console.log('item: ', item);
+
+                    console.log('playerOne: ', playerOne);
                   }}
                 />
 
@@ -336,36 +349,36 @@ const RegisterResultScreen = () => {
               </View>
 
               <View style={{ ...styles.textInputView, zIndex: 4 }}>
-                {/* <DropDownPicker
-                  placeholder="Välj spelare"
-                  items={playersArray}
-                  defaultValue={playerTwo.name}
-                  containerStyle={{ height: 45 }}
-                  style={styles.dropDownPickerStyle}
-                  itemStyle={{ justifyContent: 'flex-start' }}
-                  labelStyle={styles.dropDownLabelStyle}
-                  dropDownStyle={{ backgroundColor: Theme.colors.white }}
-                  onChangeItem={(item) =>
+                <RNPicker
+                  dataSource={playersArray}
+                  // dummyDataSource={this.state.dataSource}
+                  // defaultValue={playersArray[0].name}
+                  pickerTitle={'Select player'}
+                  // showSearchBar={true}
+                  disablePicker={false}
+                  changeAnimation={'none'}
+                  showPickerTitle={true}
+                  pickerStyle={styles.pickerStyle}
+                  itemSeparatorStyle={styles.itemSeparatorStyle}
+                  pickerItemTextStyle={styles.listTextViewStyle}
+                  selectedLabel={playerTwo.name}
+                  placeHolderLabel={playerTwo.name || 'Select player...'}
+                  selectLabelTextStyle={styles.selectLabelTextStyle}
+                  placeHolderTextStyle={styles.placeHolderTextStyle}
+                  dropDownImageStyle={styles.dropDownImageStyle}
+                  selectedValue={(index, item) => {
+                    if (index === 0) {
+                      setPlayerTwo({
+                        ...playerTwo,
+                        name: '',
+                        userID: item.id,
+                      });
+                    }
                     setPlayerTwo({
                       ...playerTwo,
-                      name: item.value,
-                      userID: item.userID,
-                    })
-                  }
-                /> */}
-
-                <ModalDropdown
-                  defaultValue="Select player..."
-                  options={playersArray}
-                  animated={true}
-                  dropdownStyle={styles.modalDropdownStyle}
-                  style={styles.modalStyle}
-                  textStyle={styles.modalTextStyle}
-                  onSelect={(index, value) => {
-                    if (index === 0) {
-                      value = null;
-                    }
-                    console.log(value);
+                      name: item.name,
+                      userID: item.id,
+                    });
                   }}
                 />
                 <TextInput
@@ -389,36 +402,37 @@ const RegisterResultScreen = () => {
               </View>
 
               <View style={{ ...styles.textInputView, zIndex: 3 }}>
-                {/* <DropDownPicker
-                  placeholder="Välj spelare"
-                  items={playersArray}
-                  defaultValue={playerThree.name}
-                  containerStyle={{ height: 45 }}
-                  style={styles.dropDownPickerStyle}
-                  itemStyle={{ justifyContent: 'flex-start' }}
-                  labelStyle={styles.dropDownLabelStyle}
-                  dropDownStyle={{ backgroundColor: Theme.colors.white }}
-                  onChangeItem={(item) =>
+                <RNPicker
+                  dataSource={playersArray}
+                  // dummyDataSource={this.state.dataSource}
+                  // defaultValue={playersArray[0].name}
+                  pickerTitle={'Select player'}
+                  // showSearchBar={true}
+                  disablePicker={false}
+                  changeAnimation={'none'}
+                  showPickerTitle={true}
+                  pickerStyle={styles.pickerStyle}
+                  itemSeparatorStyle={styles.itemSeparatorStyle}
+                  pickerItemTextStyle={styles.listTextViewStyle}
+                  selectedLabel={playerThree.name}
+                  placeHolderLabel={playerThree.name || 'Select player...'}
+                  selectLabelTextStyle={styles.selectLabelTextStyle}
+                  placeHolderTextStyle={styles.placeHolderTextStyle}
+                  dropDownImageStyle={styles.dropDownImageStyle}
+                  selectedValue={(index, item) => {
+                    if (index === 0) {
+                      setPlayerThree({
+                        ...playerThree,
+                        name: '',
+                        userID: item.id,
+                      });
+                    }
+
                     setPlayerThree({
                       ...playerThree,
-                      name: item.value,
-                      userID: item.userID,
-                    })
-                  }
-                /> */}
-
-                <ModalDropdown
-                  defaultValue="Select player..."
-                  options={playersArray}
-                  animated={true}
-                  dropdownStyle={styles.modalDropdownStyle}
-                  style={styles.modalStyle}
-                  textStyle={styles.modalTextStyle}
-                  onSelect={(index, value) => {
-                    if (index === 0) {
-                      value = null;
-                    }
-                    console.log(value);
+                      name: item.name,
+                      userID: item.id,
+                    });
                   }}
                 />
                 <TextInput
@@ -442,36 +456,34 @@ const RegisterResultScreen = () => {
               </View>
 
               <View style={{ ...styles.textInputView, zIndex: 2 }}>
-                {/* <DropDownPicker
-                  placeholder="Välj spelare"
-                  items={playersArray}
-                  defaultValue={playerFour.name}
-                  containerStyle={{ height: 45 }}
-                  style={styles.dropDownPickerStyle}
-                  itemStyle={{ justifyContent: 'flex-start' }}
-                  labelStyle={styles.dropDownLabelStyle}
-                  dropDownStyle={{ backgroundColor: Theme.colors.white }}
-                  onChangeItem={(item) =>
+                <RNPicker
+                  dataSource={playersArray}
+                  pickerTitle={'Select player'}
+                  disablePicker={false}
+                  changeAnimation={'none'}
+                  showPickerTitle={true}
+                  pickerStyle={styles.pickerStyle}
+                  itemSeparatorStyle={styles.itemSeparatorStyle}
+                  pickerItemTextStyle={styles.listTextViewStyle}
+                  selectedLabel={playerFour.name}
+                  placeHolderLabel={playerFour.name || 'Select player...'}
+                  selectLabelTextStyle={styles.selectLabelTextStyle}
+                  placeHolderTextStyle={styles.placeHolderTextStyle}
+                  dropDownImageStyle={styles.dropDownImageStyle}
+                  selectedValue={(index, item) => {
+                    if (index === 0) {
+                      setPlayerFour({
+                        ...playerFour,
+                        name: '',
+                        userID: item.id,
+                      });
+                    }
+
                     setPlayerFour({
                       ...playerFour,
-                      name: item.value,
-                      userID: item.userID,
-                    })
-                  }
-                /> */}
-
-                <ModalDropdown
-                  defaultValue="Select player..."
-                  options={playersArray}
-                  animated={true}
-                  dropdownStyle={styles.modalDropdownStyle}
-                  style={styles.modalStyle}
-                  textStyle={styles.modalTextStyle}
-                  onSelect={(index, value) => {
-                    if (index === 0) {
-                      value = null;
-                    }
-                    console.log(value);
+                      name: item.name,
+                      userID: item.id,
+                    });
                   }}
                 />
                 <TextInput
@@ -653,6 +665,92 @@ const styles = StyleSheet.create({
     top: -90,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
+  },
+  itemSeparatorStyle: {
+    height: 1,
+    width: '90%',
+    alignSelf: 'center',
+    backgroundColor: '#D3D3D3',
+  },
+  searchBarContainerStyle: {
+    marginBottom: 10,
+    flexDirection: 'row',
+    height: 40,
+    shadowOpacity: 1.0,
+    shadowRadius: 5,
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    backgroundColor: 'rgba(255,255,255,1)',
+    shadowColor: '#d3d3d3',
+    borderRadius: 10,
+    elevation: 3,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+
+  selectLabelTextStyle: {
+    color: '#000',
+    marginLeft: 10,
+    textAlign: 'left',
+    width: '99%',
+    // padding: 10,
+    flexDirection: 'row',
+    alignSelf: 'center',
+  },
+  placeHolderTextStyle: {
+    color: '#D3D3D3',
+    // padding: 10,
+    textAlign: 'left',
+    width: '99%',
+    flexDirection: 'row',
+    alignSelf: 'center',
+    marginLeft: 10,
+  },
+  dropDownImageStyle: {
+    marginLeft: 10,
+    width: 10,
+    height: 10,
+    alignSelf: 'center',
+  },
+  listTextViewStyle: {
+    color: '#000',
+    marginVertical: 10,
+    flex: 0.9,
+    marginLeft: 20,
+    marginHorizontal: 10,
+    textAlign: 'left',
+    // alignSelf: 'center',
+  },
+  pickerStyle: {
+    width: 160,
+    // marginLeft: 18,
+    // elevation: 3,
+    paddingRight: 30,
+    // marginRight: 10,
+    marginBottom: 2,
+    // shadowOpacity: 1.0,
+    // shadowOffset: {
+    //   width: 1,
+    //   height: 1,
+    // },
+    // borderWidth: 1,
+    // shadowRadius: 10,
+    // backgroundColor: 'rgba(255,255,255,1)',
+    // shadowColor: '#d3d3d3',
+    // borderRadius: 5,
+    flexDirection: 'row',
+
+    backgroundColor: Theme.colors.white,
+    // width: '40%',
+    marginLeft: 10,
+    marginTop: 15,
+    height: 30,
+    borderColor: Theme.colors.grey,
+    borderWidth: 2,
+    borderRadius: 5,
+    // alignItems: 'flex-end',
   },
 });
 
