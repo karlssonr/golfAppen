@@ -8,6 +8,7 @@ import {
   View,
   ImageBackground,
   ScrollView,
+  Dimensions,
 } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import Splash from './Splash';
@@ -37,6 +38,9 @@ const ChartListScreen = () => {
   );
   const [players, setPlayers] = useState([]);
   const [resultTable, setResultTable] = useState([]);
+
+  const windowWidth = Dimensions.get('window').width;
+  const windowHeight = Dimensions.get('window').height;
 
   useEffect(() => {
     getAndSetPlayers();
@@ -272,32 +276,43 @@ const ChartListScreen = () => {
 
         <View style={styles.chartView}>
           {loadingPlayerScore && <Splash />}
-          {resultTable && (
-            <FlatList
-              data={resultTable}
-              renderItem={({ item, index }) => {
-                let number = index + 1;
-                let positionNumber = number.toString();
-                let name = '';
-                if (item.nickName) {
-                  name = item.nickName;
-                } else {
-                  name = item.name;
-                }
+          <ScrollView
+            contentContainerStyle={{ width: windowWidth + 200 }}
+            horizontal
+            alwaysBounceHorizontal
+            style={{
+              flexDirection: 'column',
+              marginHorizontal: 0,
+            }}
+          >
+            {resultTable && (
+              <FlatList
+                data={resultTable}
+                renderItem={({ item, index }) => {
+                  let number = index + 1;
+                  let positionNumber = number.toString();
+                  let name = '';
+                  if (item.nickName) {
+                    name = item.nickName;
+                  } else {
+                    name = item.name;
+                  }
 
-                return (
-                  <Item
-                    positionNumber={positionNumber}
-                    name={name}
-                    totalScore={item.totalOfBestSevenRounds}
-                    averageOfBest7Rounds={item.averageOfBest7Rounds}
-                  />
-                );
-              }}
-              keyExtractor={(_, index) => index.toString()}
-            />
-          )}
+                  return (
+                    <Item
+                      positionNumber={positionNumber}
+                      name={name}
+                      totalScore={item.totalOfBestSevenRounds}
+                      averageOfBest7Rounds={item.averageOfBest7Rounds}
+                    />
+                  );
+                }}
+                keyExtractor={(_, index) => index.toString()}
+              />
+            )}
+          </ScrollView>
         </View>
+
         <View style={styles.KGHIOBox}>
           {/* <Text style={styles.text}>Vänd luren för detaljer</Text> */}
           <Text style={styles.kghio}>KGHIO 2021</Text>

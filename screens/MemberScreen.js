@@ -9,7 +9,6 @@ import {
   Dimensions,
 } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
-
 import Splash from './Splash';
 import { PlayerContext } from '../context/PlayerContext';
 import Theme from '../theme/theme';
@@ -31,14 +30,13 @@ const Item = ({ name, nickName, phoneNumber, golfID }) => (
 const MemberScreen = () => {
   const { getPlayers, getPlayerLoading } = useContext(PlayerContext);
   const [players, setPlayers] = useState([]);
+  // const [playersSorted, setPlayersSorted] = useState([]);
 
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
 
   useEffect(() => {
     getPlayers().then(setPlayers);
-
-    if (players) console.log(players);
   }, []);
 
   const renderFlatListHeader = () => {
@@ -47,7 +45,7 @@ const MemberScreen = () => {
         <Text style={{ ...styles.text, width: '25%', backgroundColor: null }}>
           Name
         </Text>
-        {/* <View /> */}
+
         <Text style={{ ...styles.text, width: '25%', backgroundColor: null }}>
           Nickname
         </Text>
@@ -55,13 +53,14 @@ const MemberScreen = () => {
           style={{
             ...styles.text,
             width: '25%',
-            textAlign: 'center',
+            textAlign: 'left',
             backgroundColor: null,
+            left: 30,
           }}
         >
           Phone
         </Text>
-        {/* <View /> */}
+
         <Text
           style={{
             ...styles.text,
@@ -77,95 +76,53 @@ const MemberScreen = () => {
   };
 
   return (
-    // <ScrollView style={{ backgroundColor: 'black' }}>
-    <View style={styles.container}>
-      <ImageBackground
-        source={require('../assets/golfball1.png')}
-        style={styles.imageBackgroundStyle}
-      >
-        <Text style={styles.header}>Members</Text>
-      </ImageBackground>
-
-      {getPlayerLoading && <Splash />}
-
-      <View style={styles.chartView}>
-        <ScrollView
-          horizontal
-          alwaysBounceHorizontal
-          style={{
-            width: windowWidth + 150,
-            flexDirection: 'column',
-            marginHorizontal: 0,
-          }}
+    <ScrollView style={{ backgroundColor: 'black' }}>
+      <View style={styles.container}>
+        <ImageBackground
+          source={require('../assets/golfball1.png')}
+          style={styles.imageBackgroundStyle}
         >
-          <FlatList
-            data={players}
-            ListHeaderComponent={renderFlatListHeader}
-            renderItem={({ item }) => {
-              let nickName = '';
-              if (item.nickName) {
-                nickName = item.nickName;
-              }
-              return (
-                <Item
-                  name={item.name}
-                  nickName={nickName}
-                  phoneNumber={item.phoneNumber}
-                  golfID={item.golfID}
-                />
-              );
+          <Text style={styles.header}>Members</Text>
+        </ImageBackground>
+
+        {getPlayerLoading && <Splash />}
+
+        <View style={styles.chartView}>
+          <ScrollView
+            contentContainerStyle={{ width: windowWidth + 200 }}
+            horizontal
+            alwaysBounceHorizontal
+            style={{
+              flexDirection: 'column',
+              marginHorizontal: 0,
             }}
-            keyExtractor={(item, index) => index.toString()}
-          />
-        </ScrollView>
+          >
+            <FlatList
+              data={players.sort((a, b) => a.name.localeCompare(b.name))}
+              ListHeaderComponent={renderFlatListHeader}
+              renderItem={({ item }) => {
+                let nickName = '';
+                if (item.nickName) {
+                  nickName = item.nickName;
+                }
+                return (
+                  <Item
+                    name={item.name}
+                    nickName={nickName}
+                    phoneNumber={item.phoneNumber}
+                    golfID={item.golfID}
+                  />
+                );
+              }}
+              keyExtractor={(item, index) => index.toString()}
+            />
+          </ScrollView>
+        </View>
+
+        <Text style={styles.kghio}>KGHIO 2021</Text>
       </View>
-
-      <Text style={styles.kghio}>KGHIO 2021</Text>
-    </View>
-    //  </ScrollView>
+    </ScrollView>
   );
-
-  // return (
-  //   <ScrollView
-  //     horizontal
-  //     alwaysBounceHorizontal
-  //     snapToStart={false}
-  //     scrollToOverflowEnabled
-  //     // snapToOffsets={false}
-  //     style={{
-  //       width: windowWidth + 100,
-  //       flexDirection: 'column',
-  //       // marginHorizontal: 40,
-  //     }}
-  //   >
-  //     <FlatList
-  //       data={players}
-  //       style={{ width: '100%' }}
-  //       ListHeaderComponent={renderFlatListHeader}
-  //       pagingEnabled={true}
-  //       showsHorizontalScrollIndicator={false}
-  //       legacyImplementation={false}
-  //       renderItem={({ item }) => {
-  //         return (
-  //           // <ScrollView
-  //           //   horizontal
-  //           //   style={{
-  //           //     width: '200%',
-  //           //     flexDirection: 'column',
-  //           //   }}
-  //           // >
-  //           <Item
-  //             name={item.name}
-  //             phoneNumber={item.phoneNumber}
-  //             golfID={item.golfID}
-  //           />
-  //           // </ScrollView>
-  //         );
-  //       }}
-  //       keyExtractor={(item, index) => index.toString()}
-  //     />
-  //   </ScrollView>
-  // );
 };
 
 const styles = StyleSheet.create({
@@ -184,9 +141,10 @@ const styles = StyleSheet.create({
   header: {
     color: Theme.colors.white,
     fontSize: Theme.fontSize.H1,
-    alignSelf: 'center',
+    alignSelf: 'flex-start',
     marginTop: 180,
     fontFamily: Theme.fontFamily.fontFamilyHeader,
+    marginLeft: 20,
   },
   text: {
     color: Theme.colors.white,
@@ -222,13 +180,13 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: Theme.fontSize.caption,
-    color: Theme.colors.orange,
+    color: Theme.colors.white,
     fontFamily: Theme.fontFamilyText,
     width: '25%',
   },
   nickName: {
     fontSize: Theme.fontSize.caption,
-    color: Theme.colors.white,
+    color: Theme.colors.orange,
     fontFamily: Theme.fontFamilyText,
 
     width: '25%',
@@ -236,7 +194,7 @@ const styles = StyleSheet.create({
   phoneNumber: {
     fontSize: Theme.fontSize.caption,
     width: '25%',
-    textAlign: 'center',
+    textAlign: 'left',
     color: Theme.colors.white,
     fontFamily: Theme.fontFamilyText,
   },
@@ -252,7 +210,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: Theme.colors.white,
     marginTop: 40,
-    fontFamily: Theme.fontFamilyText,
+    fontFamily: Theme.fontFamily.fontFamilyText,
   },
   imageBackgroundStyle: {
     width: '100%',

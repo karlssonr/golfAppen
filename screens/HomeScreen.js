@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, { useContext } from 'react';
 import { StyleSheet, Text, View, Button, ImageBackground } from 'react-native';
 import IconAndTextButton from '../components/IconAndTextButton';
@@ -12,7 +13,47 @@ const HomeScreen = ({ navigation }) => {
         source={require('../assets/image8.png')}
         style={styles.imageBackgroundStyle}
       >
-        <Text style={styles.header}>KGHIO 2021</Text>
+        {/* <Text style={styles.header}>KGHIO {'\n'}2021</Text> */}
+        <View
+          style={{
+            color: Theme.colors.white,
+            fontSize: Theme.fontSize.H1,
+            alignSelf: 'flex-start',
+            marginBottom: 10,
+            marginLeft: 20,
+            fontFamily: Theme.fontFamily.fontFamilyHeader,
+            marginTop: 80,
+          }}
+        >
+          <Text
+            style={{
+              color: Theme.colors.white,
+              fontSize: Theme.fontSize.H1,
+              alignSelf: 'flex-start',
+              // marginBottom: 10,
+              marginLeft: 20,
+              fontFamily: Theme.fontFamily.fontFamilyHeader,
+              // marginTop: 80,
+            }}
+          >
+            KGHIO
+          </Text>
+          <Text
+            style={{
+              color: Theme.colors.black,
+              fontSize: Theme.fontSize.H1,
+              alignSelf: 'flex-start',
+              marginBottom: 10,
+              marginLeft: 20,
+              fontFamily: Theme.fontFamily.fontFamilyHeader,
+              // marginTop: 80,
+            }}
+          >
+            2021
+          </Text>
+        </View>
+        {/* <Text style={styles.header}>KGHIO</Text>
+        <Text style={styles.header}>2021</Text> */}
       </ImageBackground>
 
       <View style={styles.homeView}>
@@ -21,7 +62,7 @@ const HomeScreen = ({ navigation }) => {
           imageWidth={Theme.fontSize.buttonIcon}
           iconColor={Theme.colors.orange}
           imageHeight={Theme.fontSize.buttonIcon}
-          title="Registrera Resultat"
+          title="Report Round"
           textColor={Theme.colors.white}
           textFontSize={Theme.fontSize.button}
           onPress={() => navigation.navigate('RegisterResultScreen')}
@@ -31,7 +72,7 @@ const HomeScreen = ({ navigation }) => {
           imageWidth={Theme.fontSize.buttonIcon}
           imageHeight={Theme.fontSize.buttonIcon}
           iconColor={Theme.colors.orange}
-          title="Senaste rundorna"
+          title="Played Rounds"
           textColor={Theme.colors.white}
           textFontSize={Theme.fontSize.button}
           onPress={() => navigation.navigate('LatestGolfRoundsScreen')}
@@ -41,7 +82,7 @@ const HomeScreen = ({ navigation }) => {
           imageWidth={Theme.fontSize.buttonIcon}
           imageHeight={Theme.fontSize.buttonIcon}
           iconColor={Theme.colors.orange}
-          title="Tabell"
+          title="The Race"
           textColor={Theme.colors.white}
           textFontSize={Theme.fontSize.button}
           onPress={() => navigation.navigate('ChartListScreen')}
@@ -63,7 +104,7 @@ const HomeScreen = ({ navigation }) => {
           iconWidth={Theme.fontSize.buttonIcon}
           iconHeight={Theme.fontSize.buttonIcon}
           iconFontSize={25}
-          title="Chatt"
+          title="Chat"
           textColor={Theme.colors.white}
           iconColor={Theme.colors.orange}
           textFontSize={Theme.fontSize.button}
@@ -74,18 +115,18 @@ const HomeScreen = ({ navigation }) => {
           imageSource={require('../assets/stats.png')}
           imageWidth={Theme.fontSize.buttonIcon}
           imageHeight={Theme.fontSize.buttonIcon}
-          title="Statistik"
+          title="Stats"
           textColor={Theme.colors.grey}
           iconColor={Theme.colors.grey}
           textFontSize={Theme.fontSize.button}
-          onPress={() => navigation.navigate('Stats')}
+          // onPress={() => navigation.navigate('Stats')}
         />
         <IconAndTextButton
           imageSource={require('../assets/golfSwing.png')}
           imageWidth={Theme.fontSize.buttonIcon}
           imageHeight={Theme.fontSize.buttonIcon}
           iconColor={Theme.colors.orange}
-          title="Medlemmar"
+          title="Members"
           textColor={Theme.colors.white}
           textFontSize={Theme.fontSize.button}
           onPress={() => navigation.navigate('MemberScreen')}
@@ -95,10 +136,10 @@ const HomeScreen = ({ navigation }) => {
           imageWidth={Theme.fontSize.buttonIcon}
           imageHeight={Theme.fontSize.buttonIcon}
           title="Champs"
-          textColor={Theme.colors.grey}
+          iconColor={Theme.colors.orange}
+          textColor={Theme.colors.white}
           textFontSize={Theme.fontSize.button}
-
-          // onPress={() => navigation.navigate('RegisterResultScreen')}
+          onPress={() => navigation.navigate('Champs')}
         />
       </View>
     </View>

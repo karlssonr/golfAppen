@@ -14,6 +14,7 @@ import Stats from '../screens/Stats';
 import Messages from '../chat/Messages';
 import Theme from '../theme/theme';
 import { AuthContext } from '../context/AuthContext';
+import Champs from '../screens/Champs';
 
 const Stack = createStackNavigator();
 
@@ -44,7 +45,7 @@ export default function AuthenticatedStack() {
                 console.log('profil');
                 navigation.navigate('ProfileScreen');
               }}
-              title="Profil"
+              title="Profile"
               color={
                 Platform.OS === 'ios' ? Theme.colors.white : Theme.colors.black
               }
@@ -58,6 +59,7 @@ export default function AuthenticatedStack() {
         component={RegisterResultScreen}
       />
       <Stack.Screen name="Stats" options={{ title: '' }} component={Stats} />
+      <Stack.Screen name="Champs" options={{ title: '' }} component={Champs} />
       <Stack.Screen
         name="ChartListScreen"
         component={ChartListScreen}
