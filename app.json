@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "golfAppen",
+    "name": "KGHIO",
     "slug": "golfAppen",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/KGHIO_2.png",
     "splash": {
-      "image": "./assets/pokal.png",
+      "image": "./assets/KGHIO_2.png",
       "resizeMode": "contain",
       "backgroundColor": "#000000"
     },

@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, { useState, useEffect, useContext } from 'react';
 import {
   StyleSheet,
@@ -240,7 +241,8 @@ const MyGolfRoundsScreen = () => {
                   userID,
                   score,
                   extraPoints,
-                  timeStampDate
+                  timeStampDate,
+                  name
                 );
 
                 getAndSetGolfGames();

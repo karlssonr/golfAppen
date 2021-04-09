@@ -177,19 +177,73 @@ export default function PlayerContextProvider({ children }) {
   const updateGolfRound = async (
     docID,
     userID,
-
+    name,
     points,
     extraPoints,
     date
   ) => {
-    const golfRoundRef = firebase
+    const golfRoundRef = await firebase
       .firestore()
       .collection('players')
       .doc(userID)
       .collection('golfRounds')
       .doc(docID);
 
-    const golfGameRef = firebase.firestore().collection('golfGames').doc(docID);
+    const getGolfGame = await firebase
+      .firestore()
+      .collection('golfGames')
+      .doc(docID)
+      .get();
+
+    const golfGameRef = await firebase
+      .firestore()
+      .collection('golfGames')
+      .doc(docID);
+
+    const golfGame = getGolfGame.data();
+
+    console.log('1', golfGame.playerOne.userID);
+
+    if (golfGame.playerOne.userID === userID) {
+      golfGameRef.update({
+        playerOne: {
+          points: points,
+          extraPoints: extraPoints,
+          name: name,
+          userID: userID,
+        },
+      });
+    }
+    if (golfGame.playerTwo.userID === userID) {
+      golfGameRef.update({
+        playerTwo: {
+          points: points,
+          extraPoints: extraPoints,
+          name: name,
+          userID: userID,
+        },
+      });
+    }
+    if (golfGame.playerThree.userID === userID) {
+      golfGameRef.update({
+        playerThree: {
+          points: points,
+          extraPoints: extraPoints,
+          name: name,
+          userID: userID,
+        },
+      });
+    }
+    if (golfGame.playerFour.userID === userID) {
+      golfGameRef.update({
+        playerFour: {
+          points: points,
+          extraPoints: extraPoints,
+          name: name,
+          userID: userID,
+        },
+      });
+    }
 
     golfRoundRef
       .update({
@@ -205,18 +259,26 @@ export default function PlayerContextProvider({ children }) {
 
   const getGolfGames = async () => {
     setGetGolfGamesLoading(true);
+
     let snapshot = await firebase.firestore().collection('golfGames').get();
 
     let golfGames = [];
+    let players = [];
 
     if (snapshot) {
       snapshot.forEach((doc) => {
-        // console.log(doc);
-        let id = doc.data();
-        // console.log(id);
+        // console.log('doc', doc);
+
         golfGames.push({ ...doc.data() });
+
+        // doc.collection('players').forEach((player) => {
+        //   console.log('test');
+        //   golfGames.push({ ...player.data() });
+        // });
       });
     }
+
+    // console.log('array: ', golfGames);
 
     setGetGolfGamesLoading(false);
     return golfGames;

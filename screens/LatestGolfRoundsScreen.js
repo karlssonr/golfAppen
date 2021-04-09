@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
@@ -17,6 +18,7 @@ const LatestGolfRoundsScreen = () => {
   const Moment = require('moment');
 
   useEffect(() => {
+    // getGolfGames();
     getAndSetGolfGames();
   }, []);
 

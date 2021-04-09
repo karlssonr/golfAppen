@@ -15,19 +15,32 @@ import Splash from './Splash';
 import { PlayerContext } from '../context/PlayerContext';
 import Theme from '../theme/theme';
 
-const Item = ({ positionNumber, name, totalScore, averageOfBest7Rounds }) => (
+const Item = ({
+  positionNumber,
+  name,
+  totalOfBestSevenRounds,
+  averageOfBest7Rounds,
+  totalScore,
+  avrageScore,
+}) => (
   <View style={{ ...styles.item }}>
     <Text style={{ ...styles.positionNumber, backgroundColor: null }}>
       {positionNumber}
     </Text>
-    <Text style={{ ...styles.title, backgroundColor: null }}>{name}</Text>
+    <Text style={{ ...styles.name, backgroundColor: null }}>{name}</Text>
 
+    <Text style={{ ...styles.totalOfBestSevenRounds, backgroundColor: null }}>
+      {totalOfBestSevenRounds}
+    </Text>
+
+    <Text style={{ ...styles.averageOfBest7Rounds, backgroundColor: null }}>
+      {averageOfBest7Rounds}
+    </Text>
     <Text style={{ ...styles.totalScore, backgroundColor: null }}>
       {totalScore}
     </Text>
-
-    <Text style={{ ...styles.sevenBest, backgroundColor: null }}>
-      {averageOfBest7Rounds}
+    <Text style={{ ...styles.avrageScore, backgroundColor: null }}>
+      {avrageScore}
     </Text>
   </View>
 );
@@ -72,21 +85,6 @@ const ChartListScreen = () => {
       }
     } while (checked);
 
-    // console.log('inputarray8: ', inputArr[8]);
-    // console.log('inputarray7: ', inputArr[7]);
-
-    // console.log(
-    //   '11:  ',
-    //   inputArr[7]?.totalOfBestSevenRounds >
-    //     inputArr[7 + 1]?.totalOfBestSevenRounds
-    // );
-
-    // console.log(
-    //   '11:  ',
-
-    //   inputArr[8 + 1]?.totalOfBestSevenRounds
-    // );
-
     const reversed = inputArr.reverse();
 
     return reversed;
@@ -125,15 +123,13 @@ const ChartListScreen = () => {
         name: golfroundsOfPlayer.name,
         nickName: golfroundsOfPlayer.nickName,
         totalScore: totalScore,
-        avrageScore: avrageScore,
+        avrageScore: avrageScore.toFixed(2),
         averageOfBest7Rounds: averageOfBest7Rounds.toFixed(2),
         totalOfBestSevenRounds: totalOfBestSevenRounds,
       });
     });
 
     const sortedArray = bubbleSort(resulTableScore);
-
-    console.log('SortedArray: ', sortedArray);
 
     setResultTable(sortedArray);
   };
@@ -246,6 +242,37 @@ const ChartListScreen = () => {
     await getPlayers().then(setPlayers);
   };
 
+  const renderFlatListHeader = () => {
+    return (
+      <View style={styles.namePhoneIDView}>
+        <Text style={{ ...styles.culumText, width: '5%' }}></Text>
+        <Text style={{ ...styles.culumText, width: '19%', left: 10 }}>
+          Name
+        </Text>
+
+        <Text
+          style={{ ...styles.culumText, textAlign: 'center', width: '19%' }}
+        >
+          Score
+        </Text>
+
+        <Text style={{ ...styles.culumText, textAlign: 'right', width: '19%' }}>
+          Avrage
+        </Text>
+        <Text
+          style={{ ...styles.culumText, textAlign: 'center', width: '19%' }}
+        >
+          Total Score
+        </Text>
+        <Text
+          style={{ ...styles.culumText, textAlign: 'center', width: '19%' }}
+        >
+          Total Avrage
+        </Text>
+      </View>
+    );
+  };
+
   return (
     <ScrollView style={{ backgroundColor: Theme.colors.black }}>
       <View style={styles.container}>
@@ -255,29 +282,11 @@ const ChartListScreen = () => {
         >
           <Text style={styles.header}>Tabell</Text>
         </ImageBackground>
-        <View style={styles.namePhoneIDView}>
-          <Text style={{ ...styles.culumText, width: '5%' }}></Text>
-          <Text style={{ ...styles.culumText, width: '40%', left: 10 }}>
-            Namn
-          </Text>
-
-          <Text
-            style={{ ...styles.culumText, textAlign: 'center', width: '15%' }}
-          >
-            Total
-          </Text>
-
-          <Text
-            style={{ ...styles.culumText, textAlign: 'right', width: '35%' }}
-          >
-            Medel av 7 bästa
-          </Text>
-        </View>
 
         <View style={styles.chartView}>
           {loadingPlayerScore && <Splash />}
           <ScrollView
-            contentContainerStyle={{ width: windowWidth + 200 }}
+            contentContainerStyle={{ width: windowWidth + 400 }}
             horizontal
             alwaysBounceHorizontal
             style={{
@@ -288,6 +297,7 @@ const ChartListScreen = () => {
             {resultTable && (
               <FlatList
                 data={resultTable}
+                ListHeaderComponent={renderFlatListHeader}
                 renderItem={({ item, index }) => {
                   let number = index + 1;
                   let positionNumber = number.toString();
@@ -302,7 +312,9 @@ const ChartListScreen = () => {
                     <Item
                       positionNumber={positionNumber}
                       name={name}
-                      totalScore={item.totalOfBestSevenRounds}
+                      totalScore={item.totalScore}
+                      avrageScore={item.avrageScore}
+                      totalOfBestSevenRounds={item.totalOfBestSevenRounds}
                       averageOfBest7Rounds={item.averageOfBest7Rounds}
                     />
                   );
@@ -358,26 +370,42 @@ const styles = StyleSheet.create({
     color: Theme.colors.white,
     width: '5%',
   },
-  title: {
+  name: {
     fontSize: Theme.fontSize.caption,
     left: 10,
-    width: '40%',
+    width: '19%',
 
     color: 'white',
     fontFamily: Theme.fontFamilyText,
   },
   totalScore: {
     fontSize: Theme.fontSize.caption,
+    width: '19%',
+    textAlign: 'center',
+    color: 'white',
+    fontFamily: Theme.fontFamilyText,
+  },
+  avrageScore: {
+    fontSize: Theme.fontSize.caption,
+    left: 10,
+    width: '19%',
+    textAlign: 'center',
+    color: 'white',
+    fontFamily: Theme.fontFamilyText,
+  },
+
+  totalOfBestSevenRounds: {
+    fontSize: Theme.fontSize.caption,
 
     textAlign: 'center',
     color: Theme.colors.orange,
     fontFamily: Theme.fontFamilyText,
     marginLeft: 0,
-    width: '15%',
+    width: '19%',
   },
-  sevenBest: {
+  averageOfBest7Rounds: {
     fontSize: Theme.fontSize.caption,
-    width: '35%',
+    width: '19%',
     textAlign: 'right',
 
     color: Theme.colors.white,
