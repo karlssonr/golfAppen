@@ -23,6 +23,8 @@ const LatestGolfRoundsScreen = () => {
   }, []);
 
   useEffect(() => {
+    // console.log(golfGamesFromDB);
+
     sortGolfGamesArray(golfGamesFromDB);
   }, [golfGamesFromDB]);
 
@@ -37,6 +39,8 @@ const LatestGolfRoundsScreen = () => {
     golfGamesArray.forEach((golfGame) => {
       let dateFromTimeStamp = golfGame.date.date.toDate();
       let date = moment(dateFromTimeStamp).format('YYYYMMDD');
+
+      // console.log('golfGame: ', date);
 
       arrayToSort.push({
         ...golfGame,
@@ -77,6 +81,8 @@ const LatestGolfRoundsScreen = () => {
             data={golfGames}
             renderItem={({ item, index }) => {
               let date = moment(item.date.date).format('MMMM Do, YYYY');
+
+              // console.log('item: ', item.date.date);
 
               return (
                 <View style={{ margin: 10 }}>

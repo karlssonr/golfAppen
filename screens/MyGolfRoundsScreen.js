@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React, { useState, useEffect, useContext } from 'react';
 import {
@@ -55,6 +56,7 @@ const MyGolfRoundsScreen = () => {
   }, []);
 
   useEffect(() => {
+    // console.log(golfRoundsFromDB);
     sortGolfGamesArray(golfRoundsFromDB);
   }, [golfRoundsFromDB]);
 
@@ -80,6 +82,7 @@ const MyGolfRoundsScreen = () => {
       });
     });
 
+    console.log('golfGame: ', arrayToSort);
     sortedArray = arrayToSort.sort(
       (a, b) =>
         new Moment(a.date).format('YYYYMMDD') -
@@ -105,11 +108,13 @@ const MyGolfRoundsScreen = () => {
             style={{ marginBottom: 50 }}
             data={golfGames}
             renderItem={({ item, index }) => {
+              // let date = moment(item.date.date).format('MMMM Do, YYYY');
               let dateFromTimeStamp = new Date(moment(item.date));
 
               let golfRoundDate = moment(dateFromTimeStamp).format(
                 'MMMM Do, YYYY'
               );
+              // console.log('item: ', item.date);
 
               return (
                 <TouchableOpacity
@@ -136,7 +141,7 @@ const MyGolfRoundsScreen = () => {
                       <Text
                         style={{ ...styles.culumText, width: '40%', left: 10 }}
                       >
-                        Namn
+                        Name
                       </Text>
 
                       <Text
