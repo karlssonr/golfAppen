@@ -37,27 +37,11 @@ const LatestGolfRoundsScreen = () => {
       );
 
     return () => unsubscribeListener();
-    // getAndSetGolfGames();
   }, []);
 
   useEffect(() => {
     sortGolfGamesArray(golfGamesFromDB);
   }, [golfGamesFromDB]);
-
-  // firebase
-  //   .firestore()
-  //   .collection('golfGames')
-  //   .onSnapshot(
-  //     (snapshot) => {
-  //       if (snapshot) {
-  //         getAndSetGolfGames();
-  //         console.log('snapshot');
-  //       }
-  //     },
-  //     (error) => {
-  //       console.log('error', error);
-  //     }
-  //   );
 
   const getAndSetGolfGames = async () => {
     await getGolfGames().then(setGolfGamesFromDB);

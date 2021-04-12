@@ -52,7 +52,26 @@ const MyGolfRoundsScreen = () => {
   const FB = firebase.firestore.Timestamp;
 
   useEffect(() => {
-    getAndSetGolfGames();
+    const unsubscribeListener = firebase
+      .firestore()
+      .collection('players')
+      .doc(user.uid)
+      .collection('golfRounds')
+      .onSnapshot(
+        (snapshot) => {
+          if (snapshot) {
+            getAndSetGolfGames();
+            console.log('snapshot');
+          }
+          return;
+        },
+        (error) => {
+          console.log('error', error);
+        }
+      );
+
+    return () => unsubscribeListener();
+    // getAndSetGolfGames();
   }, []);
 
   useEffect(() => {
@@ -60,9 +79,9 @@ const MyGolfRoundsScreen = () => {
     sortGolfGamesArray(golfRoundsFromDB);
   }, [golfRoundsFromDB]);
 
-  useEffect(() => {
-    getAndSetGolfGames();
-  }, [score, extraPoints]);
+  // useEffect(() => {
+  //   getAndSetGolfGames();
+  // }, [score, extraPoints]);
 
   const getAndSetGolfGames = async () => {
     await getPlayerScore(user.uid).then(setGolfRoundsFromDB);
@@ -82,7 +101,7 @@ const MyGolfRoundsScreen = () => {
       });
     });
 
-    console.log('golfGame: ', arrayToSort);
+    // console.log('golfGame: ', arrayToSort);
     sortedArray = arrayToSort.sort(
       (a, b) =>
         new Moment(a.date).format('YYYYMMDD') -
@@ -94,7 +113,7 @@ const MyGolfRoundsScreen = () => {
 
   const convertToTimeStamp = async (dateToConvert) => {
     let timeStamp = new FB.fromDate(dateToConvert);
-    console.log('timeStamp: ', timeStamp);
+    // console.log('timeStamp: ', timeStamp);
 
     return timeStamp;
   };
