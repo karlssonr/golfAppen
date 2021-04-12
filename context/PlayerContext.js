@@ -186,12 +186,27 @@ export default function PlayerContextProvider({ children }) {
     extraPoints,
     date
   ) => {
-    const golfRoundRef = await firebase
+    // console.log(' docid: ', docID);
+    // console.log(' userid: ', userID);
+    // console.log(' name: ', name);
+    // console.log(' points: ', points);
+    // console.log(' extrapoints: ', extraPoints);
+    // console.log(' date: ', date);
+    await firebase
       .firestore()
       .collection('players')
       .doc(userID)
       .collection('golfRounds')
-      .doc(docID);
+      .doc(docID)
+      .update({
+        date: date,
+        docID: docID,
+        extraPoints: extraPoints,
+        points: points,
+      })
+      .then(() => {
+        console.log('golfround updated');
+      });
 
     const getGolfGame = await firebase
       .firestore()
@@ -204,20 +219,9 @@ export default function PlayerContextProvider({ children }) {
       .collection('golfGames')
       .doc(docID);
 
-    await golfRoundRef
-      .update({
-        date: date,
-        points: points,
-        extraPoints: extraPoints,
-        docID: docID,
-      })
-      .then(() => {
-        console.log('golfround updated');
-      });
-
     const golfGame = getGolfGame.data();
 
-    console.log('1', golfGame.playerOne.userID);
+    // console.log('1', golfGame.playerOne.userID);
 
     if (golfGame.playerOne.userID === userID) {
       golfGameRef.update({

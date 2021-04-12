@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
@@ -7,6 +8,7 @@ import Splash from './Splash';
 import { PlayerContext } from '../context/PlayerContext';
 import Theme from '../theme/theme';
 import moment from 'moment';
+import firebase from '../firebase';
 
 const LatestGolfRoundsScreen = () => {
   const { getGolfGames, getGolfGamesLoading } = useContext(PlayerContext);
@@ -18,15 +20,44 @@ const LatestGolfRoundsScreen = () => {
   const Moment = require('moment');
 
   useEffect(() => {
-    // getGolfGames();
-    getAndSetGolfGames();
+    const unsubscribeListener = firebase
+      .firestore()
+      .collection('golfGames')
+      .onSnapshot(
+        (snapshot) => {
+          if (snapshot) {
+            getAndSetGolfGames();
+            console.log('snapshot');
+          }
+          return;
+        },
+        (error) => {
+          console.log('error', error);
+        }
+      );
+
+    return () => unsubscribeListener();
+    // getAndSetGolfGames();
   }, []);
 
   useEffect(() => {
-    // console.log(golfGamesFromDB);
-
     sortGolfGamesArray(golfGamesFromDB);
   }, [golfGamesFromDB]);
+
+  // firebase
+  //   .firestore()
+  //   .collection('golfGames')
+  //   .onSnapshot(
+  //     (snapshot) => {
+  //       if (snapshot) {
+  //         getAndSetGolfGames();
+  //         console.log('snapshot');
+  //       }
+  //     },
+  //     (error) => {
+  //       console.log('error', error);
+  //     }
+  //   );
 
   const getAndSetGolfGames = async () => {
     await getGolfGames().then(setGolfGamesFromDB);
@@ -39,8 +70,6 @@ const LatestGolfRoundsScreen = () => {
     golfGamesArray.forEach((golfGame) => {
       let dateFromTimeStamp = golfGame.date.date.toDate();
       let date = moment(dateFromTimeStamp).format('YYYYMMDD');
-
-      // console.log('golfGame: ', date);
 
       arrayToSort.push({
         ...golfGame,

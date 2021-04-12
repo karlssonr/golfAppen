@@ -244,10 +244,10 @@ const MyGolfRoundsScreen = () => {
                 updateGolfRound(
                   docID,
                   userID,
+                  name,
                   score,
                   extraPoints,
-                  timeStampDate,
-                  name
+                  timeStampDate
                 );
 
                 getAndSetGolfGames();
