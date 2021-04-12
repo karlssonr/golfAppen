@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Button, Platform } from 'react-native';
 import HomeScreen from '../screens/HomeScreen';
@@ -15,13 +15,37 @@ import Messages from '../chat/Messages';
 import Theme from '../theme/theme';
 import { AuthContext } from '../context/AuthContext';
 import Champs from '../screens/Champs';
+import firebase from '../firebase';
+import { PlayerContext } from '../context/PlayerContext';
 
 const Stack = createStackNavigator();
 
 export default function AuthenticatedStack() {
   const { user, signOut } = useContext(AuthContext);
+  const { getPlayer } = useContext(PlayerContext);
 
-  let userName = user.displayName;
+  const [userName, setUserName] = useState(user.displayName);
+
+  useEffect(() => {
+    const unsubscribeListener = firebase
+      .firestore()
+      .collection('players')
+      .onSnapshot(
+        (snapshot) => {
+          if (snapshot) {
+            setUserName(user.displayName);
+
+            console.log('snapshot');
+          }
+          return;
+        },
+        (error) => {
+          console.log('error', error);
+        }
+      );
+    return () => unsubscribeListener();
+  }, []);
+
   return (
     <Stack.Navigator
       initialRouteName="Home"
@@ -80,7 +104,7 @@ export default function AuthenticatedStack() {
             <Button
               backgroundColor={null}
               onPress={() => navigation.navigate('MyGolfRoundsScreen')}
-              title="Mina rundor"
+              title="My rounds"
               color={
                 Platform.OS === 'ios' ? Theme.colors.orange : Theme.colors.black
               }
@@ -92,13 +116,13 @@ export default function AuthenticatedStack() {
       <Stack.Screen
         name="MyGolfRoundsScreen"
         component={MyGolfRoundsScreen}
-        options={{ title: 'Mina rundor' }}
+        options={{ title: 'My rounds' }}
       />
 
       <Stack.Screen
         name="CreateChatRoom"
         component={CreateChatRoom}
-        options={{ title: 'Skapa chatt' }}
+        options={{ title: 'Create chat' }}
       />
 
       <Stack.Screen
@@ -120,7 +144,7 @@ export default function AuthenticatedStack() {
               onPress={() => {
                 navigation.navigate('CreateChatRoom');
               }}
-              title="Skapa chatt"
+              title="Create chat"
               color={
                 Platform.OS === 'ios' ? Theme.colors.orange : Theme.colors.black
               }
@@ -133,7 +157,7 @@ export default function AuthenticatedStack() {
         name="ProfileScreen"
         component={ProfileScreen}
         options={() => ({
-          title: 'Profil',
+          title: 'Profile',
           headerTitleAlign: 'center',
           headerRight: () => (
             <Button
@@ -141,7 +165,7 @@ export default function AuthenticatedStack() {
               onPress={() => {
                 signOut();
               }}
-              title="Logga ut"
+              title="Log out"
               color={
                 Platform.OS === 'ios' ? Theme.colors.white : Theme.colors.black
               }

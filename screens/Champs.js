@@ -54,10 +54,10 @@ const Champs = () => {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require('../assets/pokal.png')}
+        source={require('../assets/theChamp.png')}
         style={styles.imageBackgroundStyle}
       >
-        <Text style={styles.header}>Champs</Text>
+        {/* <Text style={styles.header}>Champs</Text> */}
       </ImageBackground>
 
       <View style={styles.chartView}>
@@ -95,10 +95,9 @@ const styles = StyleSheet.create({
     color: Theme.colors.white,
     fontSize: Theme.fontSize.H1,
     alignSelf: 'flex-start',
-    marginBottom: 10,
-    marginLeft: 20,
+    marginTop: 40,
     fontFamily: Theme.fontFamily.fontFamilyHeader,
-    marginTop: 120,
+    marginLeft: 20,
   },
 
   champRow: {
@@ -146,8 +145,8 @@ const styles = StyleSheet.create({
   imageBackgroundStyle: {
     width: '100%',
     height: undefined,
-    aspectRatio: 1,
-    marginTop: -90,
+    aspectRatio: 1.5,
+    // marginTop: -120,
   },
 });
 

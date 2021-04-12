@@ -55,7 +55,6 @@ const MemberScreen = () => {
             width: '25%',
             textAlign: 'left',
             backgroundColor: null,
-            left: 30,
           }}
         >
           Phone
@@ -65,7 +64,7 @@ const MemberScreen = () => {
           style={{
             ...styles.text,
             width: '25%',
-            textAlign: 'center',
+            textAlign: 'left',
             backgroundColor: null,
           }}
         >
@@ -142,7 +141,7 @@ const styles = StyleSheet.create({
     color: Theme.colors.white,
     fontSize: Theme.fontSize.H1,
     alignSelf: 'flex-start',
-    marginTop: 180,
+    marginTop: 40,
     fontFamily: Theme.fontFamily.fontFamilyHeader,
     marginLeft: 20,
   },
@@ -202,7 +201,7 @@ const styles = StyleSheet.create({
     fontSize: Theme.fontSize.caption,
     color: Theme.colors.white,
     width: '25%',
-    textAlign: 'center',
+    textAlign: 'left',
     fontFamily: Theme.fontFamilyText,
   },
 
@@ -215,8 +214,8 @@ const styles = StyleSheet.create({
   imageBackgroundStyle: {
     width: '100%',
     height: undefined,
-    aspectRatio: 1,
-    marginTop: -120,
+    aspectRatio: 1.5,
+    // marginTop: -120,
   },
 });
 

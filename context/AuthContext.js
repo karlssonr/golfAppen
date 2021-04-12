@@ -39,7 +39,7 @@ export default function AuthContextProvider({ children }) {
       console.log('error:', error);
     }
 
-    alert('Profil skapad');
+    alert('Account created');
   };
 
   const updateUser = async (nickName, displayName, phoneNumber, golfID) => {
@@ -81,7 +81,7 @@ export default function AuthContextProvider({ children }) {
       });
     }
 
-    alert('Profil updaterad');
+    alert('Profile updated');
   };
 
   const resetPassword = async (email) => {

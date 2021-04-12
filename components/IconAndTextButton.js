@@ -9,6 +9,7 @@ const IconAndTextButton = ({
   imageSource,
   imageWidth,
   imageHeight,
+  imagemarginLeft,
   onPress,
   viewMarginBottom,
   iconColor,
@@ -36,7 +37,7 @@ const IconAndTextButton = ({
       height: imageHeight,
       tintColor: iconColor,
       // left: 22,
-      marginLeft: '25%',
+      marginLeft: imagemarginLeft ? imagemarginLeft : '30%',
     },
     touchableOpacity: {
       flexDirection: 'row',

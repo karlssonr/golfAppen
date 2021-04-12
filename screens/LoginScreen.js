@@ -21,7 +21,7 @@ export default function LogIn({ navigation }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const { setIsLoggedIn, logIn } = useContext(AuthContext);
+  const { logIn } = useContext(AuthContext);
 
   const submit = async () => {
     try {
@@ -58,7 +58,7 @@ export default function LogIn({ navigation }) {
               style={{ ...styles.textInput, marginBottom: 10 }}
               autoCapitalize="none"
             />
-            <Text style={styles.text}>Lösenord</Text>
+            <Text style={styles.text}>Password</Text>
             <TextInput
               placeholder="Enter password"
               value={password}
@@ -68,26 +68,36 @@ export default function LogIn({ navigation }) {
               secureTextEntry={true}
             />
             <View style={{ marginTop: 30 }}>
-              <Button
-                title="Logga In"
-                onPress={submit}
-                color={Theme.colors.orange}
-                style={styles.button}
-              />
-
-              <Button
-                title="Skapa Konto"
-                onPress={() => navigation.navigate('SignUpScreen')}
-                color={Theme.colors.orange}
-                style={styles.button}
-              />
-
-              <Button
-                title="Glömt lösenord?"
-                onPress={() => navigation.navigate('ForgotPasswordScreen')}
-                color={Theme.colors.orange}
-                style={styles.button}
-              />
+              <View
+              // style={{ margin: 5 }}
+              >
+                <Button
+                  title="Log in"
+                  onPress={submit}
+                  color={Theme.colors.orange}
+                  style={styles.button}
+                />
+              </View>
+              <View
+              // style={{ margin: 5 }}
+              >
+                <Button
+                  title="Create account"
+                  onPress={() => navigation.navigate('SignUpScreen')}
+                  color={Theme.colors.orange}
+                  style={styles.button}
+                />
+              </View>
+              <View
+              // style={{ margin: 5 }}
+              >
+                <Button
+                  title="Forgot password?"
+                  onPress={() => navigation.navigate('ForgotPasswordScreen')}
+                  color={Theme.colors.orange}
+                  style={styles.button}
+                />
+              </View>
             </View>
           </View>
         </View>

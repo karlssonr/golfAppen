@@ -1,16 +1,20 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { StyleSheet, Text, View, Button, ImageBackground } from 'react-native';
 import IconAndTextButton from '../components/IconAndTextButton';
 import VectorIconAndTextButton from '../components/VectorIconAndTextButton';
+import firebase from '../firebase';
+import AuthContext from '../context/AuthContext';
 
 import Theme from '../theme/theme';
 
 const HomeScreen = ({ navigation }) => {
+  // const { user } = useContext(AuthContext);
+
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require('../assets/image8.png')}
+        source={require('../assets/Golfare.png')}
         style={styles.imageBackgroundStyle}
       >
         {/* <Text style={styles.header}>KGHIO {'\n'}2021</Text> */}
@@ -62,6 +66,7 @@ const HomeScreen = ({ navigation }) => {
           imageWidth={Theme.fontSize.buttonIcon}
           iconColor={Theme.colors.orange}
           imageHeight={Theme.fontSize.buttonIcon}
+          // imagemarginLeft={'35%'}
           title="Report Round"
           textColor={Theme.colors.white}
           textFontSize={Theme.fontSize.button}
@@ -71,6 +76,7 @@ const HomeScreen = ({ navigation }) => {
           imageSource={require('../assets/golfbag.png')}
           imageWidth={Theme.fontSize.buttonIcon}
           imageHeight={Theme.fontSize.buttonIcon}
+          // imagemarginLeft={'35%'}
           iconColor={Theme.colors.orange}
           title="Played Rounds"
           textColor={Theme.colors.white}
@@ -81,6 +87,7 @@ const HomeScreen = ({ navigation }) => {
           imageSource={require('../assets/list.png')}
           imageWidth={Theme.fontSize.buttonIcon}
           imageHeight={Theme.fontSize.buttonIcon}
+          // imagemarginLeft={'35%'}
           iconColor={Theme.colors.orange}
           title="The Race"
           textColor={Theme.colors.white}
@@ -103,28 +110,31 @@ const HomeScreen = ({ navigation }) => {
           iconName="wechat"
           iconWidth={Theme.fontSize.buttonIcon}
           iconHeight={Theme.fontSize.buttonIcon}
+          // iconMarginLeft={'35%'}
           iconFontSize={25}
           title="Chat"
-          textColor={Theme.colors.white}
-          iconColor={Theme.colors.orange}
+          textColor={Theme.colors.grey}
+          iconColor={Theme.colors.grey}
           textFontSize={Theme.fontSize.button}
-          onPress={() => navigation.navigate('ChatRoom')}
+          // onPress={() => navigation.navigate('ChatRoom')}
         />
 
         <IconAndTextButton
           imageSource={require('../assets/stats.png')}
           imageWidth={Theme.fontSize.buttonIcon}
           imageHeight={Theme.fontSize.buttonIcon}
+          // imagemarginLeft={'35%'}
           title="Stats"
           textColor={Theme.colors.grey}
           iconColor={Theme.colors.grey}
           textFontSize={Theme.fontSize.button}
-          // onPress={() => navigation.navigate('Stats')}
+          onPress={() => navigation.navigate('Stats')}
         />
         <IconAndTextButton
           imageSource={require('../assets/golfSwing.png')}
           imageWidth={Theme.fontSize.buttonIcon}
           imageHeight={Theme.fontSize.buttonIcon}
+          // imagemarginLeft={'35%'}
           iconColor={Theme.colors.orange}
           title="Members"
           textColor={Theme.colors.white}
@@ -135,6 +145,7 @@ const HomeScreen = ({ navigation }) => {
           imageSource={require('../assets/crown.png')}
           imageWidth={Theme.fontSize.buttonIcon}
           imageHeight={Theme.fontSize.buttonIcon}
+          // imagemarginLeft={'35%'}
           title="Champs"
           iconColor={Theme.colors.orange}
           textColor={Theme.colors.white}
@@ -164,7 +175,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
     backgroundColor: null,
-    marginBottom: 50,
+    marginBottom: 130,
   },
   header: {
     color: Theme.colors.white,

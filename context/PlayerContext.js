@@ -24,7 +24,7 @@ export default function PlayerContextProvider({ children }) {
         docID: docID,
       })
       .then(() => {
-        console.log('GolfRound Added');
+        console.log('Round added');
       });
   };
 

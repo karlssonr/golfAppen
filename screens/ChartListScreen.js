@@ -95,8 +95,8 @@ const ChartListScreen = () => {
     let pointsAsInt;
     let extraPointsAsInt;
     golfroundsOfPlayer.scores.forEach((scoreOfGolfroundOfPlayer) => {
-      pointsAsInt = parseInt(scoreOfGolfroundOfPlayer.points);
-      extraPointsAsInt = parseInt(scoreOfGolfroundOfPlayer.extraPoints);
+      pointsAsInt = parseFloat(scoreOfGolfroundOfPlayer.points);
+      extraPointsAsInt = parseFloat(scoreOfGolfroundOfPlayer.extraPoints);
 
       totalScore = pointsAsInt + extraPointsAsInt + totalScore;
     });
@@ -122,14 +122,16 @@ const ChartListScreen = () => {
       resulTableScore.push({
         name: golfroundsOfPlayer.name,
         nickName: golfroundsOfPlayer.nickName,
-        totalScore: totalScore,
-        avrageScore: avrageScore.toFixed(2),
-        averageOfBest7Rounds: averageOfBest7Rounds.toFixed(2),
-        totalOfBestSevenRounds: totalOfBestSevenRounds,
+        totalScore: parseFloat(totalScore.toFixed(2)),
+        avrageScore: parseFloat(avrageScore.toFixed(2)),
+        averageOfBest7Rounds: parseFloat(averageOfBest7Rounds.toFixed(2)),
+        totalOfBestSevenRounds: parseFloat(totalOfBestSevenRounds.toFixed(2)),
       });
     });
 
     const sortedArray = bubbleSort(resulTableScore);
+
+    console.log('sortedArray: ', sortedArray);
 
     setResultTable(sortedArray);
   };
@@ -186,8 +188,8 @@ const ChartListScreen = () => {
     let scoreOfRound;
 
     golfroundsOfPlayer.scores.forEach((scoreOfGolfroundOfPlayer) => {
-      pointsAsInt = parseInt(scoreOfGolfroundOfPlayer.points);
-      extraPointsAsInt = parseInt(scoreOfGolfroundOfPlayer.extraPoints);
+      pointsAsInt = parseFloat(scoreOfGolfroundOfPlayer.points);
+      extraPointsAsInt = parseFloat(scoreOfGolfroundOfPlayer.extraPoints);
       scoreOfRound = pointsAsInt + extraPointsAsInt;
 
       if (best7Rounds.length < 7) {
@@ -256,8 +258,10 @@ const ChartListScreen = () => {
           Score
         </Text>
 
-        <Text style={{ ...styles.culumText, textAlign: 'right', width: '19%' }}>
-          Avrage
+        <Text
+          style={{ ...styles.culumText, textAlign: 'center', width: '19%' }}
+        >
+          Average
         </Text>
         <Text
           style={{ ...styles.culumText, textAlign: 'center', width: '19%' }}
@@ -267,7 +271,7 @@ const ChartListScreen = () => {
         <Text
           style={{ ...styles.culumText, textAlign: 'center', width: '19%' }}
         >
-          Total Avrage
+          Total Average
         </Text>
       </View>
     );
@@ -277,16 +281,18 @@ const ChartListScreen = () => {
     <ScrollView style={{ backgroundColor: Theme.colors.black }}>
       <View style={styles.container}>
         <ImageBackground
-          source={require('../assets/pokal.png')}
+          source={require('../assets/TheRace.png')}
           style={styles.imageBackgroundStyle}
         >
-          <Text style={styles.header}>Tabell</Text>
+          <Text style={styles.header}>
+            the Race -{'\n'}Grandma´s {'\n'}Foot 2021
+          </Text>
         </ImageBackground>
 
         <View style={styles.chartView}>
           {loadingPlayerScore && <Splash />}
           <ScrollView
-            contentContainerStyle={{ width: windowWidth + 400 }}
+            contentContainerStyle={{ width: windowWidth + 250 }}
             horizontal
             alwaysBounceHorizontal
             style={{
@@ -352,9 +358,10 @@ const styles = StyleSheet.create({
   header: {
     color: Theme.colors.white,
     fontSize: Theme.fontSize.H1,
-    alignSelf: 'center',
-    marginTop: 120,
+    alignSelf: 'flex-start',
+    marginTop: 40,
     fontFamily: Theme.fontFamily.fontFamilyHeader,
+    marginLeft: 20,
   },
 
   item: {
@@ -406,7 +413,7 @@ const styles = StyleSheet.create({
   averageOfBest7Rounds: {
     fontSize: Theme.fontSize.caption,
     width: '19%',
-    textAlign: 'right',
+    textAlign: 'center',
 
     color: Theme.colors.white,
 
@@ -438,8 +445,8 @@ const styles = StyleSheet.create({
   imageBackgroundStyle: {
     width: '100%',
     height: undefined,
-    aspectRatio: 1,
-    marginTop: -90,
+    aspectRatio: 1.5,
+    // marginTop: -120,
   },
   namePhoneIDView: {
     width: '100%',

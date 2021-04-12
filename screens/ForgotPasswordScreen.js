@@ -51,7 +51,7 @@ export default function ForgotPasswordScreen({ navigation }) {
           <View style={{ width: '50%' }}>
             <Text style={styles.text}>Email</Text>
             <TextInput
-              placeholder="Ange emailadress"
+              placeholder="Enter email"
               value={email}
               onChangeText={setEmail}
               style={styles.textImputEmail}
@@ -61,7 +61,7 @@ export default function ForgotPasswordScreen({ navigation }) {
 
             <View style={{ marginTop: 30 }}>
               <Button
-                title="Återställ lösenord"
+                title="Reset password"
                 color={Theme.colors.orange}
                 style={styles.button}
                 disabled={loading}

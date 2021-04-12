@@ -55,16 +55,16 @@ export default function SignUpScreen({ navigation }) {
           <View style={{ width: '50%' }}>
             <Text style={styles.text}>Email</Text>
             <TextInput
-              placeholder="Ange emailadress"
+              placeholder="Enter email"
               value={email}
               onChangeText={setEmail}
               style={styles.textInput}
               autoCapitalize="none"
               autoCorrect={false}
             />
-            <Text style={styles.text}>Lösenord</Text>
+            <Text style={styles.text}>Password</Text>
             <TextInput
-              placeholder="Ange lösenord"
+              placeholder="Enter password"
               value={password}
               onChangeText={setPassword}
               style={styles.textInput}
@@ -89,7 +89,7 @@ export default function SignUpScreen({ navigation }) {
 
             <View style={{ marginTop: 30 }}>
               <Button
-                title="Skapa Konto"
+                title="Create account"
                 color={Theme.colors.orange}
                 style={styles.button}
                 disabled={loading}

@@ -24,12 +24,12 @@ export default function UnauthenticatedStack() {
       <Stack.Screen
         name="SignUpScreen"
         component={SignUpScreen}
-        options={{ title: 'Skapa Konto' }}
+        options={{ title: 'Create account' }}
       />
       <Stack.Screen
         name="ForgotPasswordScreen"
         component={ForgotPasswordScreen}
-        options={{ title: 'Glömt lösenord' }}
+        options={{ title: 'Forgot password' }}
       />
     </Stack.Navigator>
   );

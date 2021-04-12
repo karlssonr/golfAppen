@@ -15,6 +15,7 @@ const VectorIconAndTextButton = ({
   viewMarginBottom,
   iconColor,
   iconFontSize,
+  iconMarginLeft,
 }) => {
   const styles = StyleSheet.create({
     text: {
@@ -32,7 +33,7 @@ const VectorIconAndTextButton = ({
       color: iconColor,
       fontSize: iconFontSize,
       // left: 22,
-      marginLeft: '25%',
+      marginLeft: iconMarginLeft ? iconMarginLeft : '30%',
     },
     view: {
       backgroundColor: null,

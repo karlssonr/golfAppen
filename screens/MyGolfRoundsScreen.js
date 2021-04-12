@@ -19,6 +19,7 @@ import Theme from '../theme/theme';
 import firebase from '../firebase';
 import moment from 'moment';
 import CustomDatePicker from '../components/CustomDatePicker';
+import VectorIconButton from '../components/VectorIconButton';
 
 const GolfRoundRow = ({ name, points, extraPoints }) => (
   <View style={{ ...styles.golfRoundRow }}>
@@ -71,17 +72,11 @@ const MyGolfRoundsScreen = () => {
       );
 
     return () => unsubscribeListener();
-    // getAndSetGolfGames();
   }, []);
 
   useEffect(() => {
-    // console.log(golfRoundsFromDB);
     sortGolfGamesArray(golfRoundsFromDB);
   }, [golfRoundsFromDB]);
-
-  // useEffect(() => {
-  //   getAndSetGolfGames();
-  // }, [score, extraPoints]);
 
   const getAndSetGolfGames = async () => {
     await getPlayerScore(user.uid).then(setGolfRoundsFromDB);
@@ -208,28 +203,29 @@ const MyGolfRoundsScreen = () => {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Uppdatera golfrunda!</Text>
+            <View style={styles.textAndDeleteButtonView}>
+              <VectorIconButton
+                iconName="times-circle"
+                iconFontSize={30}
+                iconWidth={30}
+                iconHeight={30}
+                iconColor={Theme.colors.orange}
+                onPress={() => {
+                  setModalVisible(false);
+                }}
+              />
+            </View>
+            <Text style={styles.modalText}>Update golfround</Text>
             <View
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
               }}
             >
-              <View
-                style={{
-                  borderColor: Theme.colors.grey,
-                  borderWidth: 1,
-                  backgroundColor: Theme.colors.white,
-                }}
-              >
+              <View style={styles.datePickerView}>
                 <CustomDatePicker
                   defaultDate={date}
-                  textStyle={{
-                    paddingVertical: 3,
-                    paddingHorizontal: 10,
-                    borderColor: Theme.colors.grey,
-                    borderWidth: 1,
-                  }}
+                  textStyle={styles.customDatePicker}
                   onDateChange={(value) => {
                     setDate(value);
                   }}
@@ -272,7 +268,7 @@ const MyGolfRoundsScreen = () => {
                 getAndSetGolfGames();
               }}
             >
-              <Text style={styles.textStyle}>Updatera</Text>
+              <Text style={styles.textStyle}>Update</Text>
             </Pressable>
           </View>
         </View>
@@ -282,6 +278,26 @@ const MyGolfRoundsScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  textAndDeleteButtonView: {
+    // backgroundColor: 'white',
+    alignSelf: 'flex-end',
+  },
+
+  customDatePicker: {
+    paddingVertical: 3,
+    paddingHorizontal: 20,
+    borderColor: Theme.colors.grey,
+    borderWidth: 1,
+    borderRadius: 5,
+    fontSize: Theme.fontSize.mediumCaption,
+  },
+  datePickerView: {
+    borderColor: Theme.colors.grey,
+    borderWidth: 1,
+    backgroundColor: Theme.colors.white,
+    alignSelf: 'center',
+    borderRadius: 5,
+  },
   touchableOpacity: {
     margin: 10,
     marginBottom: 20,
@@ -362,7 +378,7 @@ const styles = StyleSheet.create({
     margin: 20,
     backgroundColor: Theme.colors.lightBlack,
     borderRadius: 20,
-    padding: 35,
+    padding: 20,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
@@ -382,7 +398,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F194FF',
   },
   buttonClose: {
-    backgroundColor: Theme.colors.green,
+    backgroundColor: Theme.colors.grey,
     marginTop: 20,
   },
   textStyle: {
@@ -394,15 +410,17 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 15,
     textAlign: 'center',
-    color: Theme.colors.orange,
+    color: Theme.colors.white,
+    fontWeight: 'bold',
     // fontWeight: 'bold',
   },
   textInput: {
-    height: 27,
+    height: 33,
     borderColor: Theme.colors.grey,
     borderWidth: 2,
     backgroundColor: Theme.colors.white,
     marginLeft: 5,
+    borderRadius: 5,
     width: '20%',
   },
 });

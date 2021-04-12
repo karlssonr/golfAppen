@@ -80,7 +80,7 @@ const RegisterResultScreen = () => {
 
   const convertToTimeStamp = async (dateToConvert) => {
     let timeStamp = new FB.fromDate(dateToConvert);
-    console.log('timeStamp: ', timeStamp);
+    // console.log('timeStamp: ', timeStamp);
 
     return timeStamp;
   };
@@ -90,7 +90,7 @@ const RegisterResultScreen = () => {
 
     let timeStamp = await convertToTimeStamp(date);
 
-    console.log('newDate: ', timeStamp);
+    // console.log('newDate: ', timeStamp);
 
     try {
       let playersPlayed = 0;
@@ -109,7 +109,7 @@ const RegisterResultScreen = () => {
       }
 
       if (playersPlayed < 1) {
-        alert('Minst 2 spelare och poäng måste rapporteras');
+        alert('Choose minimum of two players and points needs to be reported');
       }
 
       if (playersPlayed > 1) {
@@ -230,7 +230,7 @@ const RegisterResultScreen = () => {
 
     postGolfGame(golfGameArray);
 
-    alert('Golfrunda skapad');
+    alert('Round added');
   };
 
   const mapPlayersFromDB = (playersFromDB) => {
@@ -266,10 +266,10 @@ const RegisterResultScreen = () => {
           <View style={styles.container}>
             {/* <View style={{ height: '30%' }}> */}
             <ImageBackground
-              source={require('../assets/greenball.png')}
+              source={require('../assets/BallIntheHole.png')}
               style={styles.imageBackground}
             >
-              <Text style={styles.header}>Registrera Resultat</Text>
+              <Text style={styles.header}>Report {'\n'}Round</Text>
             </ImageBackground>
 
             <View>
@@ -328,7 +328,7 @@ const RegisterResultScreen = () => {
                 />
 
                 <TextInput
-                  placeholder="Poäng"
+                  placeholder="Points"
                   value={playerOne.points}
                   onChangeText={(text) =>
                     setPlayerOne({ ...playerOne, points: text })
@@ -338,7 +338,7 @@ const RegisterResultScreen = () => {
                 />
 
                 <TextInput
-                  placeholder="Extra poäng"
+                  placeholder="Extra"
                   value={playerOne.extraPoints}
                   onChangeText={(text) =>
                     setPlayerOne({ ...playerOne, extraPoints: text })
@@ -382,7 +382,7 @@ const RegisterResultScreen = () => {
                   }}
                 />
                 <TextInput
-                  placeholder="Poäng"
+                  placeholder="Points"
                   value={playerTwo.points}
                   onChangeText={(text) =>
                     setPlayerTwo({ ...playerTwo, points: text })
@@ -391,7 +391,7 @@ const RegisterResultScreen = () => {
                   style={{ ...styles.textInput }}
                 />
                 <TextInput
-                  placeholder="Extra poäng"
+                  placeholder="Extra"
                   value={playerTwo.extraPoints}
                   onChangeText={(text) =>
                     setPlayerTwo({ ...playerTwo, extraPoints: text })
@@ -406,7 +406,7 @@ const RegisterResultScreen = () => {
                   dataSource={playersArray}
                   // dummyDataSource={this.state.dataSource}
                   // defaultValue={playersArray[0].name}
-                  pickerTitle={'Select player'}
+                  // pickerTitle={'Select player'}
                   // showSearchBar={true}
                   disablePicker={false}
                   changeAnimation={'none'}
@@ -436,7 +436,7 @@ const RegisterResultScreen = () => {
                   }}
                 />
                 <TextInput
-                  placeholder="Poäng"
+                  placeholder="Points"
                   value={playerThree.points}
                   onChangeText={(text) =>
                     setPlayerThree({ ...playerThree, points: text })
@@ -445,7 +445,7 @@ const RegisterResultScreen = () => {
                   style={{ ...styles.textInput }}
                 />
                 <TextInput
-                  placeholder="Extra poäng"
+                  placeholder="Extra"
                   value={playerThree.extraPoints}
                   onChangeText={(text) =>
                     setPlayerThree({ ...playerThree, extraPoints: text })
@@ -487,7 +487,7 @@ const RegisterResultScreen = () => {
                   }}
                 />
                 <TextInput
-                  placeholder="Poäng"
+                  placeholder="Points"
                   value={playerFour.points}
                   onChangeText={(text) =>
                     setPlayerFour({ ...playerFour, points: text })
@@ -496,7 +496,7 @@ const RegisterResultScreen = () => {
                   style={{ ...styles.textInput }}
                 />
                 <TextInput
-                  placeholder="Extra poäng"
+                  placeholder="Extra"
                   value={players.extraPoints}
                   onChangeText={(text) =>
                     setPlayerFour({ ...playerFour, extraPoints: text })
@@ -507,7 +507,7 @@ const RegisterResultScreen = () => {
               </View>
 
               <View style={styles.dateView}>
-                <Text
+                {/* <Text
                   style={{
                     ...styles.text,
                     alignSelf: 'center',
@@ -515,7 +515,7 @@ const RegisterResultScreen = () => {
                   }}
                 >
                   Datum
-                </Text>
+                </Text> */}
                 <View style={{ flex: 1 }} />
                 <View style={styles.datePickerView}>
                   <CustomDatePicker
@@ -530,14 +530,22 @@ const RegisterResultScreen = () => {
               </View>
 
               <View
-                style={{ bottom: 30, alignSelf: 'center', marginBottom: 60 }}
+                style={{
+                  // backgroundColor: 'blue',
+                  marginTop: 40,
+                  // bottom: 30,
+                  alignSelf: 'center',
+                  // marginBottom: 60
+                  alignItems: 'center',
+                }}
               >
                 <IconAndTextButton
                   imageSource={require('../assets/edit.png')}
                   iconColor={Theme.colors.orange}
                   imageWidth={Theme.fontSize.buttonIcon}
                   imageHeight={Theme.fontSize.buttonIcon}
-                  title="Registrera Resultat"
+                  imagemarginLeft={'35%'}
+                  title="Done!"
                   textColor={Theme.colors.white}
                   textFontSize={Theme.fontSize.button}
                   onPress={submit}
@@ -588,20 +596,21 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.colors.white,
     alignSelf: 'center',
     borderRadius: 5,
+    marginTop: 0,
   },
   dateView: {
     flex: 1,
     backgroundColor: null,
-    top: -70,
+    // top: -70,
     flexDirection: 'column',
     alignItems: 'center',
+    marginTop: 50,
   },
 
   imageBackground: {
     width: '100%',
     height: undefined,
-    aspectRatio: 1,
-    top: -90,
+    aspectRatio: 1.5,
   },
   scrollView: {
     backgroundColor: Theme.colors.black,
@@ -642,14 +651,15 @@ const styles = StyleSheet.create({
     fontSize: Theme.fontSize.largeCaption,
   },
   header: {
-    fontSize: Theme.fontSize.H1,
-    marginTop: 120,
-    alignSelf: 'center',
     color: Theme.colors.white,
+    fontSize: Theme.fontSize.H1,
+    alignSelf: 'flex-start',
+    marginTop: 40,
     fontFamily: Theme.fontFamily.fontFamilyHeader,
+    marginLeft: 20,
   },
   textView: {
-    top: -90,
+    // top: -90,
     flexDirection: 'row',
 
     alignItems: 'center',
@@ -662,7 +672,7 @@ const styles = StyleSheet.create({
     fontFamily: Theme.fontFamily.fontFamilyText,
   },
   textInputView: {
-    top: -90,
+    // top: -90,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
   },

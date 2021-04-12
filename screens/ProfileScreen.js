@@ -53,27 +53,27 @@ export default function SignUpScreen({ navigation }) {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <View style={{ width: '50%' }}>
-            <Text style={styles.text}>Alias</Text>
+            <Text style={styles.text}>Nickname</Text>
             <TextInput
-              placeholder="Ange alias"
+              placeholder="Nickname"
               value={nickName}
               onChangeText={setNickName}
               style={styles.textInput}
               autoCapitalize="none"
               autoCorrect={false}
             />
-            <Text style={styles.text}>Namn</Text>
+            <Text style={styles.text}>Name</Text>
             <TextInput
-              placeholder="Ange namn"
+              placeholder="Name"
               value={displayName}
               onChangeText={setDisplayName}
               style={styles.textInput}
               autoCapitalize="none"
               autoCorrect={false}
             />
-            <Text style={styles.text}>Telefonummer</Text>
+            <Text style={styles.text}>Phone number</Text>
             <TextInput
-              placeholder="Ange telefonummer"
+              placeholder="Phone number"
               value={phoneNumber}
               onChangeText={setPhoneNumber}
               style={styles.textInput}
@@ -81,7 +81,7 @@ export default function SignUpScreen({ navigation }) {
             />
             <Text style={styles.text}>Golf ID</Text>
             <TextInput
-              placeholder="Ange golf ID"
+              placeholder="Golf ID"
               value={golfUserID}
               onChangeText={setGolfUserID}
               style={{
@@ -93,7 +93,7 @@ export default function SignUpScreen({ navigation }) {
             />
             <View style={{ marginTop: 30 }}>
               <Button
-                title="Updatera Profil"
+                title="Update profile"
                 color={Theme.colors.orange}
                 style={styles.button}
                 disabled={loading}
