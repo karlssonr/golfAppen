@@ -44,6 +44,30 @@ const Item = ({
     </Text>
   </View>
 );
+const bubbleSort = (inputArr) => {
+  let len = inputArr.length;
+  let checked;
+  // console.log('lenght', len);
+  do {
+    checked = false;
+    for (let i = 0; i < len; i++) {
+      if (
+        inputArr[i]?.totalOfBestSevenRounds >
+        inputArr[i + 1]?.totalOfBestSevenRounds
+      ) {
+        let tmp = inputArr[i];
+        inputArr[i] = inputArr[i + 1];
+        inputArr[i + 1] = tmp;
+
+        checked = true;
+      }
+    }
+  } while (checked);
+
+  const reversed = inputArr.reverse();
+
+  return reversed;
+};
 
 const ChartListScreen = () => {
   const { getPlayers, getPlayerScore, loadingPlayerScore } = useContext(
@@ -64,31 +88,6 @@ const ChartListScreen = () => {
       assignResultsForEachPlayer(value);
     });
   }, [players]);
-
-  const bubbleSort = (inputArr) => {
-    let len = inputArr.length;
-    let checked;
-    // console.log('lenght', len);
-    do {
-      checked = false;
-      for (let i = 0; i < len; i++) {
-        if (
-          inputArr[i]?.totalOfBestSevenRounds >
-          inputArr[i + 1]?.totalOfBestSevenRounds
-        ) {
-          let tmp = inputArr[i];
-          inputArr[i] = inputArr[i + 1];
-          inputArr[i + 1] = tmp;
-
-          checked = true;
-        }
-      }
-    } while (checked);
-
-    const reversed = inputArr.reverse();
-
-    return reversed;
-  };
 
   const sumAllScores = (golfroundsOfPlayer) => {
     let totalScore = 0;
@@ -298,7 +297,7 @@ const ChartListScreen = () => {
           style={styles.imageBackgroundStyle}
         >
           <Text style={styles.header}>
-            the Race -{'\n'}Grandma´s {'\n'}Foot 2021
+            The Race -{'\n'}Grandma´s {'\n'}Foot 2021
           </Text>
         </ImageBackground>
 

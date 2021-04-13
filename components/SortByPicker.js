@@ -5,25 +5,32 @@ import ModalDropdown from 'react-native-modal-dropdown';
 import Theme from '../theme/theme';
 import VectorIconButton from '../components/VectorIconButton';
 
-const Stats = () => {
+const SortByPicker = (
+  borderColor,
+  backgroundColor,
+  dateColor,
+  pointsColor,
+  dateFontWeight,
+  pointsFontWeight,
+  fontSize
+) => {
   return (
     <View
       style={{
-        backgroundColor: 'grey',
-        height: '6%',
+        backgroundColor: Theme.colors.grey,
+        height: '5%',
         width: '40%',
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'center',
         alignSelf: 'center',
         borderRadius: 20,
-        padding: 8,
-        marginTop: 10,
+        padding: 0,
+        marginVertical: 10,
         borderWidth: 2,
-        borderColor: 'orange',
+        borderColor: Theme.colors.orange,
       }}
     >
-      {/* <Text style={{ marginLeft: '25%' }}>Sort by: </Text> */}
       <TouchableOpacity
         style={{
           backgroundColor: null,
@@ -31,14 +38,30 @@ const Stats = () => {
           flexDirection: 'row',
         }}
       >
-        <Text>Date</Text>
+        <Text
+          style={{
+            color: dateColor,
+            fontWeight: dateFontWeight,
+            fontSize: fontSize,
+          }}
+        >
+          Date
+        </Text>
       </TouchableOpacity>
-      <Text style={{ margin: 9 }}>|</Text>
+      <Text style={{ marginHorizontal: 10 }}>|</Text>
       <TouchableOpacity>
-        <Text>Points</Text>
+        <Text
+          style={{
+            color: pointsColor,
+            fontWeight: pointsFontWeight,
+            fontSize: fontSize,
+          }}
+        >
+          Points
+        </Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-export default Stats;
+export default SortByPicker;

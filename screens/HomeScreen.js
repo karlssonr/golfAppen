@@ -39,9 +39,9 @@ const HomeScreen = ({ navigation }) => {
               fontSize: Theme.fontSize.H1,
               alignSelf: 'flex-start',
               // marginBottom: 10,
-              marginLeft: 20,
+              marginLeft: 7,
               fontFamily: Theme.fontFamily.fontFamilyHeader,
-              // marginTop: 80,
+              marginTop: -35,
             }}
           >
             KGHIO
@@ -52,7 +52,7 @@ const HomeScreen = ({ navigation }) => {
               fontSize: Theme.fontSize.H1,
               alignSelf: 'flex-start',
               marginBottom: 10,
-              marginLeft: 20,
+              marginLeft: 7,
               fontFamily: Theme.fontFamily.fontFamilyHeader,
               // marginTop: 80,
             }}
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
   imageBackgroundStyle: {
     width: '100%',
     height: undefined,
-    aspectRatio: 1.5,
+    aspectRatio: 1.25,
   },
 
   container: {
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
     backgroundColor: null,
-    marginBottom: 130,
+    marginBottom: 160,
   },
   header: {
     color: Theme.colors.white,
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginLeft: 20,
     fontFamily: Theme.fontFamily.fontFamilyHeader,
-    marginTop: 80,
+    marginTop: 40,
   },
 });
 

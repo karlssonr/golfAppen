@@ -40,6 +40,7 @@ const MyGolfRoundsScreen = () => {
   const { user } = useContext(AuthContext);
 
   const [golfGames, setGolfGames] = useState([]);
+  const [golfGamesSortedByPoints, setGolfGamesSortedByPoints] = useState([]);
   const [golfRoundsFromDB, setGolfRoundsFromDB] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -47,6 +48,8 @@ const MyGolfRoundsScreen = () => {
   const [extraPoints, setExtraPoints] = useState('');
   const [docID, setDocID] = useState('');
   const [date, setDate] = useState(moment());
+
+  const [sortBy, setSortBy] = useState(false);
 
   const Moment = require('moment');
 
@@ -78,25 +81,60 @@ const MyGolfRoundsScreen = () => {
     sortGolfGamesArray(golfRoundsFromDB);
   }, [golfRoundsFromDB]);
 
+  const bubbleSort = (inputArr) => {
+    let len = inputArr.length;
+    let checked;
+
+    do {
+      checked = false;
+      for (let i = 0; i < len; i++) {
+        if (inputArr[i]?.points > inputArr[i + 1]?.points) {
+          let tmp = inputArr[i];
+          inputArr[i] = inputArr[i + 1];
+          inputArr[i + 1] = tmp;
+
+          checked = true;
+        }
+      }
+    } while (checked);
+
+    const reversed = inputArr.reverse();
+
+    return reversed;
+  };
+
   const getAndSetGolfGames = async () => {
     await getPlayerScore(user.uid).then(setGolfRoundsFromDB);
   };
 
   const sortGolfGamesArray = (golfGamesArray) => {
+    let arrayToSortByPoints = [];
+    let sortedArrayByPoints = [];
     let sortedArray = [];
     let arrayToSort = [];
 
     golfGamesArray.forEach((golfGame) => {
+      // console.log('golfGame', golfGame);
+      let points = parseFloat(golfGame.points);
       let dateFromTimeStamp = golfGame.date.toDate();
       let newDate = moment(dateFromTimeStamp).format('YYYYMMDD');
 
+      arrayToSortByPoints.push({
+        ...golfGame,
+        points: points,
+        date: newDate,
+      });
+
       arrayToSort.push({
         ...golfGame,
+        points: points,
         date: newDate,
       });
     });
 
-    // console.log('golfGame: ', arrayToSort);
+    sortedArrayByPoints = bubbleSort(arrayToSortByPoints);
+
+    // console.log('golfGame: ', sortedArrayByPoints);
     sortedArray = arrayToSort.sort(
       (a, b) =>
         new Moment(a.date).format('YYYYMMDD') -
@@ -104,6 +142,7 @@ const MyGolfRoundsScreen = () => {
     );
     sortedArray.reverse();
     setGolfGames(sortedArray);
+    setGolfGamesSortedByPoints(sortedArrayByPoints);
   };
 
   const convertToTimeStamp = async (dateToConvert) => {
@@ -115,25 +154,82 @@ const MyGolfRoundsScreen = () => {
 
   return (
     <View style={styles.container}>
+      <View
+        style={{
+          backgroundColor: Theme.colors.grey,
+          height: '4%',
+          width: '40%',
+          alignItems: 'center',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignSelf: 'center',
+          borderRadius: 20,
+          padding: 0,
+          marginVertical: 10,
+          // borderWidth: 2,
+          borderColor: Theme.colors.orange,
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            setSortBy(false);
+          }}
+          style={{
+            backgroundColor: null,
+            alignItems: 'center',
+            flexDirection: 'row',
+          }}
+        >
+          <Text
+            style={{
+              color: !sortBy ? Theme.colors.orange : Theme.colors.white,
+              fontWeight: !sortBy ? 'bold' : 'normal',
+              fontSize: Theme.fontSize.largeCaption,
+            }}
+          >
+            Date
+          </Text>
+        </TouchableOpacity>
+        <Text style={{ marginHorizontal: 10 }}>|</Text>
+        <TouchableOpacity
+          onPress={() => {
+            setSortBy(true);
+          }}
+        >
+          <Text
+            style={{
+              color: !sortBy ? Theme.colors.white : Theme.colors.orange,
+              fontWeight: !sortBy ? 'normal' : 'bold',
+              fontSize: Theme.fontSize.largeCaption,
+            }}
+          >
+            Points
+          </Text>
+        </TouchableOpacity>
+      </View>
       <View style={{ marginBottom: 30 }}>
         {loadingPlayerScore && <Splash />}
-        {golfGames && (
+        {!sortBy && (
           <FlatList
             style={{ marginBottom: 50 }}
             data={golfGames}
             renderItem={({ item, index }) => {
-              // let date = moment(item.date.date).format('MMMM Do, YYYY');
               let dateFromTimeStamp = new Date(moment(item.date));
 
               let golfRoundDate = moment(dateFromTimeStamp).format(
                 'MMMM Do, YYYY'
               );
-              // console.log('item: ', item.date);
+
+              let points = item.points;
+              points.toString();
+              // let points = String(item.points);
+
+              console.log('item: ', points);
 
               return (
                 <TouchableOpacity
                   onPress={() => {
-                    setScore(item.points);
+                    setScore(item.points.toString());
                     setExtraPoints(item.extraPoints);
                     setDocID(item.docID);
                     setDate(dateFromTimeStamp);
@@ -153,7 +249,89 @@ const MyGolfRoundsScreen = () => {
                     <Text style={styles.golfRoundDate}>{golfRoundDate}</Text>
                     <View style={styles.namePointsExtra}>
                       <Text
-                        style={{ ...styles.culumText, width: '40%', left: 10 }}
+                        style={{
+                          ...styles.culumText,
+                          width: '40%',
+                          left: 10,
+                        }}
+                      >
+                        Name
+                      </Text>
+
+                      <Text
+                        style={{
+                          ...styles.culumText,
+                          textAlign: 'center',
+                          width: '15%',
+                        }}
+                      >
+                        Poäng
+                      </Text>
+
+                      <Text
+                        style={{
+                          ...styles.culumText,
+                          textAlign: 'right',
+                          width: '35%',
+                        }}
+                      >
+                        Extra
+                      </Text>
+                    </View>
+                  </View>
+
+                  <GolfRoundRow
+                    name={user.displayName}
+                    points={item.points}
+                    extraPoints={item.extraPoints}
+                  />
+                </TouchableOpacity>
+              );
+            }}
+            keyExtractor={(_, index) => index.toString()}
+          />
+        )}
+
+        {sortBy && (
+          <FlatList
+            style={{ marginBottom: 50 }}
+            data={golfGamesSortedByPoints}
+            renderItem={({ item, index }) => {
+              let dateFromTimeStamp = new Date(moment(item.date));
+
+              let golfRoundDate = moment(dateFromTimeStamp).format(
+                'MMMM Do, YYYY'
+              );
+              // console.log('item: ', item.date);
+
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    setScore(item.points.toString());
+                    setExtraPoints(item.extraPoints);
+                    setDocID(item.docID);
+                    setDate(dateFromTimeStamp);
+                    setModalVisible(true);
+                  }}
+                  style={styles.touchableOpacity}
+                >
+                  <View
+                    style={
+                      {
+                        // color: 'white',
+                        // backgroundColor: 'red',
+                        // width: '100%',
+                      }
+                    }
+                  >
+                    <Text style={styles.golfRoundDate}>{golfRoundDate}</Text>
+                    <View style={styles.namePointsExtra}>
+                      <Text
+                        style={{
+                          ...styles.culumText,
+                          width: '40%',
+                          left: 10,
+                        }}
                       >
                         Name
                       </Text>
@@ -412,10 +590,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: Theme.colors.white,
     fontWeight: 'bold',
-    // fontWeight: 'bold',
   },
   textInput: {
-    height: 33,
+    height: 30,
     borderColor: Theme.colors.grey,
     borderWidth: 2,
     backgroundColor: Theme.colors.white,

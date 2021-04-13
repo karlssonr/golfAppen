@@ -659,6 +659,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   textView: {
+    marginTop: 40,
     // top: -90,
     flexDirection: 'row',
 
@@ -672,6 +673,7 @@ const styles = StyleSheet.create({
     fontFamily: Theme.fontFamily.fontFamilyText,
   },
   textInputView: {
+    // marginTop: 50,
     // top: -90,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
