@@ -107,15 +107,16 @@ const styles = StyleSheet.create({
     // marginHorizontal: 1,
     flexDirection: 'row',
     justifyContent: 'center',
+    // marginTop: 50,
   },
   year: {
-    fontSize: Theme.fontSize.H4,
+    fontSize: Theme.fontSize.button,
     color: Theme.colors.orange,
     width: '30%',
     textAlign: 'right',
   },
   name: {
-    fontSize: Theme.fontSize.H4,
+    fontSize: Theme.fontSize.button,
     left: 10,
     width: '40%',
 
@@ -127,7 +128,7 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.colors.grey,
     flexDirection: 'column',
     width: '100%',
-    marginTop: 0,
+    marginTop: '25%',
   },
 
   kghio: {

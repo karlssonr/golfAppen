@@ -20,7 +20,7 @@ const Item = ({
   name,
   totalOfBestSevenRounds,
   averageOfBest7Rounds,
-  totalScore,
+  roundsPlayed,
   avrageScore,
 }) => (
   <View style={{ ...styles.item }}>
@@ -36,11 +36,11 @@ const Item = ({
     <Text style={{ ...styles.averageOfBest7Rounds, backgroundColor: null }}>
       {averageOfBest7Rounds}
     </Text>
-    <Text style={{ ...styles.totalScore, backgroundColor: null }}>
-      {totalScore}
-    </Text>
     <Text style={{ ...styles.avrageScore, backgroundColor: null }}>
       {avrageScore}
+    </Text>
+    <Text style={{ ...styles.roundsPlayed, backgroundColor: null }}>
+      {roundsPlayed}
     </Text>
   </View>
 );
@@ -105,6 +105,7 @@ const ChartListScreen = () => {
   };
 
   const assignResultsForEachPlayer = async (golfroundsOfPlayers) => {
+    let roundsPlayed = -4;
     let totalScore = 0;
     let avrageScore = 0;
     let averageOfBest7Rounds = 0;
@@ -112,6 +113,7 @@ const ChartListScreen = () => {
     let totalOfBestSevenRounds = 0;
 
     golfroundsOfPlayers.forEach((golfroundsOfPlayer) => {
+      roundsPlayed = calculateRoundsPlayed(golfroundsOfPlayer);
       totalScore = sumAllScores(golfroundsOfPlayer);
       avrageScore = calculateAverageScore(golfroundsOfPlayer);
       averageOfBest7Rounds = calcutaleBestSevenRounds(golfroundsOfPlayer);
@@ -126,6 +128,7 @@ const ChartListScreen = () => {
         avrageScore: parseFloat(avrageScore.toFixed(2)),
         averageOfBest7Rounds: parseFloat(averageOfBest7Rounds.toFixed(2)),
         totalOfBestSevenRounds: parseFloat(totalOfBestSevenRounds.toFixed(2)),
+        roundsPlayed: roundsPlayed,
       });
     });
 
@@ -134,6 +137,16 @@ const ChartListScreen = () => {
     console.log('sortedArray: ', sortedArray);
 
     setResultTable(sortedArray);
+  };
+
+  const calculateRoundsPlayed = (golfroundsOfPlayer) => {
+    let roundsPlayed = 0;
+
+    golfroundsOfPlayer.scores.forEach(() => {
+      roundsPlayed = roundsPlayed + 1;
+    });
+
+    return roundsPlayed;
   };
 
   const calcutaleBestSevenRounds = (golfroundsOfPlayer) => {
@@ -266,12 +279,12 @@ const ChartListScreen = () => {
         <Text
           style={{ ...styles.culumText, textAlign: 'center', width: '19%' }}
         >
-          Total Score
+          Total Average
         </Text>
         <Text
           style={{ ...styles.culumText, textAlign: 'center', width: '19%' }}
         >
-          Total Average
+          Rounds Played
         </Text>
       </View>
     );
@@ -318,7 +331,7 @@ const ChartListScreen = () => {
                     <Item
                       positionNumber={positionNumber}
                       name={name}
-                      totalScore={item.totalScore}
+                      roundsPlayed={item.roundsPlayed}
                       avrageScore={item.avrageScore}
                       totalOfBestSevenRounds={item.totalOfBestSevenRounds}
                       averageOfBest7Rounds={item.averageOfBest7Rounds}
@@ -382,22 +395,22 @@ const styles = StyleSheet.create({
     left: 10,
     width: '19%',
 
-    color: 'white',
-    fontFamily: Theme.fontFamilyText,
-  },
-  totalScore: {
-    fontSize: Theme.fontSize.caption,
-    width: '19%',
-    textAlign: 'center',
-    color: 'white',
+    color: Theme.colors.white,
     fontFamily: Theme.fontFamilyText,
   },
   avrageScore: {
     fontSize: Theme.fontSize.caption,
+    width: '19%',
+    textAlign: 'center',
+    color: Theme.colors.white,
+    fontFamily: Theme.fontFamilyText,
+  },
+  roundsPlayed: {
+    fontSize: Theme.fontSize.caption,
     left: 10,
     width: '19%',
     textAlign: 'center',
-    color: 'white',
+    color: Theme.colors.white,
     fontFamily: Theme.fontFamilyText,
   },
 

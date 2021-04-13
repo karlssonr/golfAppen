@@ -14,7 +14,7 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require('../assets/Golfare.png')}
+        source={require('../assets/image8.png')}
         style={styles.imageBackgroundStyle}
       >
         {/* <Text style={styles.header}>KGHIO {'\n'}2021</Text> */}
@@ -128,7 +128,7 @@ const HomeScreen = ({ navigation }) => {
           textColor={Theme.colors.grey}
           iconColor={Theme.colors.grey}
           textFontSize={Theme.fontSize.button}
-          onPress={() => navigation.navigate('Stats')}
+          // onPress={() => navigation.navigate('Stats')}
         />
         <IconAndTextButton
           imageSource={require('../assets/golfSwing.png')}
