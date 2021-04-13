@@ -54,7 +54,7 @@ const Champs = () => {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require('../assets/theChamp.png')}
+        source={require('../assets/Champs.png')}
         style={styles.imageBackgroundStyle}
       >
         {/* <Text style={styles.header}>Champs</Text> */}

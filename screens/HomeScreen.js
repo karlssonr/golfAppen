@@ -11,10 +11,14 @@ import Theme from '../theme/theme';
 const HomeScreen = ({ navigation }) => {
   // const { user } = useContext(AuthContext);
 
+  useEffect(() => {
+    firebase.firestore().collection('golfGames').orderBy('date');
+  }, []);
+
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require('../assets/image8.png')}
+        source={require('../assets/Start.png')}
         style={styles.imageBackgroundStyle}
       >
         {/* <Text style={styles.header}>KGHIO {'\n'}2021</Text> */}
@@ -161,7 +165,7 @@ const styles = StyleSheet.create({
   imageBackgroundStyle: {
     width: '100%',
     height: undefined,
-    aspectRatio: 1,
+    aspectRatio: 1.5,
   },
 
   container: {

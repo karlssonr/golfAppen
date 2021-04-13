@@ -266,7 +266,7 @@ const RegisterResultScreen = () => {
           <View style={styles.container}>
             {/* <View style={{ height: '30%' }}> */}
             <ImageBackground
-              source={require('../assets/BallIntheHole.png')}
+              source={require('../assets/ReportRound.png')}
               style={styles.imageBackground}
             >
               <Text style={styles.header}>Report {'\n'}Round</Text>

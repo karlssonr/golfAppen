@@ -294,7 +294,7 @@ const ChartListScreen = () => {
     <ScrollView style={{ backgroundColor: Theme.colors.black }}>
       <View style={styles.container}>
         <ImageBackground
-          source={require('../assets/TheRace.png')}
+          source={require('../assets/TheRace1.png')}
           style={styles.imageBackgroundStyle}
         >
           <Text style={styles.header}>

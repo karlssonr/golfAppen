@@ -78,7 +78,7 @@ const MemberScreen = () => {
     <ScrollView style={{ backgroundColor: 'black' }}>
       <View style={styles.container}>
         <ImageBackground
-          source={require('../assets/golfball1.png')}
+          source={require('../assets/Members.png')}
           style={styles.imageBackgroundStyle}
         >
           <Text style={styles.header}>Members</Text>
