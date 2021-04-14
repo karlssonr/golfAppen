@@ -82,7 +82,7 @@ const HomeScreen = ({ navigation }) => {
           imageHeight={Theme.fontSize.buttonIcon}
           // imagemarginLeft={'35%'}
           iconColor={Theme.colors.orange}
-          title="Played Rounds"
+          title="Rounds"
           textColor={Theme.colors.white}
           textFontSize={Theme.fontSize.button}
           onPress={() => navigation.navigate('LatestGolfRoundsScreen')}

@@ -297,7 +297,7 @@ const ChartListScreen = () => {
           style={styles.imageBackgroundStyle}
         >
           <Text style={styles.header}>
-            The Race -{'\n'}Grandma´s {'\n'}Foot 2021
+            The Race -{'\n'}Grandma's {'\n'}Foot 2021
           </Text>
         </ImageBackground>
 
