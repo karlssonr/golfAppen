@@ -22,32 +22,66 @@ export default function AuthContextProvider({ children }) {
     return unsubscribe;
   });
 
-  const updateUser = (displayName, phoneNumber, golfID) => {
-    firebase
+  const createUser = async () => {
+    try {
+      await firebase
+        .firestore()
+        .collection('players')
+        .doc(auth.currentUser.uid)
+        .set({
+          name: '',
+          nickName: '',
+          phoneNumber: '',
+          golfID: '',
+          userID: auth.currentUser.uid,
+        });
+    } catch (error) {
+      console.log('error:', error);
+    }
+
+    alert('Account created');
+  };
+
+  const updateUser = async (nickName, displayName, phoneNumber, golfID) => {
+    const ref = firebase
       .firestore()
       .collection('players')
-      .doc(auth.currentUser.uid)
-      .set({
-        name: displayName,
-        golfID: golfID,
-        phoneNumber: phoneNumber,
-        userID: auth.currentUser.uid,
-      })
-      .then(() => {
-        console.log('User updated');
-      });
+      .doc(auth.currentUser.uid);
 
-    user
-      .updateProfile({
-        displayName: displayName,
-      })
-      .then(function () {
-        alert('Update succesfull');
-      })
-      .catch(function (error) {
-        alert(error);
-        console.log('updateUserError: ', error);
+    if (nickName !== null) {
+      ref.update({
+        nickName: nickName,
       });
+    }
+
+    if (displayName !== null) {
+      ref.update({
+        name: displayName,
+      });
+      user
+        .updateProfile({
+          displayName: displayName,
+        })
+        .then(function () {})
+        .catch(function (error) {
+          alert(error);
+          console.log('updateUserError: ', error);
+        });
+    }
+
+    if (phoneNumber !== null) {
+      ref.update({
+        phoneNumber: phoneNumber,
+      });
+    }
+
+    if (golfID !== null) {
+      ref.update({
+        golfID: golfID,
+      });
+    }
+
+    alert('Profile updated');
   };
 
   const resetPassword = async (email) => {
@@ -62,7 +96,7 @@ export default function AuthContextProvider({ children }) {
       });
   };
 
-  const signUp = (email, password) => {
+  const signUp = async (email, password) => {
     return auth
       .createUserWithEmailAndPassword(email, password)
       .catch(function (error) {
@@ -111,6 +145,7 @@ export default function AuthContextProvider({ children }) {
         signUp,
         resetPassword,
         updateUser,
+        createUser,
       }}
     >
       {children}

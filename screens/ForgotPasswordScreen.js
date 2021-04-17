@@ -51,7 +51,7 @@ export default function ForgotPasswordScreen({ navigation }) {
           <View style={{ width: '50%' }}>
             <Text style={styles.text}>Email</Text>
             <TextInput
-              placeholder="Ange emailadress"
+              placeholder="Enter email"
               value={email}
               onChangeText={setEmail}
               style={styles.textImputEmail}
@@ -61,8 +61,8 @@ export default function ForgotPasswordScreen({ navigation }) {
 
             <View style={{ marginTop: 30 }}>
               <Button
-                title="Återställ lösenord"
-                color={Theme.orange}
+                title="Reset password"
+                color={Theme.colors.orange}
                 style={styles.button}
                 disabled={loading}
                 onPress={submit}
@@ -78,7 +78,7 @@ export default function ForgotPasswordScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: Theme.colors.black,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -87,12 +87,12 @@ const styles = StyleSheet.create({
   },
   text: {
     fontWeight: '600',
-    fontSize: 16,
-    color: Theme.orange,
-    fontFamily: Theme.fontFamilyText,
+    fontSize: Theme.fontSize.formText,
+    color: Theme.colors.orange,
+    fontFamily: Theme.fontFamily.fontFamilyText,
   },
   textImputEmail: {
-    backgroundColor: 'lightgrey',
+    backgroundColor: Theme.colors.lightGrey,
     padding: 10,
     borderRadius: 5,
     marginBottom: 10,

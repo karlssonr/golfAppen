@@ -5,7 +5,7 @@ import Theme from '../theme/theme';
 export default function Splash() {
   return (
     <View style={styles.container}>
-      <Text>App Logo</Text>
+      {/* <Text>App Logo</Text> */}
       <ActivityIndicator animating={true} color={Theme.orange} />
     </View>
   );
@@ -14,7 +14,7 @@ export default function Splash() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: null,
     alignItems: 'center',
     justifyContent: 'center',
   },

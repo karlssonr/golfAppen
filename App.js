@@ -5,16 +5,19 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import AppNavigation from './navigation/AppNavigation';
 import AuthNavigation from './navigation/AuthNavigation';
 import PlayerContextProvider from './context/PlayerContext';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import AuthContextProvider from './context/AuthContext';
 
 export default function App() {
   return (
-    <PlayerContextProvider>
-      <AuthContextProvider>
-        <AuthNavigation />
-      </AuthContextProvider>
-    </PlayerContextProvider>
+    <SafeAreaProvider>
+      <PlayerContextProvider>
+        <AuthContextProvider>
+          <AuthNavigation />
+        </AuthContextProvider>
+      </PlayerContextProvider>
+    </SafeAreaProvider>
   );
 }
 

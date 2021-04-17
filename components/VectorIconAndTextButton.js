@@ -1,29 +1,23 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import Theme from '../theme/theme';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-const IconAndTextButton = ({
+const VectorIconAndTextButton = ({
   title,
   textFontSize,
   textColor,
-  imageSource,
-  imageWidth,
-  imageHeight,
-  imagemarginLeft,
+  iconName,
+  iconWidth,
+  iconHeight,
   onPress,
+  viewWidth,
   viewMarginBottom,
   iconColor,
+  iconFontSize,
+  iconMarginLeft,
 }) => {
   const styles = StyleSheet.create({
-    view: {
-      backgroundColor: null,
-      flexDirection: 'row',
-      justifyContent: 'space-evenly',
-      width: '90  %',
-      margin: 5,
-      marginBottom: viewMarginBottom,
-    },
     text: {
       fontSize: textFontSize,
       marginLeft: 20,
@@ -32,27 +26,34 @@ const IconAndTextButton = ({
       width: '80%',
       textAlign: 'left',
       backgroundColor: null,
-      fontFamily: Theme.fontFamily.fontFamilyText,
     },
-    image: {
-      width: imageWidth,
-      height: imageHeight,
-      tintColor: iconColor,
+    icon: {
+      width: iconWidth,
+      height: iconHeight,
+      color: iconColor,
+      fontSize: iconFontSize,
       // left: 22,
-      marginLeft: imagemarginLeft ? imagemarginLeft : '30%',
+      marginLeft: iconMarginLeft ? iconMarginLeft : '30%',
     },
-    touchableOpacity: {
+    view: {
+      backgroundColor: null,
       flexDirection: 'row',
+      justifyContent: 'space-evenly',
+      width: '90%',
+      margin: 5,
+      marginBottom: viewMarginBottom,
     },
+    touchableOpacity: { flexDirection: 'row' },
   });
+
   return (
     <View style={styles.view}>
       <TouchableOpacity style={styles.touchableOpacity} onPress={onPress}>
-        <Image source={imageSource} style={styles.image} />
+        <Icon name={iconName} style={styles.icon} />
         <Text style={styles.text}>{title}</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-export default IconAndTextButton;
+export default VectorIconAndTextButton;

@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "golfAppen",
+    "name": "KGHIO",
     "slug": "golfAppen",
-    "version": "1.0.0",
+    "version": "1.0.5",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/ICON_1280x1280.png",
     "splash": {
-      "image": "./assets/pokal.png",
+      "image": "./assets/ICON_1280x1280.png",
       "resizeMode": "contain",
       "backgroundColor": "#000000"
     },
@@ -20,12 +20,13 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+        "foregroundImage": "./assets/ICON_1280x1280.png",
+        "backgroundColor": "#000000"
+      },
+      "package": "com.robin.karlsson.golfAppen"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/ICON_1280x1280.png"
     }
   }
 }

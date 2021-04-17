@@ -12,8 +12,8 @@ export default function UnauthenticatedStack() {
     <Stack.Navigator
       initialRouteName="LoginScreen"
       screenOptions={{
-        headerStyle: { backgroundColor: 'black' },
-        headerTintColor: Theme.orange,
+        headerStyle: { backgroundColor: Theme.colors.black },
+        headerTintColor: Theme.colors.orange,
       }}
     >
       <Stack.Screen
@@ -24,12 +24,12 @@ export default function UnauthenticatedStack() {
       <Stack.Screen
         name="SignUpScreen"
         component={SignUpScreen}
-        options={{ title: 'Skapa Konto' }}
+        options={{ title: 'Create account' }}
       />
       <Stack.Screen
         name="ForgotPasswordScreen"
         component={ForgotPasswordScreen}
-        options={{ title: 'Glömt lösenord' }}
+        options={{ title: 'Forgot password' }}
       />
     </Stack.Navigator>
   );
